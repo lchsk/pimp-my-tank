@@ -2,7 +2,7 @@
 
 #include "game.h"
 
-namespace ks
+namespace pmt
 {
     const std::string ASSETS_DIR = "assets/";
 
@@ -29,9 +29,9 @@ namespace ks
             _textures[filename] = std::move(texture);
         }
 
-        _player = std::make_shared<ks::Tank>(_textures["tank.png"], 0, 100, 100);
+        _player = std::make_shared<pmt::Tank>(_textures["tank.png"], 0, 100, 100);
 
-        _map = std::make_unique<ks::Map>();
+        _map = std::make_unique<pmt::Map>();
     }
 
     Game::~Game()

@@ -1,6 +1,6 @@
 #include "tank.h"
 
-namespace ks
+namespace pmt
 {
     Tank::Tank(std::unique_ptr<sf::Texture>& tex, int side, int x, int y)
         : _side(side)

@@ -1,6 +1,6 @@
 #include "map.h"
 
-namespace ks
+namespace pmt
 {
     Map::Map()
     {

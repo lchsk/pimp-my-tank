@@ -5,7 +5,7 @@
 
 #include <SFML/Graphics.hpp>
 
-namespace ks
+namespace pmt
 {
     class Tank
     {

@@ -4,7 +4,7 @@
 
 int main(int argc, char** argv)
 {
-    ks::Game game;
+    pmt::Game game;
     game.run();
 
     return 0;
