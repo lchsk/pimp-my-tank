@@ -28,6 +28,8 @@ namespace ks
 
             _textures[filename] = std::move(texture);
         }
+
+        _player = std::make_shared<ks::Tank>(_textures["tank.png"], 0, 100, 100);
     }
 
     Game::~Game()
@@ -59,6 +61,7 @@ namespace ks
     void Game::render()
     {
         _window->clear();
+        _player->render(*_window);
         _window->display();
     }
 

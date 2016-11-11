@@ -9,6 +9,8 @@
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 
+#include "tank.h"
+
 namespace ks
 {
     class Game
@@ -26,6 +28,8 @@ namespace ks
             void handle_events();
             void update(sf::Time delta);
             void render();
+
+            std::shared_ptr<ks::Tank> _player;
 
             std::unique_ptr<sf::RenderWindow> _window;
 

@@ -30,6 +30,7 @@ add_definitions(-std=c++14)
 add_executable(${EXECUTABLE_NAME}
     src/main.cpp
     src/game.cpp
+    src/tank.cpp
 )
 
 
