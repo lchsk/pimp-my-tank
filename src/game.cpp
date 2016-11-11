@@ -4,12 +4,30 @@
 
 namespace ks
 {
+    const std::string ASSETS_DIR = "assets/";
+
     Game::Game()
     {
-        _window = std::make_unique<sf::RenderWindow>(
-            sf::VideoMode(800, 600),
-            "pimp-my-tank"
-            );
+        _window = std::make_unique<sf::RenderWindow>
+            (sf::VideoMode(800, 600),
+             "pimp-my-tank");
+
+        _filenames = {
+            "gun.png",
+            "tank.png"
+        };
+
+        for (std::string& filename : _filenames) {
+            std::unique_ptr<sf::Texture> texture(new sf::Texture());
+
+            std::string path = ASSETS_DIR + filename;
+
+            if (! texture->loadFromFile(path)) {
+                throw std::runtime_error("Unable to load " + path);
+            }
+
+            _textures[filename] = std::move(texture);
+        }
     }
 
     Game::~Game()

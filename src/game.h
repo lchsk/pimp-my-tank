@@ -3,6 +3,8 @@
 
 #include <string>
 #include <memory>
+#include <vector>
+#include <unordered_map>
 
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
@@ -26,6 +28,10 @@ namespace ks
             void render();
 
             std::unique_ptr<sf::RenderWindow> _window;
+
+            std::vector<std::string> _filenames;
+            std::unordered_map<std::string, std::unique_ptr<sf::Texture> >
+                _textures;
     };
 }
 #endif
