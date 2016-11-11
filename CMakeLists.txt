@@ -31,6 +31,7 @@ add_executable(${EXECUTABLE_NAME}
     src/main.cpp
     src/game.cpp
     src/tank.cpp
+    src/map.cpp
 )
 
 

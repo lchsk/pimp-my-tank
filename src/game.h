@@ -10,6 +10,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "tank.h"
+#include "map.h"
 
 namespace ks
 {
@@ -30,6 +31,8 @@ namespace ks
             void render();
 
             std::shared_ptr<ks::Tank> _player;
+
+            std::unique_ptr<ks::Map> _map;
 
             std::unique_ptr<sf::RenderWindow> _window;
 

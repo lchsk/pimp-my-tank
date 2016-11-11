@@ -8,6 +8,7 @@ namespace ks
         _tank = std::make_unique<sf::Sprite>(*tex.get());
 
         _tank->setPosition(x, y);
+        _tank->setColor(sf::Color::Blue);
     }
 
     Tank::~Tank()

@@ -30,6 +30,8 @@ namespace ks
         }
 
         _player = std::make_shared<ks::Tank>(_textures["tank.png"], 0, 100, 100);
+
+        _map = std::make_unique<ks::Map>();
     }
 
     Game::~Game()
