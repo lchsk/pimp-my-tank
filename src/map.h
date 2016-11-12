@@ -2,6 +2,7 @@
 #define MAP_H
 
 #include <memory>
+#include <vector>
 
 #include <SFML/Graphics.hpp>
 
@@ -16,6 +17,8 @@ namespace pmt
         void render(sf::RenderWindow& window);
 
     private:
+        void _load_data(std::string filename);
+        std::vector<int> _tiles;
     };
 }
 
