@@ -39,6 +39,9 @@ namespace pmt
             std::vector<std::string> _filenames;
             std::unordered_map<std::string, std::unique_ptr<sf::Texture> >
                 _textures;
+
+            // Map tiles IDs to texture filenames
+            std::unordered_map<int, std::string> _tiles_map;
     };
 }
 #endif

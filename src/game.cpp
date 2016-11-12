@@ -9,12 +9,20 @@ namespace pmt
     Game::Game()
     {
         _window = std::make_unique<sf::RenderWindow>
-            (sf::VideoMode(800, 450),
-             "pimp-my-tank");
+            (sf::VideoMode(800, 450), "pimp-my-tank");
 
         _filenames = {
             "gun.png",
-            "tank.png"
+            "tank.png",
+            "ground.png",
+            "ground_sand.png",
+            "ground_rock.png"
+        };
+
+        _tiles_map = {
+            {1, "ground.png"},
+            {2, "ground_sand.png"},
+            {3, "ground_rock.png"}
         };
 
         for (std::string& filename : _filenames) {
@@ -31,7 +39,7 @@ namespace pmt
 
         _player = std::make_shared<pmt::Tank>(_textures["tank.png"], 0, 100, 100);
 
-        _map = std::make_unique<pmt::Map>();
+        _map = std::make_unique<pmt::Map>(_tiles_map, _textures);
     }
 
     Game::~Game()
