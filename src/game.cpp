@@ -14,6 +14,7 @@ namespace pmt
         _filenames = {
             "gun.png",
             "tank.png",
+            "shell.png",
             "ground.png",
             "ground_sand.png",
             "ground_rock.png"
@@ -41,7 +42,7 @@ namespace pmt
 			_textures["tank.png"],
 			_textures["gun.png"],
             0,
-            true,
+            false,
 			100,
 			350);
 
