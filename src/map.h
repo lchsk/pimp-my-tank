@@ -28,7 +28,12 @@ namespace pmt
                 <std::string, std::unique_ptr<sf::Texture> >& textures
         );
 
+        void _load_meta(
+            std::string filename
+        );
+
         std::vector<sf::Sprite> _tiles;
+        std::unordered_map<std::string, std::string> _meta;
     };
 }
 

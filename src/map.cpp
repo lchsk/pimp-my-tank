@@ -11,6 +11,7 @@ namespace pmt
             <std::string, std::unique_ptr<sf::Texture> >& textures)
     {
         _load_data("map.data", tiles, textures);
+        _load_meta("map.meta");
     }
 
     Map::~Map()
@@ -22,6 +23,29 @@ namespace pmt
     {
         for (sf::Sprite& s : _tiles) {
             window.draw(s);
+        }
+    }
+
+    void Map::_load_meta(std::string filename)
+    {
+        std::ifstream map(filename);
+
+        std::string line;
+
+        if (map.is_open()) {
+
+            while (std::getline(map, line)) {
+                auto pos = line.find("=");
+
+                std::string key = line.substr(0, pos);
+                std::string value = line.substr(pos + 1, line.length());
+
+                _meta[key] = value;
+            }
+
+            map.close();
+        } else {
+            throw std::runtime_error("Map file not found");
         }
     }
 
@@ -60,6 +84,8 @@ namespace pmt
 
                 _tiles.push_back(sprite);
             }
+
+            map.close();
         } else {
             throw std::runtime_error("Map file not found");
         }
