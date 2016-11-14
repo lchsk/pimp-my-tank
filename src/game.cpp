@@ -37,7 +37,13 @@ namespace pmt
             _textures[filename] = std::move(texture);
         }
 
-        _player = std::make_shared<pmt::Tank>(_textures["tank.png"], 0, 100, 100);
+        _player = std::make_shared<pmt::Tank>(
+			_textures["tank.png"],
+			_textures["gun.png"],
+            0,
+            true,
+			100,
+			350);
 
         _map = std::make_unique<pmt::Map>(_tiles_map, _textures);
     }
