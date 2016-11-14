@@ -71,6 +71,7 @@ namespace pmt
     void Game::render()
     {
         _window->clear();
+        _map->render(*_window);
         _player->render(*_window);
         _window->display();
     }

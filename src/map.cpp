@@ -20,7 +20,9 @@ namespace pmt
 
     void Map::render(sf::RenderWindow& window)
     {
-
+        for (sf::Sprite& s : _tiles) {
+            window.draw(s);
+        }
     }
 
     void Map::_load_data(
@@ -33,10 +35,14 @@ namespace pmt
 
         std::ifstream map(filename);
 
+        int tile_no = -1;
+
         if (map.is_open()) {
             int tile;
 
             while (! map.eof()) {
+                tile_no++;
+
                 map >> tile;
 
                 // Omit tile ID=0
@@ -45,7 +51,14 @@ namespace pmt
 
                 auto& tex = textures[tiles[tile]];
 
-                _tiles.push_back(sf::Sprite(*tex.get()));
+                sf::Sprite sprite(*tex.get());
+
+                int row = tile_no / 25;
+                int col = tile_no % 25;
+
+                sprite.setPosition(col * 32, row * 32);
+
+                _tiles.push_back(sprite);
             }
         } else {
             throw std::runtime_error("Map file not found");
