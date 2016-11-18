@@ -2,12 +2,29 @@
 #define BULLET_MGR_H
 
 #include <cmath>
+#include <vector>
 
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 
 namespace pmt
 {
+    enum class BulletType {
+        Missile
+    };
+
+    class Bullet
+    {
+    public:
+        Bullet();
+        ~Bullet();
+
+    private:
+        std::unique_ptr<sf::Sprite> _sprite;
+        bool _active;
+        BulletType _type;
+    };
+
     class BulletMgr
     {
         public:
@@ -23,6 +40,8 @@ namespace pmt
 
         private:
             void _simulate();
+
+            std::vector<pmt::Bullet> _bullets;
     };
 }
 

@@ -3,6 +3,16 @@
 
 namespace pmt
 {
+    Bullet::Bullet() :
+        _active(false)
+    {
+    }
+
+    Bullet::~Bullet()
+    {
+
+    }
+
     BulletMgr::BulletMgr()
     {
     }
