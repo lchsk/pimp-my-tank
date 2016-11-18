@@ -32,6 +32,8 @@ add_executable(${EXECUTABLE_NAME}
     src/game.cpp
     src/tank.cpp
     src/map.cpp
+    src/util.cpp
+    src/bullet_mgr.cpp
 )
 
 

@@ -11,6 +11,7 @@
 
 #include "tank.h"
 #include "map.h"
+#include "bullet_mgr.h"
 
 namespace pmt
 {
@@ -42,6 +43,9 @@ namespace pmt
 
             // Map tiles IDs to texture filenames
             std::unordered_map<int, std::string> _tiles_map;
+
+            std::unique_ptr<sf::Sprite> _bullet;
+            std::unique_ptr<pmt::BulletMgr> _bullet_mgr;
     };
 }
 #endif

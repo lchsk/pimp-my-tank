@@ -47,6 +47,10 @@ namespace pmt
 			350);
 
         _map = std::make_unique<pmt::Map>(_tiles_map, _textures);
+
+        _bullet_mgr = std::make_unique<pmt::BulletMgr>();
+        // _bullet = std::make_unique<sf::Sprite>(*_textures["shell.png"]);
+        // _bullet->setPosition(10, 300);
     }
 
     Game::~Game()
@@ -73,13 +77,17 @@ namespace pmt
 
     void Game::update(sf::Time delta)
     {
+        _bullet_mgr->update(delta);
     }
 
     void Game::render()
     {
+        // _bullet->setPosition(x, 450 - y);
+
         _window->clear();
         _map->render(*_window);
         _player->render(*_window);
+        _bullet_mgr->render(*_window);
         _window->display();
     }
 
