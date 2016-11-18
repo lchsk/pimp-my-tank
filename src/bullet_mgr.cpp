@@ -39,11 +39,13 @@ namespace pmt
         double mass = 100.0;
 
         double cosX, cosY;
-        double xe, ze;
+        double xe;
+			// , ze;
         double b, Lx, Ly;
         double sx1, vx1;
         double sy1, vy1;
-        double tx1, tx2, ty1, ty2;
+        // double tx1, tx2;
+        // double ty1, ty2;
         static double time;
 
         double Vm = 100;
