@@ -1,10 +1,12 @@
+#include <iostream>
+
 #include "bullet_mgr.h"
 #include "util.h"
 
 namespace pmt
 {
     Bullet::Bullet(WeaponType type, std::unique_ptr<sf::Texture>& texture) :
-        _flying(false),
+        _flying(true),
         _type(type)
     {
         _sprite = std::make_unique<sf::Sprite>(*texture);
@@ -13,6 +15,21 @@ namespace pmt
     Bullet::~Bullet()
     {
 
+    }
+
+    void Bullet::render(sf::RenderWindow& window)
+    {
+        window.draw(*_sprite);
+    }
+
+    bool Bullet::is_flying() const
+    {
+        return _flying;
+    }
+
+    void Bullet::set_position(double x, double y)
+    {
+        _sprite->setPosition(x, y);
     }
 
     BulletMgr::BulletMgr()
@@ -32,15 +49,34 @@ namespace pmt
             _bullets[type].push_back(std::make_shared<Bullet>(type, texture));
     }
 
+    void BulletMgr::shoot(WeaponType type)
+    {
+
+    }
+
     void BulletMgr::update(sf::Time delta)
     {
+        for (auto it = _bullets.begin(); it != _bullets.end(); ++it) {
+            for (auto& bullet : it->second) {
+                if (bullet->is_flying()) {
+                    _simulate(delta, bullet);
+                }
+            }
+        }
     }
 
     void BulletMgr::render(sf::RenderWindow& window)
     {
+        for (auto it = _bullets.begin(); it != _bullets.end(); ++it) {
+            for (auto& bullet : it->second) {
+                if (bullet->is_flying()) {
+                    bullet->render(window);
+                }
+            }
+        }
     }
 
-    void BulletMgr::_simulate()
+    void BulletMgr::_simulate(sf::Time delta, std::shared_ptr<pmt::Bullet> bullet)
     {
         double g = 9.81;
         double Gamma_wind = 0.0;
@@ -59,13 +95,13 @@ namespace pmt
         // double ty1, ty2;
         static double time;
 
-        double Vm = 100;
+        double Vm = 80;
 
         double Alpha, Gamma;
         Alpha = 50;
         Gamma = 20;
 
-        time += 0.1;
+        time += pmt::config::MISSILE_SPEED * delta.asSeconds();
 
         b = 10.0 * cos(pmt::util::radian(90-Alpha) );
         Lx = b * cos(pmt::util::radian(Gamma));
@@ -87,5 +123,6 @@ namespace pmt
         x = ( (mass/C_air) * exp(-(C_air*time)/mass) * ((-C_wind * V_wind * cos(pmt::util::radian(Gamma_wind)))/C_air - vx1) - (C_wind * V_wind * cos(pmt::util::radian(Gamma_wind)) * time)/C_air ) - ( (mass/C_air) * ((-C_wind * V_wind * cos(pmt::util::radian(Gamma_wind)))/C_air - vx1)) + sx1;
         y = (sy1 + ( -(vy1 + (mass*g)/C_air) * (mass/C_air) * exp(-(C_air*time)/mass) - (mass * g * time)/C_air) + ( (mass/C_air) * (vy1 + (mass * g)/C_air)));
 
+        bullet->set_position(x, pmt::config::WINDOW_H - y);
     }
 }

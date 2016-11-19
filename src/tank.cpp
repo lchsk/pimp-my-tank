@@ -5,6 +5,7 @@
 namespace pmt
 {
     Tank::Tank(
+        std::shared_ptr<pmt::BulletMgr>& bullet_mgr,
         std::unique_ptr<sf::Texture>& tank,
         std::unique_ptr<sf::Texture>& gun,
         int side, bool left, int x, int y)
@@ -15,6 +16,8 @@ namespace pmt
     {
         _tank = std::make_unique<sf::Sprite>(*tank.get());
         _gun = std::make_unique<sf::Sprite>(*gun.get());
+
+        _bullet_mgr = bullet_mgr;
 
         _tank->setPosition(x, y);
 
@@ -49,7 +52,12 @@ namespace pmt
 
     void Tank::shoot()
     {
+        switch(_current_weapon) {
+        case WeaponType::Missile:
+            _bullet_mgr->shoot(_current_weapon);
 
+            break;
+        }
     }
 
     Tank::~Tank()

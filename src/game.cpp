@@ -1,5 +1,6 @@
 #include <iostream>
 
+#include "util.h"
 #include "game.h"
 
 namespace pmt
@@ -9,7 +10,8 @@ namespace pmt
     Game::Game()
     {
         _window = std::make_unique<sf::RenderWindow>
-            (sf::VideoMode(800, 448), "pimp-my-tank");
+            (sf::VideoMode(pmt::config::WINDOW_W, pmt::config::WINDOW_H),
+             "pimp-my-tank");
 
         _filenames = {
             "gun.png",
@@ -38,9 +40,15 @@ namespace pmt
             _textures[filename] = std::move(texture);
         }
 
+        _bullet_mgr = std::make_shared<pmt::BulletMgr>();
+        _bullet_mgr->add_bullets(pmt::WeaponType::Missile,
+                                 2,
+                                 _textures["shell.png"]);
+
         _map = std::make_unique<pmt::Map>(_tiles_map, _textures);
 
         _player = std::make_shared<pmt::Tank>(
+            _bullet_mgr,
             _textures["tank.png"],
             _textures["gun.png"],
             0,
@@ -53,6 +61,7 @@ namespace pmt
 
         for (unsigned i = 0; i < _enemies_count; i++) {
             _enemy_tanks.push_back(std::make_shared<pmt::Tank>(
+                _bullet_mgr,
                 _textures["tank.png"],
                 _textures["gun.png"],
                 1,
@@ -62,10 +71,6 @@ namespace pmt
             ));
         }
 
-        _bullet_mgr = std::make_unique<pmt::BulletMgr>();
-        _bullet_mgr->add_bullets(pmt::WeaponType::Missile,
-                                 2,
-                                 _textures["shell.png"]);
     }
 
     Game::~Game()

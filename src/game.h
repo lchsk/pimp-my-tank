@@ -45,7 +45,7 @@ namespace pmt
             // Map tiles IDs to texture filenames
             std::unordered_map<int, std::string> _tiles_map;
 
-            std::unique_ptr<pmt::BulletMgr> _bullet_mgr;
+            std::shared_ptr<pmt::BulletMgr> _bullet_mgr;
 
             unsigned _enemies_count;
     };

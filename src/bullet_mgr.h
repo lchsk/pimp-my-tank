@@ -22,6 +22,12 @@ namespace pmt
         Bullet(WeaponType type, std::unique_ptr<sf::Texture>& texture);
         ~Bullet();
 
+        bool is_flying() const;
+
+        void render(sf::RenderWindow& window);
+
+        void set_position(double x, double y);
+
     private:
         std::unique_ptr<sf::Sprite> _sprite;
         bool _flying;
@@ -43,8 +49,10 @@ namespace pmt
                              unsigned count,
                              std::unique_ptr<sf::Texture>& texture);
 
+            void shoot(WeaponType type);
+
         private:
-            void _simulate();
+            void _simulate(sf::Time delta, std::shared_ptr<pmt::Bullet> bullet);
 
             std::unordered_map
                 <WeaponType, std::vector<std::shared_ptr<pmt::Bullet> > >

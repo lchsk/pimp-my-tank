@@ -16,6 +16,7 @@ namespace pmt
     {
     public:
         Tank(
+            std::shared_ptr<pmt::BulletMgr>& bullet_mgr,
             std::unique_ptr<sf::Texture>& tank,
             std::unique_ptr<sf::Texture>& gun,
             int side, bool left, int x, int y);
@@ -34,6 +35,8 @@ namespace pmt
         std::unique_ptr<sf::Sprite> _gun;
         int _side;
         bool _left;
+
+        std::shared_ptr<pmt::BulletMgr> _bullet_mgr;
 
         double _gun_rotation;
 
