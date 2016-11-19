@@ -3,7 +3,7 @@
 
 namespace pmt
 {
-    Bullet::Bullet(BulletType type, std::unique_ptr<sf::Texture>& texture) :
+    Bullet::Bullet(WeaponType type, std::unique_ptr<sf::Texture>& texture) :
         _flying(false),
         _type(type)
     {
@@ -24,7 +24,7 @@ namespace pmt
     }
 
     void BulletMgr::add_bullets(
-        BulletType type,
+        WeaponType type,
         unsigned count,
         std::unique_ptr<sf::Texture>& texture)
     {

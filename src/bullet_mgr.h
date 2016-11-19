@@ -16,20 +16,16 @@ namespace pmt
         MagnumMissile
     };
 
-    enum class BulletType {
-        Missile
-    };
-
     class Bullet
     {
     public:
-        Bullet(BulletType type, std::unique_ptr<sf::Texture>& texture);
+        Bullet(WeaponType type, std::unique_ptr<sf::Texture>& texture);
         ~Bullet();
 
     private:
         std::unique_ptr<sf::Sprite> _sprite;
         bool _flying;
-        BulletType _type;
+        WeaponType _type;
     };
 
     class BulletMgr
@@ -43,7 +39,7 @@ namespace pmt
 
             void update(sf::Time delta);
             void render(sf::RenderWindow& window);
-            void add_bullets(BulletType type,
+            void add_bullets(WeaponType type,
                              unsigned count,
                              std::unique_ptr<sf::Texture>& texture);
 
@@ -51,7 +47,7 @@ namespace pmt
             void _simulate();
 
             std::unordered_map
-                <BulletType, std::vector<std::shared_ptr<pmt::Bullet> > >
+                <WeaponType, std::vector<std::shared_ptr<pmt::Bullet> > >
                 _bullets;
     };
 }

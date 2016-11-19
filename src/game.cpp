@@ -63,7 +63,7 @@ namespace pmt
         }
 
         _bullet_mgr = std::make_unique<pmt::BulletMgr>();
-        _bullet_mgr->add_bullets(pmt::BulletType::Missile,
+        _bullet_mgr->add_bullets(pmt::WeaponType::Missile,
                                  2,
                                  _textures["shell.png"]);
     }
