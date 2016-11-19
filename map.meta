@@ -1,0 +1,13 @@
+enemies_count=2
+
+player_x=65
+player_y=292
+player_side=right
+
+enemy_0_x=680
+enemy_0_y=292
+enemy_0_side=left
+
+enemy_1_x=450
+enemy_1_y=324
+enemy_1_side=left
