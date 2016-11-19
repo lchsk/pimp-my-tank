@@ -49,12 +49,23 @@ namespace pmt
             std::stoi(_map->get_param("player_y"))
         );
 
+        _enemies_count = std::stoi(_map->get_param("enemies_count"));
+
+        for (unsigned i = 0; i < _enemies_count; i++) {
+            _enemy_tanks.push_back(std::make_shared<pmt::Tank>(
+                _textures["tank.png"],
+                _textures["gun.png"],
+                1,
+                true,
+                std::stoi(_map->get_param("enemy_" + std::to_string(i) + "_x")),
+                std::stoi(_map->get_param("enemy_" + std::to_string(i) + "_y"))
+            ));
+        }
+
         _bullet_mgr = std::make_unique<pmt::BulletMgr>();
         _bullet_mgr->add_bullets(pmt::BulletType::Missile,
                                  2,
                                  _textures["shell.png"]);
-        // _bullet = std::make_unique<sf::Sprite>(*_textures["shell.png"]);
-        // _bullet->setPosition(10, 300);
     }
 
     Game::~Game()
@@ -91,6 +102,11 @@ namespace pmt
         _window->clear();
         _map->render(*_window);
         _player->render(*_window);
+
+        for (unsigned i = 0; i < _enemies_count; i++) {
+            _enemy_tanks[i]->render(*_window);
+        }
+
         _bullet_mgr->render(*_window);
         _window->display();
     }

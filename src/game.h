@@ -32,6 +32,7 @@ namespace pmt
             void render();
 
             std::shared_ptr<pmt::Tank> _player;
+            std::vector<std::shared_ptr<pmt::Tank> > _enemy_tanks;
 
             std::unique_ptr<pmt::Map> _map;
 
@@ -44,8 +45,9 @@ namespace pmt
             // Map tiles IDs to texture filenames
             std::unordered_map<int, std::string> _tiles_map;
 
-            std::unique_ptr<sf::Sprite> _bullet;
             std::unique_ptr<pmt::BulletMgr> _bullet_mgr;
+
+            unsigned _enemies_count;
     };
 }
 #endif
