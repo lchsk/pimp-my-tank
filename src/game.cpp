@@ -9,7 +9,7 @@ namespace pmt
     Game::Game()
     {
         _window = std::make_unique<sf::RenderWindow>
-            (sf::VideoMode(800, 450), "pimp-my-tank");
+            (sf::VideoMode(800, 448), "pimp-my-tank");
 
         _filenames = {
             "gun.png",
