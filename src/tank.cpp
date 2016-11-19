@@ -10,7 +10,8 @@ namespace pmt
         int side, bool left, int x, int y)
         : _side(side),
           _left(left),
-          _gun_rotation(7.0f)
+          _gun_rotation(7.0f),
+          _current_weapon(WeaponType::Missile)
     {
         _tank = std::make_unique<sf::Sprite>(*tank.get());
         _gun = std::make_unique<sf::Sprite>(*gun.get());
@@ -27,7 +28,11 @@ namespace pmt
             _gun->setPosition(x + 20, y + 6);
         }
 
+        // Set initial gun rotation
         _rotate_gun(0);
+
+        // Set initial weapons
+        _weapons[WeaponType::Missile] = 5;
 
         // _tank->setColor(sf::Color::Blue);
     }
@@ -40,6 +45,11 @@ namespace pmt
     void Tank::gun_down()
     {
         _rotate_gun(-ROTATION_UNIT);
+    }
+
+    void Tank::shoot()
+    {
+
     }
 
     Tank::~Tank()

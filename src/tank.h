@@ -2,8 +2,11 @@
 #define TANK_H
 
 #include <memory>
+#include <unordered_map>
 
 #include <SFML/Graphics.hpp>
+
+#include "bullet_mgr.h"
 
 namespace pmt
 {
@@ -22,6 +25,7 @@ namespace pmt
 
         void gun_up();
         void gun_down();
+        void shoot();
 
     private:
         void _rotate_gun(double val);
@@ -32,6 +36,9 @@ namespace pmt
         bool _left;
 
         double _gun_rotation;
+
+        std::unordered_map<WeaponType, unsigned> _weapons;
+        WeaponType _current_weapon;
     };
 }
 

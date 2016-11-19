@@ -11,6 +11,11 @@
 
 namespace pmt
 {
+    enum class WeaponType {
+        Missile,
+        MagnumMissile
+    };
+
     enum class BulletType {
         Missile
     };

@@ -125,7 +125,8 @@ namespace pmt
                     _player->gun_up();
                 else if (event.key.code == sf::Keyboard::Down)
                     _player->gun_down();
-
+                else if (event.key.code == sf::Keyboard::Space)
+                    _player->shoot();
             }
         }
     }
