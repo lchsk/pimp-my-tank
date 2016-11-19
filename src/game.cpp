@@ -118,9 +118,15 @@ namespace pmt
         while(_window->pollEvent(event)) {
             if (event.type == sf::Event::Closed)
                 _window->close();
-            else if (event.type == sf::Event::KeyPressed
-                     and event.key.code == sf::Keyboard::Escape)
-                _window->close();
+            else if (event.type == sf::Event::KeyPressed) {
+                if (event.key.code == sf::Keyboard::Escape)
+                    _window->close();
+                else if (event.key.code == sf::Keyboard::Up)
+                    _player->gun_up();
+                else if (event.key.code == sf::Keyboard::Down)
+                    _player->gun_down();
+
+            }
         }
     }
 }
