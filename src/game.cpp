@@ -44,7 +44,7 @@ namespace pmt
             _textures["tank.png"],
             _textures["gun.png"],
             0,
-            false,
+            _map->get_param("player_side") == "left",
             std::stoi(_map->get_param("player_x")),
             std::stoi(_map->get_param("player_y"))
         );
@@ -56,7 +56,7 @@ namespace pmt
                 _textures["tank.png"],
                 _textures["gun.png"],
                 1,
-                true,
+                _map->get_param("enemy_" + std::to_string(i) + "_side") == "left",
                 std::stoi(_map->get_param("enemy_" + std::to_string(i) + "_x")),
                 std::stoi(_map->get_param("enemy_" + std::to_string(i) + "_y"))
             ));
