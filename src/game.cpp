@@ -49,6 +49,9 @@ namespace pmt
         _map = std::make_unique<pmt::Map>(_tiles_map, _textures);
 
         _bullet_mgr = std::make_unique<pmt::BulletMgr>();
+        _bullet_mgr->add_bullets(pmt::BulletType::Missile,
+                                 2,
+                                 _textures["shell.png"]);
         // _bullet = std::make_unique<sf::Sprite>(*_textures["shell.png"]);
         // _bullet->setPosition(10, 300);
     }

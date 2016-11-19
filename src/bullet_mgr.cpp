@@ -3,9 +3,11 @@
 
 namespace pmt
 {
-    Bullet::Bullet() :
-        _active(false)
+    Bullet::Bullet(BulletType type, std::unique_ptr<sf::Texture>& texture) :
+        _flying(false),
+        _type(type)
     {
+        _sprite = std::make_unique<sf::Sprite>(*texture);
     }
 
     Bullet::~Bullet()
@@ -19,6 +21,15 @@ namespace pmt
 
     BulletMgr::~BulletMgr()
     {
+    }
+
+    void BulletMgr::add_bullets(
+        BulletType type,
+        unsigned count,
+        std::unique_ptr<sf::Texture>& texture)
+    {
+        for (unsigned i = 0; i < count; i++)
+            _bullets[type].push_back(std::make_shared<Bullet>(type, texture));
     }
 
     void BulletMgr::update(sf::Time delta)
