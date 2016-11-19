@@ -20,6 +20,8 @@ namespace pmt
 
         void render(sf::RenderWindow& window);
 
+        std::string get_param(std::string key);
+
     private:
         void _load_data(
             std::string filename,

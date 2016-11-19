@@ -26,6 +26,11 @@ namespace pmt
         }
     }
 
+    std::string Map::get_param(std::string key)
+    {
+        return _meta[key];
+    }
+
     void Map::_load_meta(std::string filename)
     {
         std::ifstream map(filename);
