@@ -108,7 +108,11 @@ namespace pmt
                 // x = xp;
 
                 // TODO:
-                bullet->shoot(-angle, initial_speed, x, y);
+                bullet->shoot(
+                    -angle,
+                    initial_speed,
+                    start_x,
+                    pmt::config::WINDOW_H - start_y);
             }
         }
     }
