@@ -9,9 +9,14 @@ namespace pmt
         std::shared_ptr<pmt::BulletMgr>& bullet_mgr,
         std::unique_ptr<sf::Texture>& tank,
         std::unique_ptr<sf::Texture>& gun,
+        std::unique_ptr<sf::Texture>& green,
+        std::unique_ptr<sf::Texture>& red,
+        std::unique_ptr<sf::Texture>& shield,
         int side, bool left, int x, int y)
         : _side(side),
           _left(left),
+          _health(100),
+          _shield(100),
           _gun_rotation(7.0f),
           _current_weapon(WeaponType::Missile)
     {
@@ -19,8 +24,6 @@ namespace pmt
         _gun = std::make_unique<sf::Sprite>(*gun.get());
 
         _bullet_mgr = bullet_mgr;
-
-        _tank->setPosition(x, y);
 
         if (left) {
             _tank->setScale(-1, 1);
@@ -30,6 +33,25 @@ namespace pmt
 
         } else {
             _gun->setPosition(x + 20, y + 6);
+        }
+
+        _tank->setPosition(x, y);
+
+        int tank_width = tank->getSize().x * _tank->getScale().x;
+        int tank_middle_x = x + tank_width / 2 - 10;
+
+        int health_diff = -7;
+        int shield_diff = -10;
+
+        for (int i = 0; i < 10; i++) {
+            _greens.push_back(std::make_unique<sf::Sprite>(*green.get()));
+            _greens[i]->setPosition(tank_middle_x + i * 2, y + health_diff);
+
+            _reds.push_back(std::make_unique<sf::Sprite>(*red.get()));
+            _reds[i]->setPosition(tank_middle_x + i * 2, y + health_diff);
+
+            _shields.push_back(std::make_unique<sf::Sprite>(*shield.get()));
+            _shields[i]->setPosition(tank_middle_x + i * 2, y + shield_diff);
         }
 
         // Set initial gun rotation
@@ -75,6 +97,28 @@ namespace pmt
     {
         window.draw(*_gun);
         window.draw(*_tank);
+
+        _render_health(window);
+        _render_shield(window);
+    }
+
+    void Tank::_render_health(sf::RenderWindow& window)
+    {
+        int g_cnt = ceil(_health / 10.0);
+
+        for (int i = 0; i < g_cnt; i++)
+            window.draw(*_greens[i]);
+
+        for (int i = g_cnt; i < 10; i++)
+            window.draw(*_reds[i]);
+    }
+
+    void Tank::_render_shield(sf::RenderWindow& window)
+    {
+        int g_sh = ceil(_shield / 10.0);
+
+        for (int i = 0; i < g_sh; i++)
+            window.draw(*_shields[i]);
     }
 
     void Tank::_rotate_gun(double val)

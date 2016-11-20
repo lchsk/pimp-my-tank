@@ -19,6 +19,9 @@ namespace pmt
             std::shared_ptr<pmt::BulletMgr>& bullet_mgr,
             std::unique_ptr<sf::Texture>& tank,
             std::unique_ptr<sf::Texture>& gun,
+            std::unique_ptr<sf::Texture>& green,
+            std::unique_ptr<sf::Texture>& red,
+            std::unique_ptr<sf::Texture>& shield,
             int side, bool left, int x, int y);
         ~Tank();
 
@@ -30,11 +33,19 @@ namespace pmt
 
     private:
         void _rotate_gun(double val);
+        void _render_health(sf::RenderWindow& window);
+        void _render_shield(sf::RenderWindow& window);
 
         std::unique_ptr<sf::Sprite> _tank;
         std::unique_ptr<sf::Sprite> _gun;
+        std::vector<std::unique_ptr<sf::Sprite> > _greens;
+        std::vector<std::unique_ptr<sf::Sprite> > _reds;
+        std::vector<std::unique_ptr<sf::Sprite> > _shields;
         int _side;
         bool _left;
+
+        int _health;
+        int _shield;
 
         std::shared_ptr<pmt::BulletMgr> _bullet_mgr;
 

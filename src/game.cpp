@@ -17,6 +17,11 @@ namespace pmt
             "gun.png",
             "tank.png",
             "shell.png",
+
+            "green.png",
+            "red.png",
+            "shield.png",
+
             "ground.png",
             "ground_sand.png",
             "ground_rock.png"
@@ -51,6 +56,9 @@ namespace pmt
             _bullet_mgr,
             _textures["tank.png"],
             _textures["gun.png"],
+            _textures["green.png"],
+            _textures["red.png"],
+            _textures["shield.png"],
             0,
             _map->get_param("player_side") == "left",
             std::stoi(_map->get_param("player_x")),
@@ -64,6 +72,9 @@ namespace pmt
                 _bullet_mgr,
                 _textures["tank.png"],
                 _textures["gun.png"],
+                _textures["green.png"],
+                _textures["red.png"],
+                _textures["shield.png"],
                 1,
                 _map->get_param("enemy_" + std::to_string(i) + "_side") == "left",
                 std::stoi(_map->get_param("enemy_" + std::to_string(i) + "_x")),
