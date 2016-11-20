@@ -11,8 +11,8 @@ namespace pmt
         std::unordered_map
             <std::string, std::unique_ptr<sf::Texture> >& textures)
     {
-        _load_data("map.data", tiles, textures);
-        _load_meta("map.meta");
+        _load_data(DIR_MAPS + "map.data", tiles, textures);
+        _load_meta(DIR_MAPS + "map.meta");
 
         for (int i = 0; i < 8; i += 2) {
             std::string filename = "trees" + std::to_string(i / 2 + 1) + ".png";

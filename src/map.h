@@ -11,6 +11,8 @@
 
 namespace pmt
 {
+    const std::string DIR_MAPS = "maps/";
+
     class Map
     {
     public:
