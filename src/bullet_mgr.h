@@ -23,6 +23,7 @@ namespace pmt
         ~Bullet();
 
         bool is_flying() const;
+        bool is_flying_left() const;
         double get_angle();
         double get_initial_speed();
         double get_start_x();
@@ -30,7 +31,8 @@ namespace pmt
 
         void render(sf::RenderWindow& window);
         void set_position(double x, double y);
-        void shoot(double angle,
+        void shoot(bool shoot_left,
+                   double angle,
                    double initial_speed,
                    double start_x,
                    double start_y);
@@ -38,7 +40,13 @@ namespace pmt
 
     private:
         std::unique_ptr<sf::Sprite> _sprite;
+
+        // Is flying or not
         bool _flying;
+
+        // Flying left or right
+        bool _flying_left;
+
         WeaponType _type;
 
         double _angle;
@@ -62,7 +70,8 @@ namespace pmt
                              unsigned count,
                              std::unique_ptr<sf::Texture>& texture);
 
-            void shoot(WeaponType type,
+            void shoot(bool shoot_left,
+                       WeaponType type,
                        double angle,
                        double initial_speed,
                        double start_x,

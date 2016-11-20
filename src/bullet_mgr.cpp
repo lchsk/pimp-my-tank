@@ -26,6 +26,11 @@ namespace pmt
         return _flying;
     }
 
+    bool Bullet::is_flying_left() const
+    {
+        return _flying_left;
+    }
+
     double Bullet::get_angle()
     {
         return _angle;
@@ -51,13 +56,16 @@ namespace pmt
         _sprite->setPosition(x, y);
     }
 
-    void Bullet::shoot(double angle,
+    void Bullet::shoot(bool shoot_left,
+                       double angle,
                        double initial_speed,
                        double start_x,
                        double start_y)
     {
         _flying = true;
-        _sprite->setRotation(angle);
+        _flying_left = shoot_left;
+
+        _sprite->setRotation(shoot_left ? -angle + 180 : angle);
         _angle = -angle;
         _initial_speed = initial_speed;
         _start_x = start_x;
@@ -81,7 +89,8 @@ namespace pmt
             _bullets[type].push_back(std::make_shared<Bullet>(type, texture));
     }
 
-    void BulletMgr::shoot(WeaponType type,
+    void BulletMgr::shoot(bool shoot_left,
+                          WeaponType type,
                           double angle,
                           double initial_speed,
                           double start_x,
@@ -109,6 +118,7 @@ namespace pmt
 
                 // TODO:
                 bullet->shoot(
+                    shoot_left,
                     -angle,
                     initial_speed,
                     start_x,
@@ -174,12 +184,16 @@ namespace pmt
         sx1 = bullet->get_start_x();
         sy1 = bullet->get_start_y();
 
-        vx1 = Vm * cosX; //skadlowa vx predkosci
+        vx1 = Vm * cosX;
+
+        if (! bullet->is_flying_left())
+            vx1 *= -1;
+
         // sy1 = 300.0 * cos(pmt::util::radian(Alpha)); //wspolrzedna y konca lufy
         vy1 = Vm * cosY; //skladowa vy predkosci
 
         double x, y;
-        x = ( (mass/C_air) * exp(-(C_air*time)/mass) * ((-C_wind * V_wind * cos(pmt::util::radian(Gamma_wind)))/C_air - vx1) - (C_wind * V_wind * cos(pmt::util::radian(Gamma_wind)) * time)/C_air ) - ( (mass/C_air) * ((-C_wind * V_wind * cos(pmt::util::radian(Gamma_wind)))/C_air - vx1)) + sx1;
+        x = ( (mass/C_air) * exp(-(C_air*time)/mass) * ((-C_wind * V_wind * cos(pmt::util::radian(Gamma_wind)))/C_air + vx1) - (C_wind * V_wind * cos(pmt::util::radian(Gamma_wind)) * time)/C_air ) - ( (mass/C_air) * ((-C_wind * V_wind * cos(pmt::util::radian(Gamma_wind)))/C_air + vx1)) + sx1;
         y = (sy1 + ( -(vy1 + (mass*g)/C_air) * (mass/C_air) * exp(-(C_air*time)/mass) - (mass * g * time)/C_air) + ( (mass/C_air) * (vy1 + (mass * g)/C_air)));
 
         bullet->set_position(x, pmt::config::WINDOW_H - y);

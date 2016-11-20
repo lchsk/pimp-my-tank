@@ -55,11 +55,13 @@ namespace pmt
     {
         switch(_current_weapon) {
         case WeaponType::Missile:
-            _bullet_mgr->shoot(_current_weapon,
-                               _gun_rotation,
-                               80,
-                               _gun->getPosition().x,
-                               _gun->getPosition().y);
+            _bullet_mgr->shoot(
+                _left,
+                _current_weapon,
+                _gun_rotation,
+                80,
+                _gun->getPosition().x,
+                _gun->getPosition().y);
 
             break;
         }
