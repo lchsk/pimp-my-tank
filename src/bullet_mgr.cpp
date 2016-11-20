@@ -6,7 +6,7 @@
 namespace pmt
 {
     Bullet::Bullet(WeaponType type, std::unique_ptr<sf::Texture>& texture) :
-        _flying(true),
+        _flying(false),
         _type(type)
     {
         _sprite = std::make_unique<sf::Sprite>(*texture);
@@ -14,7 +14,6 @@ namespace pmt
 
     Bullet::~Bullet()
     {
-
     }
 
     void Bullet::render(sf::RenderWindow& window)
@@ -27,9 +26,42 @@ namespace pmt
         return _flying;
     }
 
+    double Bullet::get_angle()
+    {
+        return _angle;
+    }
+
+    double Bullet::get_initial_speed()
+    {
+        return _initial_speed;
+    }
+
+    double Bullet::get_start_x()
+    {
+        return _start_x;
+    }
+
+    double Bullet::get_start_y()
+    {
+        return _start_y;
+    }
+
     void Bullet::set_position(double x, double y)
     {
         _sprite->setPosition(x, y);
+    }
+
+    void Bullet::shoot(double angle,
+                       double initial_speed,
+                       double start_x,
+                       double start_y)
+    {
+        _flying = true;
+        _sprite->setRotation(angle);
+        _angle = -angle;
+        _initial_speed = initial_speed;
+        _start_x = start_x;
+        _start_y = start_y;
     }
 
     BulletMgr::BulletMgr()
@@ -49,9 +81,36 @@ namespace pmt
             _bullets[type].push_back(std::make_shared<Bullet>(type, texture));
     }
 
-    void BulletMgr::shoot(WeaponType type)
+    void BulletMgr::shoot(WeaponType type,
+                          double angle,
+                          double initial_speed,
+                          double start_x,
+                          double start_y)
     {
+        for (auto& bullet : _bullets[type]) {
+            if (! bullet->is_flying()) {
+                std::cout << "angle: " << angle << "\n";
 
+                double x = start_x;
+                double y = pmt::config::WINDOW_H - start_y;
+
+                x += 24;
+                y -= 24;
+
+                x = x * cos(pmt::util::radian(angle));
+                // double p2 = (bullet->start_y) * sin(pmt::util::radian(angle));
+
+                // double xp = p1;
+
+                y = x * sin(pmt::util::radian(angle))
+                    + y * cos(pmt::util::radian(angle));
+
+                // x = xp;
+
+                // TODO:
+                bullet->shoot(-angle, initial_speed, x, y);
+            }
+        }
     }
 
     void BulletMgr::update(sf::Time delta)
@@ -86,20 +145,17 @@ namespace pmt
         double mass = 100.0;
 
         double cosX, cosY;
-        double xe;
-			// , ze;
         double b, Lx, Ly;
         double sx1, vx1;
         double sy1, vy1;
-        // double tx1, tx2;
-        // double ty1, ty2;
+
         static double time;
 
-        double Vm = 80;
+        double Vm = bullet->get_initial_speed();
 
         double Alpha, Gamma;
-        Alpha = 50;
-        Gamma = 20;
+        Alpha = 90 - bullet->get_angle();
+        Gamma = bullet->get_angle();
 
         time += pmt::config::MISSILE_SPEED * delta.asSeconds();
 
@@ -111,14 +167,13 @@ namespace pmt
         cosX = Lx / 10;
         cosY = Ly / 10;
 
-        xe = 10 * cos(pmt::util::radian(90-Alpha) ) * cos(pmt::util::radian(Gamma) );
+        sx1 = bullet->get_start_x();
+        sy1 = bullet->get_start_y();
 
-        sx1 = xe; //wspolrzednia x konca lufy
         vx1 = Vm * cosX; //skadlowa vx predkosci
-        sy1 = 350.0 * cos(pmt::util::radian(Alpha)); //wspolrzedna y konca lufy
+        // sy1 = 300.0 * cos(pmt::util::radian(Alpha)); //wspolrzedna y konca lufy
         vy1 = Vm * cosY; //skladowa vy predkosci
 
-        //obliczanie wspolrzendych pocisku
         double x, y;
         x = ( (mass/C_air) * exp(-(C_air*time)/mass) * ((-C_wind * V_wind * cos(pmt::util::radian(Gamma_wind)))/C_air - vx1) - (C_wind * V_wind * cos(pmt::util::radian(Gamma_wind)) * time)/C_air ) - ( (mass/C_air) * ((-C_wind * V_wind * cos(pmt::util::radian(Gamma_wind)))/C_air - vx1)) + sx1;
         y = (sy1 + ( -(vy1 + (mass*g)/C_air) * (mass/C_air) * exp(-(C_air*time)/mass) - (mass * g * time)/C_air) + ( (mass/C_air) * (vy1 + (mass * g)/C_air)));

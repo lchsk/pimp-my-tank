@@ -42,7 +42,7 @@ namespace pmt
 
         _bullet_mgr = std::make_shared<pmt::BulletMgr>();
         _bullet_mgr->add_bullets(pmt::WeaponType::Missile,
-                                 2,
+                                 1,
                                  _textures["shell.png"]);
 
         _map = std::make_unique<pmt::Map>(_tiles_map, _textures);

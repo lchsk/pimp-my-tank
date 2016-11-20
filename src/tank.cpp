@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "tank.h"
+#include "util.h"
 
 namespace pmt
 {
@@ -54,7 +55,11 @@ namespace pmt
     {
         switch(_current_weapon) {
         case WeaponType::Missile:
-            _bullet_mgr->shoot(_current_weapon);
+            _bullet_mgr->shoot(_current_weapon,
+                               _gun_rotation,
+                               80,
+                               _gun->getPosition().x,
+                               _gun->getPosition().y);
 
             break;
         }
