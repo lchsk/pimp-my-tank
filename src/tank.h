@@ -12,6 +12,11 @@ namespace pmt
 {
     const double ROTATION_UNIT = 0.5f;
 
+    enum class GameSide {
+        Human,
+        Computer
+    };
+
     class Tank
     {
     public:
@@ -22,7 +27,7 @@ namespace pmt
             std::unique_ptr<sf::Texture>& green,
             std::unique_ptr<sf::Texture>& red,
             std::unique_ptr<sf::Texture>& shield,
-            int side, bool left, int x, int y);
+            GameSide side, bool left, int x, int y);
         ~Tank();
 
         void render(sf::RenderWindow& window);
@@ -41,7 +46,7 @@ namespace pmt
         std::vector<std::unique_ptr<sf::Sprite> > _greens;
         std::vector<std::unique_ptr<sf::Sprite> > _reds;
         std::vector<std::unique_ptr<sf::Sprite> > _shields;
-        int _side;
+        GameSide _side;
         bool _left;
 
         int _health;

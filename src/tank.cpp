@@ -12,7 +12,7 @@ namespace pmt
         std::unique_ptr<sf::Texture>& green,
         std::unique_ptr<sf::Texture>& red,
         std::unique_ptr<sf::Texture>& shield,
-        int side, bool left, int x, int y)
+        GameSide side, bool left, int x, int y)
         : _side(side),
           _left(left),
           _health(100),

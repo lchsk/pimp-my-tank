@@ -1,13 +1,16 @@
-enemies_count=2
+tanks_count=3
+# SIEMA
+tank_0_x=250
+tank_0_y=292
+tank_0_side=right
+tank_0_human=true
 
-player_x=65
-player_y=292
-player_side=right
+tank_1_x=680
+tank_1_y=292
+tank_1_side=left
+tank_1_human=false
 
-enemy_0_x=680
-enemy_0_y=292
-enemy_0_side=left
-
-enemy_1_x=450
-enemy_1_y=324
-enemy_1_side=left
+tank_2_x=450
+tank_2_y=324
+tank_2_side=left
+tank_2_human=false

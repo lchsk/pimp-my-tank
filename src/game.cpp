@@ -52,35 +52,27 @@ namespace pmt
 
         _map = std::make_unique<pmt::Map>(_tiles_map, _textures);
 
-        _player = std::make_shared<pmt::Tank>(
-            _bullet_mgr,
-            _textures["tank.png"],
-            _textures["gun.png"],
-            _textures["green.png"],
-            _textures["red.png"],
-            _textures["shield.png"],
-            0,
-            _map->get_param("player_side") == "left",
-            std::stoi(_map->get_param("player_x")),
-            std::stoi(_map->get_param("player_y"))
-        );
+        _tanks_count = std::stoi(_map->get_param("tanks_count"));
 
-        _enemies_count = std::stoi(_map->get_param("enemies_count"));
+        for (unsigned i = 0; i < _tanks_count; i++) {
+            std::string tank_id = "tank_" + std::to_string(i);
 
-        for (unsigned i = 0; i < _enemies_count; i++) {
-            _enemy_tanks.push_back(std::make_shared<pmt::Tank>(
+            _tanks.push_back(std::make_shared<pmt::Tank>(
                 _bullet_mgr,
                 _textures["tank.png"],
                 _textures["gun.png"],
                 _textures["green.png"],
                 _textures["red.png"],
                 _textures["shield.png"],
-                1,
-                _map->get_param("enemy_" + std::to_string(i) + "_side") == "left",
-                std::stoi(_map->get_param("enemy_" + std::to_string(i) + "_x")),
-                std::stoi(_map->get_param("enemy_" + std::to_string(i) + "_y"))
+                _map->get_param(tank_id + "_human") == "true"
+                    ? GameSide::Human : GameSide::Computer,
+                _map->get_param(tank_id + "_side") == "left",
+                std::stoi(_map->get_param(tank_id + "_x")),
+                std::stoi(_map->get_param(tank_id + "_y"))
             ));
         }
+
+        // _turn = GameSide::Human;
 
     }
 
@@ -113,14 +105,11 @@ namespace pmt
 
     void Game::render()
     {
-        // _bullet->setPosition(x, 450 - y);
-
         _window->clear();
         _map->render(*_window);
-        _player->render(*_window);
 
-        for (unsigned i = 0; i < _enemies_count; i++) {
-            _enemy_tanks[i]->render(*_window);
+        for (unsigned i = 0; i < _tanks_count; i++) {
+            _tanks[i]->render(*_window);
         }
 
         _bullet_mgr->render(*_window);
@@ -137,12 +126,12 @@ namespace pmt
             else if (event.type == sf::Event::KeyPressed) {
                 if (event.key.code == sf::Keyboard::Escape)
                     _window->close();
-                else if (event.key.code == sf::Keyboard::Up)
-                    _player->gun_up();
-                else if (event.key.code == sf::Keyboard::Down)
-                    _player->gun_down();
-                else if (event.key.code == sf::Keyboard::Space)
-                    _player->shoot();
+                // else if (event.key.code == sf::Keyboard::Up)
+                //     _player->gun_up();
+                // else if (event.key.code == sf::Keyboard::Down)
+                //     _player->gun_down();
+                // else if (event.key.code == sf::Keyboard::Space)
+                //     _player->shoot();
             }
         }
     }

@@ -40,6 +40,10 @@ namespace pmt
         if (map.is_open()) {
 
             while (std::getline(map, line)) {
+                // Comments
+                if (line[0] == '#')
+                    continue;
+
                 auto pos = line.find("=");
 
                 std::string key = line.substr(0, pos);

@@ -31,8 +31,7 @@ namespace pmt
             void update(sf::Time delta);
             void render();
 
-            std::shared_ptr<pmt::Tank> _player;
-            std::vector<std::shared_ptr<pmt::Tank> > _enemy_tanks;
+            std::vector<std::shared_ptr<pmt::Tank> > _tanks;
 
             std::unique_ptr<pmt::Map> _map;
 
@@ -47,7 +46,9 @@ namespace pmt
 
             std::shared_ptr<pmt::BulletMgr> _bullet_mgr;
 
-            unsigned _enemies_count;
+            unsigned _tanks_count;
+
+            GameSide _turn;
     };
 }
 #endif
