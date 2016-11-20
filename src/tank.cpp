@@ -112,7 +112,8 @@ namespace pmt
 
     void Tank::check_collision(std::shared_ptr<pmt::Bullet>& bullet)
     {
-        if (_tank->getGlobalBounds().intersects(
+        if (bullet->is_flying()
+            && _tank->getGlobalBounds().intersects(
                 bullet->get_sprite()->getGlobalBounds())
             // Do not hit yourself
             && _tank_id != bullet->get_origin_tank()) {
@@ -123,6 +124,28 @@ namespace pmt
     void Tank::_hit(std::shared_ptr<pmt::Bullet>& bullet)
     {
         bullet->hit();
+
+        switch(bullet->get_type()) {
+        case WeaponType::Missile:
+            if (_shield > 0)
+                _shield -= 24;
+
+            if (_health <= 0)
+                _health -= 20;
+
+            break;
+
+        case WeaponType::MagnumMissile:
+            if (_shield > 0) {
+                _shield -= 36;
+                _health -= 9;
+            }
+
+            if (_health <= 0)
+                _health -= 25;
+
+            break;
+        }
     }
 
     void Tank::_render_health(sf::RenderWindow& window)
