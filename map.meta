@@ -8,9 +8,9 @@ tank_0_human=true
 tank_1_x=680
 tank_1_y=292
 tank_1_side=left
-tank_1_human=false
+tank_1_human=true
 
 tank_2_x=450
 tank_2_y=324
 tank_2_side=left
-tank_2_human=false
+tank_2_human=true

@@ -34,10 +34,12 @@ namespace pmt
         void render(sf::RenderWindow& window);
 
         bool is_human() const;
+        bool is_alive() const;
+        int get_id();
         void gun_up();
         void gun_down();
         void shoot();
-        void check_collision(std::shared_ptr<pmt::Bullet>& bullet);
+        bool check_collision(std::shared_ptr<pmt::Bullet>& bullet);
 
     private:
         void _rotate_gun(double val);

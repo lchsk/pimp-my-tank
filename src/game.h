@@ -31,6 +31,9 @@ namespace pmt
             void update(sf::Time delta);
             void render();
 
+            void _next_turn();
+            unsigned _next_tank_id();
+
             std::vector<std::shared_ptr<pmt::Tank> > _tanks;
 
             std::unique_ptr<pmt::Map> _map;
@@ -47,7 +50,6 @@ namespace pmt
             std::shared_ptr<pmt::BulletMgr> _bullet_mgr;
 
             unsigned _tanks_count;
-
             int _tank_turn;
     };
 }

@@ -101,11 +101,30 @@ namespace pmt
     {
         _bullet_mgr->update(delta);
 
-		for (auto& tank : _tanks) {
-			for (auto& bullet : _bullet_mgr->get_flying_bullets()) {
-                tank->check_collision(bullet);
-			}
+        bool tank_hit = false;
+        bool env_hit = false;
+
+        for (auto& bullet : _bullet_mgr->get_flying_bullets()) {
+            for (auto& tank : _tanks) {
+                tank_hit = tank->check_collision(bullet);
+
+                if (tank_hit)
+                    break;
+            }
+
+            if (tank_hit) {
+                break;
+            } else {
+                env_hit = _map->check_collision(bullet);
+
+                if (env_hit)
+                    break;
+            }
+
         }
+
+        if (tank_hit || env_hit)
+            _next_turn();
     }
 
     void Game::render()
@@ -142,6 +161,38 @@ namespace pmt
                         current_tank->shoot();
                 }
             }
+        }
+    }
+
+    unsigned Game::_next_tank_id()
+    {
+        if (_tank_turn + 1 >= _tanks_count)
+            return 0;
+        else
+            return _tank_turn + 1;
+    }
+
+    void Game::_next_turn()
+    {
+        bool found_next_tank = false;
+
+        for (int i = 0; i < _tanks_count; i++) {
+            unsigned next_tank_id = _next_tank_id();
+
+            auto& tank = _tanks[next_tank_id];
+
+            if (tank->is_alive()) {
+                found_next_tank = true;
+                _tank_turn = next_tank_id;
+
+                break;
+            }
+        }
+
+        if (found_next_tank) {
+            std::cout << "NEW TANK ID: " << _tank_turn << "\n";
+        } else {
+            std::cout << "Game Over\n";
         }
     }
 }

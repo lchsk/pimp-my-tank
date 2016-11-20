@@ -7,6 +7,8 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "bullet_mgr.h"
+
 namespace pmt
 {
     class Map
@@ -21,6 +23,8 @@ namespace pmt
         void render(sf::RenderWindow& window);
 
         std::string get_param(std::string key);
+
+        bool check_collision(std::shared_ptr<pmt::Bullet>& bullet);
 
     private:
         void _load_data(

@@ -70,6 +70,16 @@ namespace pmt
         return _side == GameSide::Human;
     }
 
+    bool Tank::is_alive() const
+    {
+        return _health > 0;
+    }
+
+    int Tank::get_id()
+    {
+        return _tank_id;
+    }
+
     void Tank::gun_up()
     {
         _rotate_gun(ROTATION_UNIT);
@@ -89,7 +99,7 @@ namespace pmt
                 _left,
                 _current_weapon,
                 _gun_rotation,
-                80,
+                120,
                 _gun->getPosition().x,
                 _gun->getPosition().y);
 
@@ -110,7 +120,7 @@ namespace pmt
         _render_shield(window);
     }
 
-    void Tank::check_collision(std::shared_ptr<pmt::Bullet>& bullet)
+    bool Tank::check_collision(std::shared_ptr<pmt::Bullet>& bullet)
     {
         if (bullet->is_flying()
             && _tank->getGlobalBounds().intersects(
@@ -118,7 +128,10 @@ namespace pmt
             // Do not hit yourself
             && _tank_id != bullet->get_origin_tank()) {
             _hit(bullet);
+            return true;
         }
+
+        return false;
     }
 
     void Tank::_hit(std::shared_ptr<pmt::Bullet>& bullet)

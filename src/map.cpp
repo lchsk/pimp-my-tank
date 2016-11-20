@@ -2,6 +2,7 @@
 #include <fstream>
 
 #include "map.h"
+#include "util.h"
 
 namespace pmt
 {
@@ -29,6 +30,31 @@ namespace pmt
     std::string Map::get_param(std::string key)
     {
         return _meta[key];
+    }
+
+    bool Map::check_collision(std::shared_ptr<pmt::Bullet>& bullet)
+    {
+        if (bullet->is_flying()) {
+            for (auto& tile : _tiles) {
+                if (tile.getGlobalBounds().intersects(
+                        bullet->get_sprite()->getGlobalBounds())) {
+                    bullet->hit();
+                    return true;
+                }
+            }
+
+            sf::Vector2f pos = bullet->get_sprite()->getPosition();
+
+            if (pos.x > pmt::config::WINDOW_W
+                || pos.x < 0
+                || pos.y < 0
+                || pos.y > pmt::config::WINDOW_H) {
+                bullet->hit();
+                return true;
+            }
+        }
+
+        return false;
     }
 
     void Map::_load_meta(std::string filename)
