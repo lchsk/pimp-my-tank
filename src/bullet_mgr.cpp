@@ -7,7 +7,8 @@ namespace pmt
 {
     Bullet::Bullet(WeaponType type, std::unique_ptr<sf::Texture>& texture) :
         _flying(false),
-        _type(type)
+        _type(type),
+        _flying_time(0)
     {
         _sprite = std::make_unique<sf::Sprite>(*texture);
     }
