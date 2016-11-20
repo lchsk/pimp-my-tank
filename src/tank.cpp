@@ -17,6 +17,7 @@ namespace pmt
         GameSide side, bool left, int x, int y)
         : _side(side),
           _left(left),
+          _has_turn(false),
           _health(100),
           _shield(100),
           _cash(0),
@@ -33,6 +34,7 @@ namespace pmt
         _text_cash = std::make_unique<sf::Text>();
         _text_cash->setFont(*_font);
         _text_cash->setCharacterSize(20);
+
         _update_hud();
 
         if (left) {
@@ -98,6 +100,16 @@ namespace pmt
         _rotate_gun(-ROTATION_UNIT);
     }
 
+    void Tank::activate()
+    {
+        _has_turn = true;
+    }
+
+    void Tank::deactivate()
+    {
+        _has_turn = false;
+    }
+
     void Tank::shoot()
     {
         switch(_current_weapon) {
@@ -127,7 +139,7 @@ namespace pmt
         _render_health(window);
         _render_shield(window);
 
-        if (is_human())
+        if (is_human() && _has_turn)
             _render_hud(window);
     }
 
@@ -203,6 +215,7 @@ namespace pmt
         double width = _text_cash->getLocalBounds().width;
 
         _text_cash->setPosition(pmt::config::WINDOW_W - width - 5, 2);
+        _text_cash->setColor(pmt::color::Blue);
     }
 
     void Tank::_rotate_gun(double val)

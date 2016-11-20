@@ -1,6 +1,8 @@
 #ifndef UTIL_H
 #define UTIL_H
 
+#include <SFML/Graphics.hpp>
+
 namespace pmt
 {
     namespace config
@@ -19,6 +21,11 @@ namespace pmt
         {
             return a / 180.0 * PI;
         }
+    }
+
+    namespace color
+    {
+        const sf::Color Blue = sf::Color(31, 58, 147, 255);
     }
 }
 

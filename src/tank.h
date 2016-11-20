@@ -42,6 +42,9 @@ namespace pmt
         void shoot();
         bool check_collision(std::shared_ptr<pmt::Bullet>& bullet);
 
+        void activate();
+        void deactivate();
+
     private:
         void _rotate_gun(double val);
 
@@ -65,6 +68,7 @@ namespace pmt
 
         GameSide _side;
         bool _left;
+        bool _has_turn;
 
         int _health;
         int _shield;

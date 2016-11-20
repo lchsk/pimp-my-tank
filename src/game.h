@@ -30,6 +30,9 @@ namespace pmt
             void handle_events();
             void update(sf::Time delta);
             void render();
+            void _draw_hud(sf::RenderWindow& window);
+
+            void _update_hud();
 
             void _next_turn();
             unsigned _next_tank_id();
@@ -53,6 +56,8 @@ namespace pmt
 
             unsigned _tanks_count;
             int _tank_turn;
+
+            std::unique_ptr<sf::Text> _text_turn_name;
     };
 }
 #endif
