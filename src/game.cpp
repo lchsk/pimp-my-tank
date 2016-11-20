@@ -72,8 +72,7 @@ namespace pmt
             ));
         }
 
-        // _turn = GameSide::Human;
-
+        _tank_turn = 0;
     }
 
     Game::~Game()
@@ -124,14 +123,18 @@ namespace pmt
             if (event.type == sf::Event::Closed)
                 _window->close();
             else if (event.type == sf::Event::KeyPressed) {
+                auto& current_tank = _tanks[_tank_turn];
+
                 if (event.key.code == sf::Keyboard::Escape)
                     _window->close();
-                // else if (event.key.code == sf::Keyboard::Up)
-                //     _player->gun_up();
-                // else if (event.key.code == sf::Keyboard::Down)
-                //     _player->gun_down();
-                // else if (event.key.code == sf::Keyboard::Space)
-                //     _player->shoot();
+                else if (current_tank->is_human()) {
+                    if (event.key.code == sf::Keyboard::Up)
+                        current_tank->gun_up();
+                    else if (event.key.code == sf::Keyboard::Down)
+                        current_tank->gun_down();
+                    else if (event.key.code == sf::Keyboard::Space)
+                        current_tank->shoot();
+                }
             }
         }
     }

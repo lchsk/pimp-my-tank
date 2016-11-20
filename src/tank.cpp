@@ -63,6 +63,11 @@ namespace pmt
         // _tank->setColor(sf::Color::Blue);
     }
 
+    bool Tank::is_human() const
+    {
+        return _side == GameSide::Human;
+    }
+
     void Tank::gun_up()
     {
         _rotate_gun(ROTATION_UNIT);

@@ -48,7 +48,7 @@ namespace pmt
 
             unsigned _tanks_count;
 
-            GameSide _turn;
+            int _tank_turn;
     };
 }
 #endif

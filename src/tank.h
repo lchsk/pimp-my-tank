@@ -32,6 +32,7 @@ namespace pmt
 
         void render(sf::RenderWindow& window);
 
+        bool is_human() const;
         void gun_up();
         void gun_down();
         void shoot();
