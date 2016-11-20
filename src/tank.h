@@ -21,6 +21,7 @@ namespace pmt
     {
     public:
         Tank(
+            unsigned tank_id,
             std::shared_ptr<pmt::BulletMgr>& bullet_mgr,
             std::unique_ptr<sf::Texture>& tank,
             std::unique_ptr<sf::Texture>& gun,
@@ -36,25 +37,30 @@ namespace pmt
         void gun_up();
         void gun_down();
         void shoot();
+        void check_collision(std::shared_ptr<pmt::Bullet>& bullet);
 
     private:
         void _rotate_gun(double val);
+
         void _render_health(sf::RenderWindow& window);
         void _render_shield(sf::RenderWindow& window);
+        void _hit(std::shared_ptr<pmt::Bullet>& bullet);
 
         std::unique_ptr<sf::Sprite> _tank;
         std::unique_ptr<sf::Sprite> _gun;
         std::vector<std::unique_ptr<sf::Sprite> > _greens;
         std::vector<std::unique_ptr<sf::Sprite> > _reds;
         std::vector<std::unique_ptr<sf::Sprite> > _shields;
+
+        std::shared_ptr<pmt::BulletMgr> _bullet_mgr;
+
         GameSide _side;
         bool _left;
 
         int _health;
         int _shield;
 
-        std::shared_ptr<pmt::BulletMgr> _bullet_mgr;
-
+        unsigned _tank_id;
         double _gun_rotation;
 
         std::unordered_map<WeaponType, unsigned> _weapons;

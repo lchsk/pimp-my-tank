@@ -28,15 +28,20 @@ namespace pmt
         double get_initial_speed();
         double get_start_x();
         double get_start_y();
+        WeaponType get_type() const;
+        unsigned get_origin_tank() const;
+        std::unique_ptr<sf::Sprite>& get_sprite();
 
         void render(sf::RenderWindow& window);
         void set_position(double x, double y);
-        void shoot(bool shoot_left,
+        void shoot(unsigned origin_tank,
+                   bool shoot_left,
                    double angle,
                    double initial_speed,
                    double start_x,
                    double start_y);
 
+        void hit();
 
     private:
         std::unique_ptr<sf::Sprite> _sprite;
@@ -46,6 +51,8 @@ namespace pmt
 
         // Flying left or right
         bool _flying_left;
+
+        unsigned _origin_tank;
 
         WeaponType _type;
 
@@ -70,12 +77,16 @@ namespace pmt
                              unsigned count,
                              std::unique_ptr<sf::Texture>& texture);
 
-            void shoot(bool shoot_left,
+            void shoot(unsigned origin_tank,
+                       bool shoot_left,
                        WeaponType type,
                        double angle,
                        double initial_speed,
                        double start_x,
                        double start_y);
+
+            std::vector<std::shared_ptr<pmt::Bullet> >&
+                get_flying_bullets();
 
         private:
             void _simulate(sf::Time delta, std::shared_ptr<pmt::Bullet> bullet);
@@ -83,6 +94,8 @@ namespace pmt
             std::unordered_map
                 <WeaponType, std::vector<std::shared_ptr<pmt::Bullet> > >
                 _bullets;
+
+            std::vector<std::shared_ptr<pmt::Bullet> > _vec;
     };
 }
 

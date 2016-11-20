@@ -55,20 +55,20 @@ namespace pmt
         _tanks_count = std::stoi(_map->get_param("tanks_count"));
 
         for (unsigned i = 0; i < _tanks_count; i++) {
-            std::string tank_id = "tank_" + std::to_string(i);
+            std::string tank_str = "tank_" + std::to_string(i);
 
-            _tanks.push_back(std::make_shared<pmt::Tank>(
+            _tanks.push_back(std::make_shared<pmt::Tank>(i,
                 _bullet_mgr,
                 _textures["tank.png"],
                 _textures["gun.png"],
                 _textures["green.png"],
                 _textures["red.png"],
                 _textures["shield.png"],
-                _map->get_param(tank_id + "_human") == "true"
+                _map->get_param(tank_str + "_human") == "true"
                     ? GameSide::Human : GameSide::Computer,
-                _map->get_param(tank_id + "_side") == "left",
-                std::stoi(_map->get_param(tank_id + "_x")),
-                std::stoi(_map->get_param(tank_id + "_y"))
+                _map->get_param(tank_str + "_side") == "left",
+                std::stoi(_map->get_param(tank_str + "_x")),
+                std::stoi(_map->get_param(tank_str + "_y"))
             ));
         }
 
@@ -100,6 +100,12 @@ namespace pmt
     void Game::update(sf::Time delta)
     {
         _bullet_mgr->update(delta);
+
+		for (auto& tank : _tanks) {
+			for (auto& bullet : _bullet_mgr->get_flying_bullets()) {
+                tank->check_collision(bullet);
+			}
+        }
     }
 
     void Game::render()

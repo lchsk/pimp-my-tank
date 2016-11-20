@@ -6,6 +6,7 @@
 namespace pmt
 {
     Tank::Tank(
+        unsigned tank_id,
         std::shared_ptr<pmt::BulletMgr>& bullet_mgr,
         std::unique_ptr<sf::Texture>& tank,
         std::unique_ptr<sf::Texture>& gun,
@@ -17,6 +18,7 @@ namespace pmt
           _left(left),
           _health(100),
           _shield(100),
+          _tank_id(tank_id),
           _gun_rotation(7.0f),
           _current_weapon(WeaponType::Missile)
     {
@@ -83,6 +85,7 @@ namespace pmt
         switch(_current_weapon) {
         case WeaponType::Missile:
             _bullet_mgr->shoot(
+                _tank_id,
                 _left,
                 _current_weapon,
                 _gun_rotation,
@@ -105,6 +108,21 @@ namespace pmt
 
         _render_health(window);
         _render_shield(window);
+    }
+
+    void Tank::check_collision(std::shared_ptr<pmt::Bullet>& bullet)
+    {
+        if (_tank->getGlobalBounds().intersects(
+                bullet->get_sprite()->getGlobalBounds())
+            // Do not hit yourself
+            && _tank_id != bullet->get_origin_tank()) {
+            _hit(bullet);
+        }
+    }
+
+    void Tank::_hit(std::shared_ptr<pmt::Bullet>& bullet)
+    {
+        bullet->hit();
     }
 
     void Tank::_render_health(sf::RenderWindow& window)

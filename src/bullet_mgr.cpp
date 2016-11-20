@@ -51,12 +51,28 @@ namespace pmt
         return _start_y;
     }
 
+    WeaponType Bullet::get_type() const
+    {
+        return _type;
+    }
+
+    unsigned Bullet::get_origin_tank() const
+    {
+        return _origin_tank;
+    }
+
+    std::unique_ptr<sf::Sprite>& Bullet::get_sprite()
+    {
+        return _sprite;
+    }
+
     void Bullet::set_position(double x, double y)
     {
         _sprite->setPosition(x, y);
     }
 
-    void Bullet::shoot(bool shoot_left,
+    void Bullet::shoot(unsigned origin_tank,
+                       bool shoot_left,
                        double angle,
                        double initial_speed,
                        double start_x,
@@ -64,12 +80,18 @@ namespace pmt
     {
         _flying = true;
         _flying_left = shoot_left;
+        _origin_tank = origin_tank;
 
         _sprite->setRotation(shoot_left ? -angle + 180 : angle);
         _angle = -angle;
         _initial_speed = initial_speed;
         _start_x = start_x;
         _start_y = start_y;
+    }
+
+    void Bullet::hit()
+    {
+        _flying = false;
     }
 
     BulletMgr::BulletMgr()
@@ -89,7 +111,8 @@ namespace pmt
             _bullets[type].push_back(std::make_shared<Bullet>(type, texture));
     }
 
-    void BulletMgr::shoot(bool shoot_left,
+    void BulletMgr::shoot(unsigned origin_tank,
+                          bool shoot_left,
                           WeaponType type,
                           double angle,
                           double initial_speed,
@@ -118,6 +141,7 @@ namespace pmt
 
                 // TODO:
                 bullet->shoot(
+                    origin_tank,
                     shoot_left,
                     -angle,
                     initial_speed,
@@ -125,6 +149,17 @@ namespace pmt
                     pmt::config::WINDOW_H - start_y);
             }
         }
+    }
+
+    std::vector<std::shared_ptr<pmt::Bullet> >&
+    BulletMgr::get_flying_bullets()
+    {
+        for (auto it = _bullets.begin(); it != _bullets.end(); ++it)
+            for (auto& bullet : it->second)
+                if (bullet->is_flying())
+                    _vec.push_back(bullet);
+
+        return _vec;
     }
 
     void BulletMgr::update(sf::Time delta)
