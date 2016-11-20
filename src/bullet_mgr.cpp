@@ -92,6 +92,17 @@ namespace pmt
     void Bullet::hit()
     {
         _flying = false;
+        _flying_time = 0;
+    }
+
+    void Bullet::increase_flying_time(double time)
+    {
+        _flying_time += pmt::config::MISSILE_SPEED * time;
+    }
+
+    double Bullet::get_time()
+    {
+        return _flying_time;
     }
 
     BulletMgr::BulletMgr()
@@ -198,15 +209,13 @@ namespace pmt
         double sx1, vx1;
         double sy1, vy1;
 
-        static double time;
-
         double Vm = bullet->get_initial_speed();
 
         double Alpha, Gamma;
         Alpha = 90 - bullet->get_angle();
         Gamma = bullet->get_angle();
 
-        time += pmt::config::MISSILE_SPEED * delta.asSeconds();
+        bullet->increase_flying_time(delta.asSeconds());
 
         b = 10.0 * cos(pmt::util::radian(90-Alpha) );
         Lx = b * cos(pmt::util::radian(Gamma));
@@ -227,8 +236,10 @@ namespace pmt
         // sy1 = 300.0 * cos(pmt::util::radian(Alpha)); //wspolrzedna y konca lufy
         vy1 = Vm * cosY; //skladowa vy predkosci
 
+        double time = bullet->get_time();
+
         double x, y;
-        x = ( (mass/C_air) * exp(-(C_air*time)/mass) * ((-C_wind * V_wind * cos(pmt::util::radian(Gamma_wind)))/C_air + vx1) - (C_wind * V_wind * cos(pmt::util::radian(Gamma_wind)) * time)/C_air ) - ( (mass/C_air) * ((-C_wind * V_wind * cos(pmt::util::radian(Gamma_wind)))/C_air + vx1)) + sx1;
+        x = ( (mass/C_air) * exp(-(C_air * time)/mass) * ((-C_wind * V_wind * cos(pmt::util::radian(Gamma_wind)))/C_air + vx1) - (C_wind * V_wind * cos(pmt::util::radian(Gamma_wind)) * time)/C_air ) - ( (mass/C_air) * ((-C_wind * V_wind * cos(pmt::util::radian(Gamma_wind)))/C_air + vx1)) + sx1;
         y = (sy1 + ( -(vy1 + (mass*g)/C_air) * (mass/C_air) * exp(-(C_air*time)/mass) - (mass * g * time)/C_air) + ( (mass/C_air) * (vy1 + (mass * g)/C_air)));
 
         bullet->set_position(x, pmt::config::WINDOW_H - y);

@@ -42,6 +42,8 @@ namespace pmt
                    double start_y);
 
         void hit();
+        void increase_flying_time(double time);
+        double get_time();
 
     private:
         std::unique_ptr<sf::Sprite> _sprite;
@@ -60,6 +62,8 @@ namespace pmt
         double _initial_speed;
         double _start_x;
         double _start_y;
+
+        double _flying_time;
     };
 
     class BulletMgr
