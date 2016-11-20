@@ -13,6 +13,29 @@ namespace pmt
     {
         _load_data("map.data", tiles, textures);
         _load_meta("map.meta");
+
+        for (int i = 0; i < 8; i += 2) {
+            std::string filename = "trees" + std::to_string(i / 2 + 1) + ".png";
+
+            _bg[i] = std::make_unique<sf::Sprite>(
+                *textures[filename].get());
+            _bg[i + 1] = std::make_unique<sf::Sprite>(
+                *textures[filename].get());
+
+            _bg[i + 1]->setPosition(BG_WIDTH, 0);
+        }
+
+        _bg[2]->setPosition(0, 50);
+        _bg[3]->setPosition(BG_WIDTH, 50);
+        _bg[4]->setPosition(0, 70);
+        _bg[5]->setPosition(BG_WIDTH, 70);
+        _bg[6]->setPosition(0, 90);
+        _bg[7]->setPosition(BG_WIDTH, 90);
+
+        _bg_speeds[0] = .02;
+        _bg_speeds[1] = .023;
+        _bg_speeds[2] = .027;
+        _bg_speeds[3] = .03;
     }
 
     Map::~Map()
@@ -20,8 +43,37 @@ namespace pmt
 
     }
 
+    void Map::update(sf::Time delta)
+    {
+        for (int i = 0; i < 8; i += 2) {
+            double move_x = _bg_speeds[i / 2] * delta.asMilliseconds();
+
+            _bg[i]->setPosition(_bg[i]->getPosition().x - move_x, _bg[i]->getPosition().y);
+            _bg[i + 1]->setPosition(_bg[i + 1]->getPosition().x - move_x, _bg[i + 1]->getPosition().y);
+
+            int larger, smaller;
+
+            if (_bg[i]->getPosition().x > _bg[i + 1]->getPosition().x) {
+                larger = i;
+                smaller = i + 1;
+            } else {
+                larger = i + 1;
+                smaller = i;
+            }
+
+            _bg[larger]->setPosition(_bg[smaller]->getPosition().x + BG_WIDTH, _bg[smaller]->getPosition().y);
+
+            if (_bg[smaller]->getPosition().x <= -BG_WIDTH)
+                _bg[smaller]->setPosition(BG_WIDTH, _bg[smaller]->getPosition().y);
+        }
+    }
+
     void Map::render(sf::RenderWindow& window)
     {
+        for (int i = 0; i < 8; i++) {
+            window.draw(*_bg[i]);
+        }
+
         for (sf::Sprite& s : _tiles) {
             window.draw(s);
         }

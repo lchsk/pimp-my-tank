@@ -14,6 +14,12 @@ namespace pmt
              "pimp-my-tank");
 
         _filenames = {
+            // Background
+            "trees1.png",
+            "trees2.png",
+            "trees3.png",
+            "trees4.png",
+
             "gun.png",
             "tank.png",
             "shell.png",
@@ -107,6 +113,7 @@ namespace pmt
     void Game::update(sf::Time delta)
     {
         _bullet_mgr->update(delta);
+        _map->update(delta);
 
         bool tank_hit = false;
         bool env_hit = false;

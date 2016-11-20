@@ -20,6 +20,7 @@ namespace pmt
         );
         ~Map();
 
+        void update(sf::Time delta);
         void render(sf::RenderWindow& window);
 
         std::string get_param(std::string key);
@@ -27,6 +28,9 @@ namespace pmt
         bool check_collision(std::shared_ptr<pmt::Bullet>& bullet);
 
     private:
+        std::unique_ptr<sf::Sprite> _bg[8];
+        double _bg_speeds[4];
+
         void _load_data(
             std::string filename,
             std::unordered_map<int, std::string> tiles,
@@ -40,6 +44,8 @@ namespace pmt
 
         std::vector<sf::Sprite> _tiles;
         std::unordered_map<std::string, std::string> _meta;
+
+        const int BG_WIDTH = 1800;
     };
 }
 
