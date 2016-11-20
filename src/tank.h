@@ -28,6 +28,7 @@ namespace pmt
             std::unique_ptr<sf::Texture>& green,
             std::unique_ptr<sf::Texture>& red,
             std::unique_ptr<sf::Texture>& shield,
+            std::shared_ptr<sf::Font>& font,
             GameSide side, bool left, int x, int y);
         ~Tank();
 
@@ -46,7 +47,10 @@ namespace pmt
 
         void _render_health(sf::RenderWindow& window);
         void _render_shield(sf::RenderWindow& window);
+        void _render_hud(sf::RenderWindow& window);
         void _hit(std::shared_ptr<pmt::Bullet>& bullet);
+
+        void _update_hud();
 
         std::unique_ptr<sf::Sprite> _tank;
         std::unique_ptr<sf::Sprite> _gun;
@@ -56,11 +60,16 @@ namespace pmt
 
         std::shared_ptr<pmt::BulletMgr> _bullet_mgr;
 
+        std::shared_ptr<sf::Font> _font;
+        std::unique_ptr<sf::Text> _text_cash;
+
         GameSide _side;
         bool _left;
 
         int _health;
         int _shield;
+
+        int _cash;
 
         unsigned _tank_id;
         double _gun_rotation;

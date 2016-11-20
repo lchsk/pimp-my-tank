@@ -13,11 +13,13 @@ namespace pmt
         std::unique_ptr<sf::Texture>& green,
         std::unique_ptr<sf::Texture>& red,
         std::unique_ptr<sf::Texture>& shield,
+        std::shared_ptr<sf::Font>& font,
         GameSide side, bool left, int x, int y)
         : _side(side),
           _left(left),
           _health(100),
           _shield(100),
+          _cash(0),
           _tank_id(tank_id),
           _gun_rotation(7.0f),
           _current_weapon(WeaponType::Missile)
@@ -26,6 +28,12 @@ namespace pmt
         _gun = std::make_unique<sf::Sprite>(*gun.get());
 
         _bullet_mgr = bullet_mgr;
+        _font = font;
+
+        _text_cash = std::make_unique<sf::Text>();
+        _text_cash->setFont(*_font);
+        _text_cash->setCharacterSize(20);
+        _update_hud();
 
         if (left) {
             _tank->setScale(-1, 1);
@@ -118,6 +126,9 @@ namespace pmt
 
         _render_health(window);
         _render_shield(window);
+
+        if (is_human())
+            _render_hud(window);
     }
 
     bool Tank::check_collision(std::shared_ptr<pmt::Bullet>& bullet)
@@ -178,6 +189,20 @@ namespace pmt
 
         for (int i = 0; i < g_sh; i++)
             window.draw(*_shields[i]);
+    }
+
+    void Tank::_render_hud(sf::RenderWindow& window)
+    {
+        window.draw(*_text_cash);
+    }
+
+    void Tank::_update_hud()
+    {
+        _text_cash->setString("$" + std::to_string(_cash));
+
+        double width = _text_cash->getLocalBounds().width;
+
+        _text_cash->setPosition(pmt::config::WINDOW_W - width - 5, 2);
     }
 
     void Tank::_rotate_gun(double val)

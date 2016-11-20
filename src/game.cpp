@@ -54,6 +54,12 @@ namespace pmt
 
         _tanks_count = std::stoi(_map->get_param("tanks_count"));
 
+        _font = std::make_shared<sf::Font>();
+
+        if (! _font->loadFromFile("assets/Armata-Regular.ttf")) {
+            std::cout << "No font found\n";
+        }
+
         for (unsigned i = 0; i < _tanks_count; i++) {
             std::string tank_str = "tank_" + std::to_string(i);
 
@@ -64,6 +70,7 @@ namespace pmt
                 _textures["green.png"],
                 _textures["red.png"],
                 _textures["shield.png"],
+                _font,
                 _map->get_param(tank_str + "_human") == "true"
                     ? GameSide::Human : GameSide::Computer,
                 _map->get_param(tank_str + "_side") == "left",

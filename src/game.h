@@ -34,6 +34,8 @@ namespace pmt
             void _next_turn();
             unsigned _next_tank_id();
 
+            std::shared_ptr<sf::Font> _font;
+
             std::vector<std::shared_ptr<pmt::Tank> > _tanks;
 
             std::unique_ptr<pmt::Map> _map;
