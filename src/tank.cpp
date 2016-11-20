@@ -143,7 +143,7 @@ namespace pmt
             if (_shield > 0)
                 _shield -= 24;
 
-            if (_health <= 0)
+            if (_shield <= 0)
                 _health -= 20;
 
             break;
@@ -154,7 +154,7 @@ namespace pmt
                 _health -= 9;
             }
 
-            if (_health <= 0)
+            if (_shield <= 0)
                 _health -= 25;
 
             break;
