@@ -128,8 +128,12 @@ namespace pmt
             for (auto& tank : _tanks) {
                 tank_hit = tank->check_collision(bullet);
 
-                if (tank_hit)
-                    break;
+                if (tank_hit) {
+                    _tanks[bullet->get_origin_tank()]
+                        ->add_cash(pmt::config::REWARD_HIT);
+
+					break;
+				}
             }
 
             if (tank_hit) {
@@ -145,6 +149,8 @@ namespace pmt
 
         if (tank_hit || env_hit)
             _next_turn();
+
+        _hud->show_cash(_tanks[_tank_turn]);
     }
 
     void Game::render()

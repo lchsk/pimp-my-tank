@@ -44,6 +44,8 @@ namespace pmt
         void shoot();
         bool check_collision(std::shared_ptr<pmt::Bullet>& bullet);
 
+		void add_cash(unsigned amount);
+
         void activate();
         void deactivate();
 

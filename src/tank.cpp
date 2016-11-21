@@ -114,6 +114,11 @@ namespace pmt
         _has_turn = false;
     }
 
+    void Tank::add_cash(unsigned amount)
+    {
+        _cash += amount;
+    }
+
     void Tank::shoot()
     {
         switch(_current_weapon) {
@@ -152,6 +157,10 @@ namespace pmt
             // Do not hit yourself
             && _tank_id != bullet->get_origin_tank()) {
             _hit(bullet);
+
+            // Cash for being hit
+            _cash += pmt::config::REWARD_BEING_HIT;
+
             return true;
         }
 

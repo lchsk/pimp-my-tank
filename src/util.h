@@ -11,6 +11,9 @@ namespace pmt
         const unsigned WINDOW_H = 448;
 
         const double MISSILE_SPEED = 2.5f;
+
+        const int REWARD_BEING_HIT = 50;
+        const int REWARD_HIT = 50;
     }
 
     namespace util
