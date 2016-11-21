@@ -31,12 +31,6 @@ namespace pmt
         _bullet_mgr = bullet_mgr;
         _font = font;
 
-        _text_cash = std::make_unique<sf::Text>();
-        _text_cash->setFont(*_font);
-        _text_cash->setCharacterSize(20);
-
-        _update_hud();
-
         if (left) {
             _tank->setScale(-1, 1);
             _gun->setScale(-1, 1);
@@ -85,9 +79,19 @@ namespace pmt
         return _health > 0;
     }
 
+    bool Tank::has_turn() const
+    {
+        return _has_turn;
+    }
+
     int Tank::get_id()
     {
         return _tank_id;
+    }
+
+    int Tank::get_cash() const
+    {
+        return _cash;
     }
 
     void Tank::gun_up()
@@ -138,9 +142,6 @@ namespace pmt
 
         _render_health(window);
         _render_shield(window);
-
-        if (is_human() && _has_turn)
-            _render_hud(window);
     }
 
     bool Tank::check_collision(std::shared_ptr<pmt::Bullet>& bullet)
@@ -201,21 +202,6 @@ namespace pmt
 
         for (int i = 0; i < g_sh; i++)
             window.draw(*_shields[i]);
-    }
-
-    void Tank::_render_hud(sf::RenderWindow& window)
-    {
-        window.draw(*_text_cash);
-    }
-
-    void Tank::_update_hud()
-    {
-        _text_cash->setString("$" + std::to_string(_cash));
-
-        double width = _text_cash->getLocalBounds().width;
-
-        _text_cash->setPosition(pmt::config::WINDOW_W - width - 5, 2);
-        _text_cash->setColor(pmt::color::Blue);
     }
 
     void Tank::_rotate_gun(double val)

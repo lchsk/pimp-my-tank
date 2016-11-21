@@ -89,7 +89,8 @@ namespace pmt
         _tank_turn = 0;
         _tanks[_tank_turn]->activate();
 
-        _hud->update_turn(_tanks[_tank_turn]);
+        _hud->show_turn(_tanks[_tank_turn]);
+        _hud->show_cash(_tanks[_tank_turn]);
     }
 
     Game::~Game()
@@ -209,7 +210,7 @@ namespace pmt
                 found_next_tank = true;
                 _tank_turn = next_tank_id;
                 tank->activate();
-                _hud->update_turn(_tanks[_tank_turn]);
+                _hud->show_turn(_tanks[_tank_turn]);
 
                 break;
             }

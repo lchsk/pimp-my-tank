@@ -36,7 +36,9 @@ namespace pmt
 
         bool is_human() const;
         bool is_alive() const;
+        bool has_turn() const;
         int get_id();
+        int get_cash() const;
         void gun_up();
         void gun_down();
         void shoot();
@@ -64,7 +66,6 @@ namespace pmt
         std::shared_ptr<pmt::BulletMgr> _bullet_mgr;
 
         std::shared_ptr<sf::Font> _font;
-        std::unique_ptr<sf::Text> _text_cash;
 
         GameSide _side;
         bool _left;

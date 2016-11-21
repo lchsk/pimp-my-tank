@@ -19,12 +19,16 @@ namespace pmt
         void render(sf::RenderWindow& window);
         void update(sf::Time& delta);
 
-        void update_turn(std::shared_ptr<pmt::Tank>& tank);
+        void show_turn(std::shared_ptr<pmt::Tank>& tank);
+        void show_cash(std::shared_ptr<pmt::Tank>& tank);
 
     private:
+        bool _show_cash;
+
         std::shared_ptr<sf::Font> _font;
 
         std::unique_ptr<sf::Text> _text_turn_name;
+        std::unique_ptr<sf::Text> _text_cash;
     };
 }
 
