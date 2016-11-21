@@ -144,7 +144,6 @@ namespace pmt
                 if (env_hit)
                     break;
             }
-
         }
 
         if (tank_hit || env_hit)

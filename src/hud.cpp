@@ -17,6 +17,13 @@ namespace pmt
         _text_cash = std::make_unique<sf::Text>();
         _text_cash->setFont(*_font);
         _text_cash->setCharacterSize(20);
+        _text_cash->setColor(pmt::color::Blue);
+
+        _text_cash_label = std::make_unique<sf::Text>();
+        _text_cash_label->setFont(*_font);
+        _text_cash_label->setCharacterSize(14);
+        _text_cash_label->setColor(pmt::color::Blue);
+        _text_cash_label->setString("Cash");
     }
 
     Hud::~Hud()
@@ -27,8 +34,10 @@ namespace pmt
     {
         window.draw(*_text_turn_name);
 
-        if (_show_cash)
+        if (_show_cash) {
             window.draw(*_text_cash);
+            window.draw(*_text_cash_label);
+        }
     }
 
     void Hud::update(sf::Time& delta)
@@ -52,10 +61,9 @@ namespace pmt
 
         _text_cash->setString("$" + std::to_string(tank->get_cash()));
 
-        double width = _text_cash->getLocalBounds().width;
+        double width = _text_cash_label->getLocalBounds().width;
 
-        _text_cash->setPosition(pmt::config::WINDOW_W - width - 5, 2);
-        _text_cash->setColor(pmt::color::Blue);
-
+        _text_cash_label->setPosition(pmt::config::WINDOW_W - width - 5, 2);
+        _text_cash->setPosition(pmt::config::WINDOW_W - width - 5, 20);
     }
 }

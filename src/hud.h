@@ -28,6 +28,8 @@ namespace pmt
         std::shared_ptr<sf::Font> _font;
 
         std::unique_ptr<sf::Text> _text_turn_name;
+
+        std::unique_ptr<sf::Text> _text_cash_label;
         std::unique_ptr<sf::Text> _text_cash;
     };
 }
