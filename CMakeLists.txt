@@ -34,6 +34,7 @@ add_executable(${EXECUTABLE_NAME}
     src/map.cpp
     src/util.cpp
     src/bullet_mgr.cpp
+    src/hud.cpp
 )
 
 
