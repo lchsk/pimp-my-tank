@@ -186,6 +186,13 @@ namespace pmt
                         current_tank->gun_down();
                     else if (event.key.code == sf::Keyboard::Space)
                         current_tank->shoot();
+                    else if (event.key.code == sf::Keyboard::Right) {
+                        current_tank->next_weapon();
+                        _hud->show_cash(current_tank);
+                    } else if (event.key.code == sf::Keyboard::Left) {
+                        current_tank->previous_weapon();
+                        _hud->show_cash(current_tank);
+                    }
                 }
             }
         }

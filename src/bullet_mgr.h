@@ -16,6 +16,11 @@ namespace pmt
         MagnumMissile
     };
 
+    static std::vector<WeaponType> WeaponsOrder = {
+        WeaponType::Missile,
+        WeaponType::MagnumMissile
+    };
+
     class Bullet
     {
     public:

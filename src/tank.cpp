@@ -65,6 +65,7 @@ namespace pmt
 
         // Set initial weapons
         _weapons[WeaponType::Missile] = 5;
+        _weapons[WeaponType::MagnumMissile] = 5;
 
         // _tank->setColor(sf::Color::Blue);
     }
@@ -122,6 +123,32 @@ namespace pmt
     void Tank::add_cash(unsigned amount)
     {
         _cash += amount;
+    }
+
+    void Tank::next_weapon()
+    {
+        std::vector<WeaponType>::iterator it = std::find(
+            pmt::WeaponsOrder.begin(),
+            pmt::WeaponsOrder.end(),
+            _current_weapon);
+
+        while (++it != pmt::WeaponsOrder.end()) {
+            if (_weapons[*it] > 0)
+                _current_weapon = *it;
+        }
+    }
+
+    void Tank::previous_weapon()
+    {
+        std::vector<WeaponType>::reverse_iterator it = std::find(
+            pmt::WeaponsOrder.rbegin(),
+            pmt::WeaponsOrder.rend(),
+            _current_weapon);
+
+        while (++it != pmt::WeaponsOrder.rend()) {
+            if (_weapons[*it] > 0)
+                _current_weapon = *it;
+        }
     }
 
     void Tank::shoot()
