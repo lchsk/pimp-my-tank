@@ -92,6 +92,8 @@ namespace pmt
             std::vector<std::shared_ptr<pmt::Bullet> >&
                 get_flying_bullets();
 
+            std::string get_weapon_name(const WeaponType type);
+
         private:
             void _simulate(sf::Time delta, std::shared_ptr<pmt::Bullet> bullet);
 
@@ -100,6 +102,8 @@ namespace pmt
                 _bullets;
 
             std::vector<std::shared_ptr<pmt::Bullet> > _vec;
+
+            std::unordered_map<WeaponType, std::string> _weapon_names;
     };
 }
 

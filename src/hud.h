@@ -31,6 +31,9 @@ namespace pmt
 
         std::unique_ptr<sf::Text> _text_cash_label;
         std::unique_ptr<sf::Text> _text_cash;
+
+        std::unique_ptr<sf::Text> _text_weapon_label;
+        std::unique_ptr<sf::Text> _text_weapon;
     };
 }
 

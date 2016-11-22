@@ -69,6 +69,11 @@ namespace pmt
         // _tank->setColor(sf::Color::Blue);
     }
 
+    std::string Tank::get_weapon_name() const
+    {
+        return _bullet_mgr->get_weapon_name(_current_weapon);
+    }
+
     bool Tank::is_human() const
     {
         return _side == GameSide::Human;

@@ -108,10 +108,19 @@ namespace pmt
 
     BulletMgr::BulletMgr()
     {
+        _weapon_names = {
+            {WeaponType::Missile, "Missile"},
+            {WeaponType::MagnumMissile, "Magnum Missile"},
+        };
     }
 
     BulletMgr::~BulletMgr()
     {
+    }
+
+    std::string BulletMgr::get_weapon_name(const WeaponType type)
+    {
+        return _weapon_names[type];
     }
 
     void BulletMgr::add_bullets(

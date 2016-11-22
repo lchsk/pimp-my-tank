@@ -49,6 +49,8 @@ namespace pmt
         void activate();
         void deactivate();
 
+        std::string get_weapon_name() const;
+
     private:
         void _rotate_gun(double val);
 

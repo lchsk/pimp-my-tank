@@ -24,6 +24,17 @@ namespace pmt
         _text_cash_label->setCharacterSize(14);
         _text_cash_label->setColor(pmt::color::Blue);
         _text_cash_label->setString("Cash");
+
+        _text_weapon = std::make_unique<sf::Text>();
+        _text_weapon->setFont(*_font);
+        _text_weapon->setCharacterSize(20);
+        _text_weapon->setColor(pmt::color::Blue);
+
+		_text_weapon_label = std::make_unique<sf::Text>();
+        _text_weapon_label->setFont(*_font);
+        _text_weapon_label->setCharacterSize(14);
+        _text_weapon_label->setColor(pmt::color::Blue);
+        _text_weapon_label->setString("Weapon");
     }
 
     Hud::~Hud()
@@ -37,6 +48,9 @@ namespace pmt
         if (_show_cash) {
             window.draw(*_text_cash);
             window.draw(*_text_cash_label);
+
+            window.draw(*_text_weapon);
+            window.draw(*_text_weapon_label);
         }
     }
 
@@ -59,11 +73,17 @@ namespace pmt
 
         if (! _show_cash) return;
 
+        // Show weapon first
+        _text_weapon->setString(tank->get_weapon_name());
+        _text_weapon->setPosition(2, 20);
+        _text_weapon_label->setPosition(2, 2);
+
+        double weapon_w = std::max(_text_weapon_label->getLocalBounds().width,
+                                   _text_weapon->getLocalBounds().width);
+
+        // Cash second
         _text_cash->setString("$" + std::to_string(tank->get_cash()));
-
-        double width = _text_cash_label->getLocalBounds().width;
-
-        _text_cash_label->setPosition(pmt::config::WINDOW_W - width - 5, 2);
-        _text_cash->setPosition(pmt::config::WINDOW_W - width - 5, 20);
+        _text_cash_label->setPosition(weapon_w + 20, 2);
+        _text_cash->setPosition(weapon_w + 20, 20);
     }
 }
