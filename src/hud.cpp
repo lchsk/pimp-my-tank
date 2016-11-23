@@ -7,7 +7,9 @@ namespace pmt
 {
     Hud::Hud(std::shared_ptr<sf::Font>& font) :
         _font(font),
-        _show_cash(false)
+        _show_cash(false),
+        _shop_open(false),
+        _top_shop_item(0)
     {
         _text_turn_name = std::make_unique<sf::Text>();
         _text_turn_name->setFont(*_font);
@@ -35,6 +37,28 @@ namespace pmt
         _text_weapon_label->setCharacterSize(14);
         _text_weapon_label->setColor(pmt::color::Blue);
         _text_weapon_label->setString("Weapon");
+
+        // Shop
+
+        for (auto& offer: pmt::offers) {
+            _shop_names[offer.type] = std::make_unique<sf::Text>();
+            _shop_names[offer.type]->setFont(*_font);
+            _shop_names[offer.type]->setCharacterSize(18);
+            _shop_names[offer.type]->setColor(pmt::color::Blue);
+            _shop_names[offer.type]->setString(offer.name);
+
+            _shop_descs[offer.type] = std::make_unique<sf::Text>();
+            _shop_descs[offer.type]->setFont(*_font);
+            _shop_descs[offer.type]->setCharacterSize(14);
+            _shop_descs[offer.type]->setColor(pmt::color::Blue);
+            _shop_descs[offer.type]->setString(offer.desc);
+
+            _shop_prices[offer.type] = std::make_unique<sf::Text>();
+            _shop_prices[offer.type]->setFont(*_font);
+            _shop_prices[offer.type]->setCharacterSize(20);
+            _shop_prices[offer.type]->setColor(pmt::color::Blue);
+            _shop_prices[offer.type]->setString("$" + std::to_string(offer.price));
+        }
     }
 
     Hud::~Hud()
@@ -52,10 +76,56 @@ namespace pmt
             window.draw(*_text_weapon);
             window.draw(*_text_weapon_label);
         }
+
+        if (_shop_open) {
+            int y = 50;
+
+            for (int i = 0; i < 5; i++) {
+                auto& offer = offers[_top_shop_item + i];
+
+                _shop_prices[offer.type]->setPosition(50, y);
+                _shop_names[offer.type]->setPosition(100, y);
+                _shop_descs[offer.type]->setPosition(100, y + 20);
+
+                window.draw(*_shop_prices[offer.type]);
+                window.draw(*_shop_names[offer.type]);
+                window.draw(*_shop_descs[offer.type]);
+
+                y += 50;
+            }
+		}
     }
 
     void Hud::update(sf::Time& delta)
     {
+    }
+
+    bool Hud::is_shop_open() const
+    {
+        return _shop_open;
+    }
+
+    void Hud::shop_up()
+    {
+        if (_top_shop_item > 0)
+            _top_shop_item--;
+    }
+
+    void Hud::shop_down()
+    {
+        if (_top_shop_item < pmt::offers.size() - 5)
+            _top_shop_item++;
+    }
+
+    void Hud::open_shop(std::shared_ptr<pmt::Tank>& tank)
+    {
+        _shop_client = tank;
+        _shop_open = true;
+    }
+
+    void Hud::close_shop()
+    {
+        _shop_open = false;
     }
 
     void Hud::show_turn(std::shared_ptr<pmt::Tank>& tank)

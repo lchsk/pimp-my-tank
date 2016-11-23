@@ -171,27 +171,37 @@ namespace pmt
     {
         sf::Event event;
 
-        while(_window->pollEvent(event)) {
+        while (_window->pollEvent(event)) {
             if (event.type == sf::Event::Closed)
                 _window->close();
             else if (event.type == sf::Event::KeyPressed) {
                 auto& current_tank = _tanks[_tank_turn];
 
-                if (event.key.code == sf::Keyboard::Escape)
-                    _window->close();
-                else if (current_tank->is_human()) {
-                    if (event.key.code == sf::Keyboard::Up)
-                        current_tank->gun_up();
-                    else if (event.key.code == sf::Keyboard::Down)
-                        current_tank->gun_down();
-                    else if (event.key.code == sf::Keyboard::Space)
-                        current_tank->shoot();
-                    else if (event.key.code == sf::Keyboard::Right) {
-                        current_tank->next_weapon();
-                        _hud->show_cash(current_tank);
-                    } else if (event.key.code == sf::Keyboard::Left) {
-                        current_tank->previous_weapon();
-                        _hud->show_cash(current_tank);
+                if (current_tank->is_human()) {
+                    if (_hud->is_shop_open()) {
+						if (event.key.code == sf::Keyboard::Escape)
+							_hud->close_shop();
+                        else if (event.key.code == sf::Keyboard::Up)
+                            _hud->shop_up();
+                        else if (event.key.code == sf::Keyboard::Down)
+                            _hud->shop_down();
+                    } else {
+                        if (event.key.code == sf::Keyboard::Up)
+                            current_tank->gun_up();
+                        else if (event.key.code == sf::Keyboard::Down)
+                            current_tank->gun_down();
+                        else if (event.key.code == sf::Keyboard::Space)
+                            current_tank->shoot();
+                        else if (event.key.code == sf::Keyboard::Right) {
+                            current_tank->next_weapon();
+                            _hud->show_cash(current_tank);
+                        } else if (event.key.code == sf::Keyboard::Left) {
+                            current_tank->previous_weapon();
+                            _hud->show_cash(current_tank);
+                        } else if (event.key.code == sf::Keyboard::Return)
+                            _hud->open_shop(current_tank);
+                        else if (event.key.code == sf::Keyboard::Escape)
+                            _window->close();
                     }
                 }
             }
