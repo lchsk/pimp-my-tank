@@ -55,6 +55,9 @@ namespace pmt
         _bullet_mgr->add_bullets(pmt::WeaponType::Missile,
                                  1,
                                  _textures["shell.png"]);
+        _bullet_mgr->add_bullets(pmt::WeaponType::MagnumMissile,
+                                 1,
+                                 _textures["shell.png"]);
 
         _font = std::make_shared<sf::Font>();
 
@@ -63,7 +66,7 @@ namespace pmt
 
         _tanks_count = std::stoi(_map->get_param("tanks_count"));
 
-        if (! _font->loadFromFile("assets/Gamer.ttf")) {
+        if (! _font->loadFromFile("assets/Minecraftia-Regular.ttf")) {
             std::cout << "No font found\n";
         }
 
@@ -193,9 +196,10 @@ namespace pmt
                             current_tank->gun_up();
                         else if (event.key.code == sf::Keyboard::Down)
                             current_tank->gun_down();
-                        else if (event.key.code == sf::Keyboard::Space)
+                        else if (event.key.code == sf::Keyboard::Space) {
                             current_tank->shoot();
-                        else if (event.key.code == sf::Keyboard::Right) {
+                            _hud->show_cash(current_tank);
+                        } else if (event.key.code == sf::Keyboard::Right) {
                             current_tank->next_weapon();
                             _hud->show_cash(current_tank);
                         } else if (event.key.code == sf::Keyboard::Left) {

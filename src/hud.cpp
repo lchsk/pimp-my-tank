@@ -30,12 +30,12 @@ namespace pmt
 
         _text_weapon = std::make_unique<sf::Text>();
         _text_weapon->setFont(*_font);
-        _text_weapon->setCharacterSize(20);
+        _text_weapon->setCharacterSize(16);
         _text_weapon->setColor(pmt::color::Blue);
 
 		_text_weapon_label = std::make_unique<sf::Text>();
         _text_weapon_label->setFont(*_font);
-        _text_weapon_label->setCharacterSize(14);
+        _text_weapon_label->setCharacterSize(16);
         _text_weapon_label->setColor(pmt::color::Blue);
         _text_weapon_label->setString("Weapon");
 
@@ -72,7 +72,7 @@ namespace pmt
 
         if (_show_cash) {
             window.draw(*_text_cash);
-            window.draw(*_text_cash_label);
+            // window.draw(*_text_cash_label);
 
             window.draw(*_text_weapon);
             window.draw(*_text_weapon_label);
@@ -170,9 +170,13 @@ namespace pmt
         if (! _show_cash) return;
 
         // Show weapon first
+
         _text_weapon->setString(tank->get_weapon_name());
-        _text_weapon->setPosition(2, 20);
-        _text_weapon_label->setPosition(2, 2);
+        _text_weapon->setPosition(2, 12);
+
+        _text_weapon_label->setPosition(_text_weapon->getLocalBounds().width + 8, 12);
+        _text_weapon_label->setString("x" + std::to_string(tank->get_weapon_count()));
+
 
         double weapon_w = std::max(_text_weapon_label->getLocalBounds().width,
                                    _text_weapon->getLocalBounds().width);
@@ -180,6 +184,6 @@ namespace pmt
         // Cash second
         _text_cash->setString("$" + std::to_string(tank->get_cash()));
         _text_cash_label->setPosition(weapon_w + 20, 2);
-        _text_cash->setPosition(weapon_w + 20, 20);
+        _text_cash->setPosition(weapon_w + 200, 20);
     }
 }

@@ -55,6 +55,7 @@ namespace pmt
         void buy(const Offer& offer);
 
         std::string get_weapon_name() const;
+        unsigned get_weapon_count();
 
     private:
         void _rotate_gun(double val);
@@ -65,8 +66,6 @@ namespace pmt
         void _hit(std::shared_ptr<pmt::Bullet>& bullet);
         void _change_color(const sf::Color color);
         void _add_shield(int value);
-
-        void _update_hud();
 
         std::unique_ptr<sf::Sprite> _tank;
         std::unique_ptr<sf::Sprite> _gun;

@@ -64,13 +64,18 @@ namespace pmt
         _rotate_gun(0);
 
         // Set initial weapons
-        _weapons[WeaponType::Missile] = 5;
+        _weapons[WeaponType::Missile] = 2;
         // _weapons[WeaponType::MagnumMissile] = 5;
     }
 
     std::string Tank::get_weapon_name() const
     {
         return _bullet_mgr->get_weapon_name(_current_weapon);
+    }
+
+    unsigned Tank::get_weapon_count()
+    {
+        return _weapons[_current_weapon];
     }
 
     bool Tank::is_human() const
@@ -130,9 +135,11 @@ namespace pmt
         switch (offer.type) {
         case OfferType::Missile:
             _weapons[WeaponType::Missile] += 1;
+            _current_weapon = WeaponType::Missile;
             break;
         case OfferType::MagnumMissile:
             _weapons[WeaponType::MagnumMissile] += 1;
+            _current_weapon = WeaponType::MagnumMissile;
             break;
 
         case OfferType::Transparency:
@@ -193,14 +200,20 @@ namespace pmt
     {
         switch(_current_weapon) {
         case WeaponType::Missile:
-            _bullet_mgr->shoot(
-                _tank_id,
-                _left,
-                _current_weapon,
-                _gun_rotation,
-                120,
-                _gun->getPosition().x,
-                _gun->getPosition().y);
+        case WeaponType::MagnumMissile:
+            if (_weapons[_current_weapon] > 0) {
+                _weapons[_current_weapon]--;
+
+                _bullet_mgr->shoot(
+                    _tank_id,
+                    _left,
+                    _current_weapon,
+                    _gun_rotation,
+                    120,
+                    _gun->getPosition().x,
+                    _gun->getPosition().y);
+
+            }
 
             break;
         }
@@ -258,17 +271,17 @@ namespace pmt
         switch(bullet->get_type()) {
         case WeaponType::Missile:
             if (_shield > 0)
-                _shield -= 24;
+                _shield -= 15;
 
             if (_shield <= 0)
-                _health -= 20;
+                _health -= 10;
 
             break;
 
         case WeaponType::MagnumMissile:
             if (_shield > 0) {
-                _shield -= 36;
-                _health -= 9;
+                _shield -= 20;
+                _health -= 15;
             }
 
             if (_shield <= 0)
