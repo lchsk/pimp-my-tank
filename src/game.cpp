@@ -63,7 +63,7 @@ namespace pmt
 
         _tanks_count = std::stoi(_map->get_param("tanks_count"));
 
-        if (! _font->loadFromFile("assets/Armata-Regular.ttf")) {
+        if (! _font->loadFromFile("assets/Gamer.ttf")) {
             std::cout << "No font found\n";
         }
 
