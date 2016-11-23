@@ -5,6 +5,60 @@
 
 namespace pmt
 {
+    enum class OfferType {
+        Missile,
+        MagnumMissile,
+
+        ShotPower,
+        ShowShotAngle,
+        Transparency,
+        Crosshairs,
+        Shield25,
+        Shield50,
+        Shield100,
+
+        RedColor,
+        BlueColor,
+        PinkColor,
+        NoColor
+    };
+
+    class Offer
+    {
+    public:
+        Offer(OfferType type, std::string name, std::string desc, int price)
+            : type(type),
+            name(name),
+            desc(desc),
+            price(price) {}
+        ~Offer()
+        {
+        }
+
+        OfferType type;
+        int price;
+        std::string name;
+        std::string desc;
+    };
+
+    static std::vector<Offer> offers = {
+        Offer(OfferType::Missile, "Missile", "Basic tank missile", 50),
+        Offer(OfferType::MagnumMissile, "Magnum Missile", "Magnum Missile", 50),
+
+        Offer(OfferType::Crosshairs, "Crosshairs", "Magnum Missile", 50),
+        Offer(OfferType::ShotPower, "Show Power", "Magnum Missile", 50),
+        Offer(OfferType::ShowShotAngle, "Shot Angle", "Magnum Missile", 50),
+        Offer(OfferType::Transparency, "Transparency", "Magnum Missile", 50),
+        Offer(OfferType::Shield25, "Shield +25", "Magnum Missile", 50),
+        Offer(OfferType::Shield50, "Shield +50", "Magnum Missile", 50),
+        Offer(OfferType::Shield100, "SHield +100", "Magnum Missile", 50),
+
+        Offer(OfferType::RedColor, "Red tank color", "Paint your tank red", 50),
+        Offer(OfferType::BlueColor, "Blue tank color", "Paint your tank blue", 50),
+        Offer(OfferType::PinkColor, "Pink tank color", "Paint your tank pink", 50),
+        Offer(OfferType::NoColor, "No tank color", "Default tank color", 50),
+    };
+
     namespace config
     {
         const unsigned WINDOW_W = 800;

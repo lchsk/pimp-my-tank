@@ -20,7 +20,7 @@ namespace pmt
           _has_turn(false),
           _health(100),
           _shield(100),
-          _cash(0),
+          _cash(110),
           _tank_id(tank_id),
           _gun_rotation(7.0f),
           _current_weapon(WeaponType::Missile)
@@ -65,7 +65,7 @@ namespace pmt
 
         // Set initial weapons
         _weapons[WeaponType::Missile] = 5;
-        _weapons[WeaponType::MagnumMissile] = 5;
+        // _weapons[WeaponType::MagnumMissile] = 5;
 
         // _tank->setColor(sf::Color::Blue);
     }
@@ -123,6 +123,24 @@ namespace pmt
     void Tank::add_cash(unsigned amount)
     {
         _cash += amount;
+    }
+
+    void Tank::buy(const Offer& offer)
+    {
+        std::cout << "Buying " << offer.name << "\n";
+
+        _cash -= offer.price;
+
+        switch (offer.type) {
+        case OfferType::Missile:
+            _weapons[WeaponType::Missile] += 1;
+            break;
+
+        case OfferType::MagnumMissile:
+            _weapons[WeaponType::MagnumMissile] += 1;
+            break;
+        }
+
     }
 
     void Tank::next_weapon()

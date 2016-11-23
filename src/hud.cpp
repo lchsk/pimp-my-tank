@@ -142,6 +142,18 @@ namespace pmt
         _shop_open = false;
     }
 
+    void Hud::buy()
+    {
+        auto& offer = pmt::offers[_selected];
+
+        if (offer.price > _shop_client->get_cash()) {
+            std::cout << "No money\n";
+        } else {
+            _shop_client->buy(offer);
+            close_shop();
+        }
+    }
+
     void Hud::show_turn(std::shared_ptr<pmt::Tank>& tank)
     {
         _text_turn_name->setString(tank->is_human() ? "Your turn" : "AI turn");

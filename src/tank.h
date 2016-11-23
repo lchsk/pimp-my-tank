@@ -7,6 +7,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "bullet_mgr.h"
+#include "util.h"
 
 namespace pmt
 {
@@ -50,6 +51,8 @@ namespace pmt
 
         void activate();
         void deactivate();
+
+        void buy(const Offer& offer);
 
         std::string get_weapon_name() const;
 

@@ -185,6 +185,9 @@ namespace pmt
                             _hud->shop_up();
                         else if (event.key.code == sf::Keyboard::Down)
                             _hud->shop_down();
+                        else if (event.key.code == sf::Keyboard::Return)
+                            _hud->buy();
+
                     } else {
                         if (event.key.code == sf::Keyboard::Up)
                             current_tank->gun_up();
