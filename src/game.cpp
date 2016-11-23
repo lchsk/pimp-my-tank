@@ -23,6 +23,7 @@ namespace pmt
             "gun.png",
             "tank.png",
             "shell.png",
+            "excl.png",
 
             "green.png",
             "red.png",
@@ -80,6 +81,7 @@ namespace pmt
                 _textures["green.png"],
                 _textures["red.png"],
                 _textures["shield.png"],
+                _textures["excl.png"],
                 _font,
                 _map->get_param(tank_str + "_human") == "true"
                     ? GameSide::Human : GameSide::Computer,

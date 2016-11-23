@@ -13,6 +13,7 @@ namespace pmt
         std::unique_ptr<sf::Texture>& green,
         std::unique_ptr<sf::Texture>& red,
         std::unique_ptr<sf::Texture>& shield,
+        std::unique_ptr<sf::Texture>& excl,
         std::shared_ptr<sf::Font>& font,
         GameSide side, bool left, int x, int y)
         : _side(side),
@@ -27,6 +28,7 @@ namespace pmt
     {
         _tank = std::make_unique<sf::Sprite>(*tank.get());
         _gun = std::make_unique<sf::Sprite>(*gun.get());
+        _excl = std::make_unique<sf::Sprite>(*excl.get());
 
         _bullet_mgr = bullet_mgr;
         _font = font;
@@ -41,10 +43,17 @@ namespace pmt
             _gun->setPosition(x + 20, y + 6);
         }
 
-        _tank->setPosition(x, y);
-
         int tank_width = tank->getSize().x * _tank->getScale().x;
         int tank_middle_x = x + tank_width / 2 - 10;
+
+        _tank->setPosition(x, y);
+        _excl->setPosition(tank_middle_x, y - 30);
+
+        _text_tank_control = std::make_unique<sf::Text>();
+        _text_tank_control->setString(is_human() ? "Human" : "AI");
+        _text_tank_control->setFont(*_font);
+        _text_tank_control->setCharacterSize(8);
+        _text_tank_control->setPosition(tank_middle_x + 24, y - 23);
 
         int health_diff = -7;
         int shield_diff = -10;
@@ -227,6 +236,11 @@ namespace pmt
     {
         window.draw(*_gun);
         window.draw(*_tank);
+
+        if (_has_turn) {
+            window.draw(*_excl);
+            window.draw(*_text_tank_control);
+        }
 
         _render_health(window);
         _render_shield(window);

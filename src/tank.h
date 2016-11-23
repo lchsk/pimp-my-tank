@@ -29,6 +29,7 @@ namespace pmt
             std::unique_ptr<sf::Texture>& green,
             std::unique_ptr<sf::Texture>& red,
             std::unique_ptr<sf::Texture>& shield,
+            std::unique_ptr<sf::Texture>& excl,
             std::shared_ptr<sf::Font>& font,
             GameSide side, bool left, int x, int y);
         ~Tank();
@@ -69,6 +70,8 @@ namespace pmt
 
         std::unique_ptr<sf::Sprite> _tank;
         std::unique_ptr<sf::Sprite> _gun;
+        std::unique_ptr<sf::Sprite> _excl;
+
         std::vector<std::unique_ptr<sf::Sprite> > _greens;
         std::vector<std::unique_ptr<sf::Sprite> > _reds;
         std::vector<std::unique_ptr<sf::Sprite> > _shields;
@@ -76,6 +79,7 @@ namespace pmt
         std::shared_ptr<pmt::BulletMgr> _bullet_mgr;
 
         std::shared_ptr<sf::Font> _font;
+        std::unique_ptr<sf::Text> _text_tank_control;
 
         GameSide _side;
         bool _left;
