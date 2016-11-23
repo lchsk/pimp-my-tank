@@ -64,6 +64,7 @@ namespace pmt
         void _render_hud(sf::RenderWindow& window);
         void _hit(std::shared_ptr<pmt::Bullet>& bullet);
         void _change_color(const sf::Color color);
+        void _add_shield(int value);
 
         void _update_hud();
 

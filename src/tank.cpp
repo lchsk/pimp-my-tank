@@ -131,7 +131,6 @@ namespace pmt
         case OfferType::Missile:
             _weapons[WeaponType::Missile] += 1;
             break;
-
         case OfferType::MagnumMissile:
             _weapons[WeaponType::MagnumMissile] += 1;
             break;
@@ -151,8 +150,17 @@ namespace pmt
         case OfferType::NoColor:
             _change_color(sf::Color::White);
             break;
-        }
 
+        case OfferType::Shield25:
+            _add_shield(25);
+            break;
+        case OfferType::Shield50:
+            _add_shield(50);
+            break;
+        case OfferType::Shield100:
+            _add_shield(100);
+            break;
+        }
     }
 
     void Tank::next_weapon()
@@ -227,6 +235,14 @@ namespace pmt
         }
 
         return false;
+    }
+
+    void Tank::_add_shield(int value)
+    {
+        _shield += value;
+
+        if (_shield > 100)
+            _shield = 100;
     }
 
     void Tank::_change_color(const sf::Color color)
