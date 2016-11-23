@@ -29,15 +29,15 @@ namespace pmt
             "red.png",
             "shield.png",
 
-            "ground.png",
-            "ground_sand.png",
-            "ground_rock.png"
+            "green_tile.png",
+            "brown_tile.png",
+            "gray_tile.png"
         };
 
         _tiles_map = {
-            {1, "ground.png"},
-            {2, "ground_sand.png"},
-            {3, "ground_rock.png"}
+            {1, "green_tile.png"},
+            {2, "brown_tile.png"},
+            {3, "gray_tile.png"}
         };
 
         for (std::string& filename : _filenames) {
