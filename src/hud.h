@@ -86,6 +86,7 @@ namespace pmt
         bool _show_cash;
         bool _shop_open;
         unsigned _top_shop_item;
+        unsigned _selected;
 
         std::shared_ptr<pmt::Tank> _shop_client;
 

@@ -9,7 +9,8 @@ namespace pmt
         _font(font),
         _show_cash(false),
         _shop_open(false),
-        _top_shop_item(0)
+        _top_shop_item(0),
+        _selected(0)
     {
         _text_turn_name = std::make_unique<sf::Text>();
         _text_turn_name->setFont(*_font);
@@ -83,6 +84,12 @@ namespace pmt
             for (int i = 0; i < 5; i++) {
                 auto& offer = offers[_top_shop_item + i];
 
+                if (_selected == _top_shop_item + i) {
+                    _shop_names[offer.type]->setColor(sf::Color::Red);
+                } else {
+                    _shop_names[offer.type]->setColor(pmt::color::Blue);
+                }
+
                 _shop_prices[offer.type]->setPosition(50, y);
                 _shop_names[offer.type]->setPosition(100, y);
                 _shop_descs[offer.type]->setPosition(100, y + 20);
@@ -107,14 +114,21 @@ namespace pmt
 
     void Hud::shop_up()
     {
-        if (_top_shop_item > 0)
+        if (_top_shop_item > 0) {
             _top_shop_item--;
+        }
+
+        if (_selected > 0)
+            _selected--;
     }
 
     void Hud::shop_down()
     {
         if (_top_shop_item < pmt::offers.size() - 5)
             _top_shop_item++;
+
+        if (_selected < pmt::offers.size() - 1)
+            _selected++;
     }
 
     void Hud::open_shop(std::shared_ptr<pmt::Tank>& tank)
