@@ -20,7 +20,7 @@ namespace pmt
           _has_turn(false),
           _health(100),
           _shield(100),
-          _cash(110),
+          _cash(110002),
           _tank_id(tank_id),
           _gun_rotation(7.0f),
           _current_weapon(WeaponType::Missile)
@@ -66,8 +66,6 @@ namespace pmt
         // Set initial weapons
         _weapons[WeaponType::Missile] = 5;
         // _weapons[WeaponType::MagnumMissile] = 5;
-
-        // _tank->setColor(sf::Color::Blue);
     }
 
     std::string Tank::get_weapon_name() const
@@ -127,8 +125,6 @@ namespace pmt
 
     void Tank::buy(const Offer& offer)
     {
-        std::cout << "Buying " << offer.name << "\n";
-
         _cash -= offer.price;
 
         switch (offer.type) {
@@ -138,6 +134,22 @@ namespace pmt
 
         case OfferType::MagnumMissile:
             _weapons[WeaponType::MagnumMissile] += 1;
+            break;
+
+        case OfferType::Transparency:
+            _change_color(pmt::color::Transparent);
+            break;
+        case OfferType::RedColor:
+            _change_color(sf::Color::Red);
+            break;
+        case OfferType::BlueColor:
+            _change_color(sf::Color::Blue);
+            break;
+        case OfferType::PinkColor:
+            _change_color(pmt::color::Pink);
+            break;
+        case OfferType::NoColor:
+            _change_color(sf::Color::White);
             break;
         }
 
@@ -215,6 +227,12 @@ namespace pmt
         }
 
         return false;
+    }
+
+    void Tank::_change_color(const sf::Color color)
+    {
+        _tank->setColor(color);
+        _gun->setColor(color);
     }
 
     void Tank::_hit(std::shared_ptr<pmt::Bullet>& bullet)

@@ -11,12 +11,12 @@ namespace pmt
 
         ShotPower,
         ShowShotAngle,
-        Transparency,
         Crosshairs,
         Shield25,
         Shield50,
         Shield100,
 
+		Transparency,
         RedColor,
         BlueColor,
         PinkColor,
@@ -48,7 +48,7 @@ namespace pmt
         Offer(OfferType::Crosshairs, "Crosshairs", "Magnum Missile", 50),
         Offer(OfferType::ShotPower, "Show Power", "Magnum Missile", 50),
         Offer(OfferType::ShowShotAngle, "Shot Angle", "Magnum Missile", 50),
-        Offer(OfferType::Transparency, "Transparency", "Magnum Missile", 50),
+
         Offer(OfferType::Shield25, "Shield +25", "Magnum Missile", 50),
         Offer(OfferType::Shield50, "Shield +50", "Magnum Missile", 50),
         Offer(OfferType::Shield100, "SHield +100", "Magnum Missile", 50),
@@ -56,7 +56,8 @@ namespace pmt
         Offer(OfferType::RedColor, "Red tank color", "Paint your tank red", 50),
         Offer(OfferType::BlueColor, "Blue tank color", "Paint your tank blue", 50),
         Offer(OfferType::PinkColor, "Pink tank color", "Paint your tank pink", 50),
-        Offer(OfferType::NoColor, "No tank color", "Default tank color", 50),
+        Offer(OfferType::Transparency, "Transparency", "Magnum Missile", 50),
+        Offer(OfferType::NoColor, "No tank color", "Default tank color", 0),
     };
 
     namespace config
@@ -83,6 +84,8 @@ namespace pmt
     namespace color
     {
         const sf::Color Blue = sf::Color(31, 58, 147, 255);
+        const sf::Color Pink = sf::Color(219, 10, 91, 255);
+        const sf::Color Transparent = sf::Color(255, 255, 255, 100);
     }
 }
 
