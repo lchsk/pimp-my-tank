@@ -79,6 +79,17 @@ namespace pmt
         {
             return a / 180.0 * PI;
         }
+
+        inline double linear(
+            double x,
+            double target_min,
+            double target_max,
+            double input_min = 0,
+            double input_max = 100)
+        {
+            return (target_max - target_min) *
+                (x - input_min) / (input_max - input_min) + target_min;
+        }
     }
 
     namespace color

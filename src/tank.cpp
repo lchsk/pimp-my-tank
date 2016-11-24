@@ -14,6 +14,9 @@ namespace pmt
         std::unique_ptr<sf::Texture>& red,
         std::unique_ptr<sf::Texture>& shield,
         std::unique_ptr<sf::Texture>& excl,
+        std::unique_ptr<sf::Texture>& green_rect,
+        std::unique_ptr<sf::Texture>& red_rect,
+        std::unique_ptr<sf::Texture>& orange_rect,
         std::shared_ptr<sf::Font>& font,
         GameSide side, bool left, int x, int y)
         : _side(side),
@@ -21,6 +24,7 @@ namespace pmt
           _has_turn(false),
           _health(100),
           _shield(100),
+          _shot_power(-1.0f),
           _cash(110002),
           _tank_id(tank_id),
           _gun_rotation(7.0f),
@@ -69,6 +73,21 @@ namespace pmt
             _shields[i]->setPosition(tank_middle_x + i * 2, y + shield_diff);
         }
 
+        for (int row = 0; row < SHOT_BAR_ROWS; row ++) {
+            for (int col = 0; col < SHOT_BAR_COLS; col++) {
+                _green_power.push_back(
+                    std::make_unique<sf::Sprite>(
+                        (row >= 0 && row < 4)
+                            ? *green_rect.get() : (row >= 4 && row < 8)
+                            ? *orange_rect.get() : *red_rect.get()
+                        )
+                    );
+
+                _green_power[row * SHOT_BAR_COLS + col]->setPosition(
+                    10 + col * 6, pmt::config::WINDOW_H / 2.0 - row * 6);
+            }
+        }
+
         // Set initial gun rotation
         _rotate_gun(0);
 
@@ -100,6 +119,11 @@ namespace pmt
     bool Tank::has_turn() const
     {
         return _has_turn;
+    }
+
+    bool Tank::can_shoot() const
+    {
+        return _shot_power > 0;
     }
 
     int Tank::get_id()
@@ -213,15 +237,21 @@ namespace pmt
             if (_weapons[_current_weapon] > 0) {
                 _weapons[_current_weapon]--;
 
+                std::cout << "Shot Power: " << _shot_power << "\n";
+                double power = pmt::util::linear(_shot_power, 60, 140);
+
+                std::cout << "Shot Power Lin: " << power << "\n";
+
                 _bullet_mgr->shoot(
                     _tank_id,
                     _left,
                     _current_weapon,
                     _gun_rotation,
-                    120,
+                    power,
                     _gun->getPosition().x,
                     _gun->getPosition().y);
 
+                _shot_power = -1.0f;
             }
 
             break;
@@ -244,6 +274,7 @@ namespace pmt
 
         _render_health(window);
         _render_shield(window);
+        _render_shot_power(window);
     }
 
     bool Tank::check_collision(std::shared_ptr<pmt::Bullet>& bullet)
@@ -262,6 +293,19 @@ namespace pmt
         }
 
         return false;
+    }
+
+    void Tank::init_shot()
+    {
+        _shot_power = 1.0f;
+    }
+
+    void Tank::increase_shot_power(sf::Time delta)
+    {
+        _shot_power += (delta.asMilliseconds() / 5.0);
+
+        if (_shot_power > 100)
+            _shot_power = 100.0f;
     }
 
     void Tank::_add_shield(int value)
@@ -322,6 +366,18 @@ namespace pmt
 
         for (int i = 0; i < g_sh; i++)
             window.draw(*_shields[i]);
+    }
+
+    void Tank::_render_shot_power(sf::RenderWindow& window)
+    {
+        if (_shot_power > 0) {
+            int items = ceil(pmt::util::linear(_shot_power, 0, SHOT_BAR_ITEMS));
+
+            items = items - (items % SHOT_BAR_COLS);
+
+            for (int i = 0; i < items; i++)
+                window.draw(*_green_power[i]);
+        }
     }
 
     void Tank::_rotate_gun(double val)

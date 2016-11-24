@@ -29,6 +29,10 @@ namespace pmt
             "red.png",
             "shield.png",
 
+            "red_rect.png",
+            "green_rect.png",
+            "orange_rect.png",
+
             "green_tile.png",
             "brown_tile.png",
             "gray_tile.png"
@@ -82,6 +86,9 @@ namespace pmt
                 _textures["red.png"],
                 _textures["shield.png"],
                 _textures["excl.png"],
+                _textures["green_rect.png"],
+                _textures["red_rect.png"],
+                _textures["orange_rect.png"],
                 _font,
                 _map->get_param(tank_str + "_human") == "true"
                     ? GameSide::Human : GameSide::Computer,
@@ -128,6 +135,9 @@ namespace pmt
 
         bool tank_hit = false;
         bool env_hit = false;
+
+        if (_tanks[_tank_turn]->can_shoot())
+            _tanks[_tank_turn]->increase_shot_power(delta);
 
         for (auto& bullet : _bullet_mgr->get_flying_bullets()) {
             for (auto& tank : _tanks) {
@@ -177,11 +187,11 @@ namespace pmt
         sf::Event event;
 
         while (_window->pollEvent(event)) {
+            auto& current_tank = _tanks[_tank_turn];
+
             if (event.type == sf::Event::Closed)
                 _window->close();
             else if (event.type == sf::Event::KeyPressed) {
-                auto& current_tank = _tanks[_tank_turn];
-
                 if (current_tank->is_human()) {
                     if (_hud->is_shop_open()) {
 						if (event.key.code == sf::Keyboard::Escape)
@@ -192,15 +202,14 @@ namespace pmt
                             _hud->shop_down();
                         else if (event.key.code == sf::Keyboard::Return)
                             _hud->buy();
-
                     } else {
                         if (event.key.code == sf::Keyboard::Up)
                             current_tank->gun_up();
                         else if (event.key.code == sf::Keyboard::Down)
                             current_tank->gun_down();
                         else if (event.key.code == sf::Keyboard::Space) {
-                            current_tank->shoot();
-                            _hud->show_cash(current_tank);
+                            if (! current_tank->can_shoot())
+                                current_tank->init_shot();
                         } else if (event.key.code == sf::Keyboard::Right) {
                             current_tank->next_weapon();
                             _hud->show_cash(current_tank);
@@ -212,6 +221,11 @@ namespace pmt
                         else if (event.key.code == sf::Keyboard::Escape)
                             _window->close();
                     }
+                }
+            } else if (event.type == sf::Event::KeyReleased) {
+                if (current_tank->can_shoot()) {
+                    current_tank->shoot();
+                    _hud->show_cash(current_tank);
                 }
             }
         }
