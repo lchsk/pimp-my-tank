@@ -216,7 +216,7 @@ namespace pmt
                         } else if (event.key.code == sf::Keyboard::Left) {
                             current_tank->previous_weapon();
                             _hud->show_cash(current_tank);
-                        } else if (event.key.code == sf::Keyboard::Return)
+                        } else if (event.key.code == sf::Keyboard::Key::S)
                             _hud->open_shop(current_tank);
                         else if (event.key.code == sf::Keyboard::Escape)
                             _window->close();
