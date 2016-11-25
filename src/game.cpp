@@ -20,6 +20,10 @@ namespace pmt
             "trees3.png",
             "trees4.png",
 
+            "pole.png",
+            "flag_1.png",
+            "flag_2.png",
+
             "gun.png",
             "tank.png",
             "shell.png",
@@ -56,7 +60,7 @@ namespace pmt
             _textures[filename] = std::move(texture);
         }
 
-        _bullet_mgr = std::make_shared<pmt::BulletMgr>();
+        _bullet_mgr = std::make_shared<pmt::BulletMgr>(_textures);
         _bullet_mgr->add_bullets(pmt::WeaponType::Missile,
                                  1,
                                  _textures["shell.png"]);
@@ -67,7 +71,7 @@ namespace pmt
         _font = std::make_shared<sf::Font>();
 
         _map = std::make_unique<pmt::Map>(_tiles_map, _textures);
-        _hud = std::make_unique<pmt::Hud>(_font);
+        _hud = std::make_unique<pmt::Hud>(_textures, _font);
 
         _tanks_count = std::stoi(_map->get_param("tanks_count"));
 
@@ -131,7 +135,7 @@ namespace pmt
     {
         _bullet_mgr->update(delta);
         _map->update(delta);
-        _hud->update(delta);
+        _hud->update(delta, _bullet_mgr->get_wind());
 
         bool tank_hit = false;
         bool env_hit = false;

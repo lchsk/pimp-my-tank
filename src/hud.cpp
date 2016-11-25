@@ -5,7 +5,8 @@
 
 namespace pmt
 {
-    Hud::Hud(std::shared_ptr<sf::Font>& font) :
+    Hud::Hud(std::unordered_map<std::string, std::unique_ptr<sf::Texture> >&
+             textures, std::shared_ptr<sf::Font>& font) :
         _font(font),
         _show_cash(false),
         _shop_open(false),
@@ -60,6 +61,19 @@ namespace pmt
             _shop_prices[offer.type]->setColor(pmt::color::Blue);
             _shop_prices[offer.type]->setString("$" + std::to_string(offer.price));
         }
+
+        _pole = std::make_unique<sf::Sprite>(*textures["pole.png"].get());
+        _pole->setScale(1.5, 1.5);
+        _pole->setPosition(
+            pmt::config::WINDOW_W / 2 - textures["pole.png"]->getSize().x / 2,
+        0);
+
+        std::vector<std::string> frames = {"flag_1.png", "flag_2.png"};
+
+        _flag = std::make_unique<pmt::Animation>(textures, frames);
+        _flag->set_position(pmt::config::WINDOW_W / 2, 43);
+        _flag->set_speed(0);
+        _flag->play();
     }
 
     Hud::~Hud()
@@ -69,6 +83,9 @@ namespace pmt
     void Hud::render(sf::RenderWindow& window)
     {
         window.draw(*_text_turn_name);
+
+        window.draw(*_pole);
+        _flag->render(window);
 
         if (_show_cash) {
             window.draw(*_text_cash);
@@ -103,8 +120,11 @@ namespace pmt
 		}
     }
 
-    void Hud::update(sf::Time& delta)
+    void Hud::update(sf::Time& delta, double wind)
     {
+        _flag->set_speed(pmt::util::linear(abs(wind), 0.02, 0.4, -1, 1));
+        _flag->set_scale(wind < 0 ? -2 : 2, 2);
+        _flag->update(delta);
     }
 
     bool Hud::is_shop_open() const

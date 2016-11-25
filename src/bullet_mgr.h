@@ -5,9 +5,12 @@
 #include <vector>
 #include <unordered_map>
 #include <memory>
+#include <random>
 
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
+
+#include "animation.h"
 
 namespace pmt
 {
@@ -77,7 +80,8 @@ namespace pmt
             BulletMgr(const BulletMgr&) = delete;
             BulletMgr& operator=(const BulletMgr&) = delete;
 
-            BulletMgr();
+            BulletMgr(std::unordered_map<std::string, std::unique_ptr<sf::Texture> >&
+               textures);
             ~BulletMgr();
 
             void update(sf::Time delta);
@@ -98,9 +102,12 @@ namespace pmt
                 get_flying_bullets();
 
             std::string get_weapon_name(const WeaponType type);
+            double get_wind() const;
 
         private:
             void _simulate(sf::Time delta, std::shared_ptr<pmt::Bullet> bullet);
+            void _update_wind(sf::Time delta);
+            double _get_random();
 
             std::unordered_map
                 <WeaponType, std::vector<std::shared_ptr<pmt::Bullet> > >
@@ -109,6 +116,13 @@ namespace pmt
             std::vector<std::shared_ptr<pmt::Bullet> > _vec;
 
             std::unordered_map<WeaponType, std::string> _weapon_names;
+
+            double _wind;
+            double _wind_change_timer;
+
+            std::unique_ptr<std::uniform_real_distribution<double> > _urd;
+            std::unique_ptr<std::random_device> _rd;
+            std::unique_ptr<std::mt19937> _mt;
     };
 }
 

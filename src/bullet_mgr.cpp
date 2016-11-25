@@ -106,12 +106,19 @@ namespace pmt
         return _flying_time;
     }
 
-    BulletMgr::BulletMgr()
+    BulletMgr::BulletMgr(std::unordered_map<std::string, std::unique_ptr<sf::Texture> >&
+               textures) :
+        _wind(0),
+        _wind_change_timer(0)
     {
         _weapon_names = {
             {WeaponType::Missile, "Missile"},
             {WeaponType::MagnumMissile, "Magnum Missile"},
         };
+
+        _urd = std::make_unique<std::uniform_real_distribution<double> >(-0.5, 0.5);
+        _rd = std::make_unique<std::random_device>();
+        _mt = std::make_unique<std::mt19937>((*_rd)());
     }
 
     BulletMgr::~BulletMgr()
@@ -185,6 +192,8 @@ namespace pmt
 
     void BulletMgr::update(sf::Time delta)
     {
+        _update_wind(delta);
+
         for (auto it = _bullets.begin(); it != _bullets.end(); ++it) {
             for (auto& bullet : it->second) {
                 if (bullet->is_flying()) {
@@ -205,14 +214,38 @@ namespace pmt
         }
     }
 
+    double BulletMgr::get_wind() const
+    {
+        return _wind;
+    }
+
+    void BulletMgr::_update_wind(sf::Time delta)
+    {
+        _wind_change_timer += delta.asMilliseconds();
+
+        if (_wind_change_timer > 1500) {
+            std::cout << "CHANGE WIND\n";
+
+            _wind += _get_random();
+            std::cout << "WIND: " << _wind << "\n";
+            _wind_change_timer = 0;
+
+        }
+    }
+
+    double BulletMgr::_get_random()
+    {
+        return (*_urd)(*_mt);
+    }
+
     void BulletMgr::_simulate(sf::Time delta, std::shared_ptr<pmt::Bullet> bullet)
     {
-        double g = 9.81;
-        double Gamma_wind = 0.0;
-        double C_air = 1.0;
-        double C_wind = 50.0;
-        double V_wind = 0.0;
-        double mass = 100.0;
+        double g = pmt::config::G;
+        double Gamma_wind = pmt::config::GAMMA_WIND;
+        double C_air = pmt::config::C_AIR;
+        double C_wind = pmt::config::C_WIND;
+        double V_wind = _wind;
+        double mass = 200.0;
 
         double cosX, cosY;
         double b, Lx, Ly;

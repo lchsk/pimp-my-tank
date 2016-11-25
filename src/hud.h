@@ -8,6 +8,7 @@
 
 #include "tank.h"
 #include "util.h"
+#include "animation.h"
 
 namespace pmt
 {
@@ -15,11 +16,12 @@ namespace pmt
     class Hud
     {
     public:
-        Hud(std::shared_ptr<sf::Font>& font);
+        Hud(std::unordered_map<std::string, std::unique_ptr<sf::Texture> >&
+            textures, std::shared_ptr<sf::Font>& font);
         ~Hud();
 
         void render(sf::RenderWindow& window);
-        void update(sf::Time& delta);
+        void update(sf::Time& delta, double wind);
 
         void show_turn(std::shared_ptr<pmt::Tank>& tank);
         void show_cash(std::shared_ptr<pmt::Tank>& tank);
@@ -53,6 +55,8 @@ namespace pmt
         std::unordered_map<OfferType, std::unique_ptr<sf::Text> > _shop_descs;
         std::unordered_map<OfferType, std::unique_ptr<sf::Text> > _shop_prices;
 
+        std::unique_ptr<pmt::Animation> _flag;
+        std::unique_ptr<sf::Sprite> _pole;
     };
 }
 
