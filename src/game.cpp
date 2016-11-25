@@ -194,8 +194,9 @@ namespace pmt
             else if (event.type == sf::Event::KeyPressed) {
                 if (current_tank->is_human()) {
                     if (_hud->is_shop_open()) {
-						if (event.key.code == sf::Keyboard::Escape)
-							_hud->close_shop();
+                        if (event.key.code == sf::Keyboard::Escape
+                            || event.key.code == sf::Keyboard::Key::S)
+                            _hud->close_shop();
                         else if (event.key.code == sf::Keyboard::Up)
                             _hud->shop_up();
                         else if (event.key.code == sf::Keyboard::Down)
