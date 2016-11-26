@@ -1,4 +1,11 @@
 tanks_count=3
+
+# Is initial wind random?
+random_wind=true
+
+# Speed of wind at the start of the game
+initial_wind=-4.59
+
 # SIEMA
 tank_0_x=250
 tank_0_y=292

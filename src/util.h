@@ -2,6 +2,7 @@
 #define UTIL_H
 
 #include <iomanip>
+#include <random>
 
 #include <SFML/Graphics.hpp>
 
@@ -79,6 +80,8 @@ namespace pmt
 
         const double WIND_POWER_COEF = 30.0;
 
+        const double WIND_MULTIPLIER = 8.0;
+
         const double G = 20.0;
         const double GAMMA_WIND = 180.0;
         const double C_AIR = 3.0;
@@ -111,6 +114,15 @@ namespace pmt
             stream << std::fixed << std::setprecision(precision) << val;
 
             return stream.str();
+        }
+
+        inline double get_random(double min, double max)
+        {
+            std::uniform_real_distribution<double> urd(min, max);
+            std::random_device rd;
+            std::mt19937 mt(rd());
+
+            return urd(mt);
         }
     }
 

@@ -27,7 +27,7 @@ namespace pmt
             BulletMgr& operator=(const BulletMgr&) = delete;
 
             BulletMgr(std::unordered_map<std::string, std::unique_ptr<sf::Texture> >&
-               textures);
+                      textures, double wind);
             ~BulletMgr();
 
             void update(sf::Time delta);

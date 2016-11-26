@@ -60,7 +60,20 @@ namespace pmt
             _textures[filename] = std::move(texture);
         }
 
-        _bullet_mgr = std::make_shared<pmt::BulletMgr>(_textures);
+        _map = std::make_unique<pmt::Map>(_tiles_map, _textures);
+
+        double wind;
+
+        if (_map->get_param("random_wind") == "true") {
+            wind = pmt::util::get_random(-1, 1);
+        } else {
+            wind = std::stod(_map->get_param("initial_wind"))
+                / pmt::config::WIND_MULTIPLIER;
+        }
+
+        std::cout << "wind: " << wind << "\n";
+
+        _bullet_mgr = std::make_shared<pmt::BulletMgr>(_textures, wind);
         _bullet_mgr->add_bullets(pmt::WeaponType::Missile,
                                  1,
                                  _textures["shell.png"]);
@@ -69,8 +82,6 @@ namespace pmt
                                  _textures["shell.png"]);
 
         _font = std::make_shared<sf::Font>();
-
-        _map = std::make_unique<pmt::Map>(_tiles_map, _textures);
         _hud = std::make_unique<pmt::Hud>(_textures, _font);
 
         _tanks_count = std::stoi(_map->get_param("tanks_count"));

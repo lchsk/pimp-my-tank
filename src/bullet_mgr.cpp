@@ -6,8 +6,8 @@
 namespace pmt
 {
     BulletMgr::BulletMgr(std::unordered_map<std::string, std::unique_ptr<sf::Texture> >&
-               textures) :
-        _wind(0),
+                         textures, double wind) :
+        _wind(wind),
         _wind_change_timer(0)
     {
         _weapon_names = {

@@ -127,7 +127,9 @@ namespace pmt
         _flag->set_scale(wind < 0 ? -2 : 2, 2);
         _flag->update(delta);
 
-        _text_wind->setString(pmt::util::to_string_prec(fabs(8 * wind)) + " mph");
+        _text_wind->setString(
+            pmt::util::to_string_prec(
+                fabs(pmt::config::WIND_MULTIPLIER * wind)) + " mph");
     }
 
     bool Hud::is_shop_open() const
