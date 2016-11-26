@@ -99,9 +99,10 @@ namespace pmt
 
             if (pos.x > pmt::config::WINDOW_W
                 || pos.x < 0
-                || pos.y < 0
+                || pos.y < -(int) pmt::config::WINDOW_H
                 || pos.y > pmt::config::WINDOW_H) {
                 bullet->hit();
+
                 return true;
             }
         }
