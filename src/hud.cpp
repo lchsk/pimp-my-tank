@@ -39,19 +39,19 @@ namespace pmt
         for (auto& offer: pmt::offers) {
             _shop_names[offer.type] = std::make_unique<sf::Text>();
             _shop_names[offer.type]->setFont(*_font);
-            _shop_names[offer.type]->setCharacterSize(18);
+            _shop_names[offer.type]->setCharacterSize(16);
             _shop_names[offer.type]->setColor(pmt::color::Blue);
             _shop_names[offer.type]->setString(offer.name);
 
             _shop_descs[offer.type] = std::make_unique<sf::Text>();
             _shop_descs[offer.type]->setFont(*_font);
-            _shop_descs[offer.type]->setCharacterSize(14);
+            _shop_descs[offer.type]->setCharacterSize(16);
             _shop_descs[offer.type]->setColor(pmt::color::Blue);
             _shop_descs[offer.type]->setString(offer.desc);
 
             _shop_prices[offer.type] = std::make_unique<sf::Text>();
             _shop_prices[offer.type]->setFont(*_font);
-            _shop_prices[offer.type]->setCharacterSize(20);
+            _shop_prices[offer.type]->setCharacterSize(16);
             _shop_prices[offer.type]->setColor(pmt::color::Blue);
             _shop_prices[offer.type]->setString("$" + std::to_string(offer.price));
         }

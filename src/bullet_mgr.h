@@ -49,6 +49,7 @@ namespace pmt
 
             std::string get_weapon_name(const WeaponType type);
             double get_wind() const;
+            void set_wind(double wind);
 
         private:
             void _simulate(sf::Time delta, std::shared_ptr<pmt::Bullet> bullet);

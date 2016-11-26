@@ -182,6 +182,17 @@ namespace pmt
             _add_shield(100);
             break;
 
+        case OfferType::ZeroWind:
+            _bullet_mgr->set_wind(0.01 * _bullet_mgr->get_wind());
+            break;
+        case OfferType::WeakerWind:
+            _bullet_mgr->set_wind(_bullet_mgr->get_wind() / 3.0);
+            break;
+
+        case OfferType::StrongerWind:
+            _bullet_mgr->set_wind(_bullet_mgr->get_wind() * 3.0);
+            break;
+
         case OfferType::ShotPower:
         case OfferType::ShowShotAngle:
         case OfferType::Crosshairs:

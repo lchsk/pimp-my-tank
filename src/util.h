@@ -19,6 +19,10 @@ namespace pmt
         Shield50,
         Shield100,
 
+        WeakerWind,
+        StrongerWind,
+        ZeroWind,
+
 		Transparency,
         RedColor,
         BlueColor,
@@ -60,6 +64,10 @@ namespace pmt
         Offer(OfferType::Shield25, "Shield +25", "Magnum Missile", 50),
         Offer(OfferType::Shield50, "Shield +50", "Magnum Missile", 50),
         Offer(OfferType::Shield100, "SHield +100", "Magnum Missile", 50),
+
+        Offer(OfferType::WeakerWind, "Weaker Wind", "Magnum Missile", 50),
+        Offer(OfferType::StrongerWind, "Stronger Wind", "Magnum Missile", 50),
+        Offer(OfferType::ZeroWind, "Zero Wind", "Magnum Missile", 50),
 
         Offer(OfferType::RedColor, "Red tank color", "Paint your tank red", 50),
         Offer(OfferType::BlueColor, "Blue tank color", "Paint your tank blue", 50),

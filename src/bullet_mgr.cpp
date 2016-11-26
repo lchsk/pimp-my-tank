@@ -119,6 +119,11 @@ namespace pmt
         return _wind;
     }
 
+    void BulletMgr::set_wind(double wind)
+    {
+        _wind = wind;
+    }
+
     void BulletMgr::_update_wind(sf::Time delta)
     {
         // Don't update wind if a bullet is flying
