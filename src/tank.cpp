@@ -11,15 +11,8 @@ namespace pmt
         int initial_shield,
         int cash,
         std::shared_ptr<pmt::BulletMgr>& bullet_mgr,
-        std::unique_ptr<sf::Texture>& tank,
-        std::unique_ptr<sf::Texture>& gun,
-        std::unique_ptr<sf::Texture>& green,
-        std::unique_ptr<sf::Texture>& red,
-        std::unique_ptr<sf::Texture>& shield,
-        std::unique_ptr<sf::Texture>& excl,
-        std::unique_ptr<sf::Texture>& green_rect,
-        std::unique_ptr<sf::Texture>& red_rect,
-        std::unique_ptr<sf::Texture>& orange_rect,
+        std::unordered_map<std::string, std::unique_ptr<sf::Texture> >&
+        textures,
         std::shared_ptr<sf::Font>& font,
         GameSide side, bool left, int x, int y)
         : _side(side),
@@ -33,9 +26,9 @@ namespace pmt
           _shot_power(-1.0f),
           _current_weapon(WeaponType::Missile)
     {
-        _tank = std::make_unique<sf::Sprite>(*tank.get());
-        _gun = std::make_unique<sf::Sprite>(*gun.get());
-        _excl = std::make_unique<sf::Sprite>(*excl.get());
+        _tank = std::make_unique<sf::Sprite>(*textures["tank.png"].get());
+        _gun = std::make_unique<sf::Sprite>(*textures["gun.png"].get());
+        _excl = std::make_unique<sf::Sprite>(*textures["excl.png"].get());
 
         _bullet_mgr = bullet_mgr;
         _font = font;
@@ -48,9 +41,12 @@ namespace pmt
         _text_tank_control->setCharacterSize(8);
 
         for (int i = 0; i < 10; i++) {
-            _greens.push_back(std::make_unique<sf::Sprite>(*green.get()));
-            _reds.push_back(std::make_unique<sf::Sprite>(*red.get()));
-            _shields.push_back(std::make_unique<sf::Sprite>(*shield.get()));
+            _greens.push_back(
+                std::make_unique<sf::Sprite>(*textures["green.png"].get()));
+            _reds.push_back(
+                std::make_unique<sf::Sprite>(*textures["red.png"].get()));
+            _shields.push_back(
+                std::make_unique<sf::Sprite>(*textures["shield.png"].get()));
         }
 
         _change_view();
@@ -60,8 +56,10 @@ namespace pmt
                 _green_power.push_back(
                     std::make_unique<sf::Sprite>(
                         (row >= 0 && row < 4)
-                            ? *green_rect.get() : (row >= 4 && row < 8)
-                            ? *orange_rect.get() : *red_rect.get()
+                        ? *textures["green_rect.png"].get()
+                        : (row >= 4 && row < 8)
+                        ? *textures["orange_rect.png"].get()
+                        : *textures["red_rect.png"].get()
                         )
                     );
 

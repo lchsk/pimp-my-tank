@@ -27,15 +27,8 @@ namespace pmt
             int initial_shield,
             int cash,
             std::shared_ptr<pmt::BulletMgr>& bullet_mgr,
-            std::unique_ptr<sf::Texture>& tank,
-            std::unique_ptr<sf::Texture>& gun,
-            std::unique_ptr<sf::Texture>& green,
-            std::unique_ptr<sf::Texture>& red,
-            std::unique_ptr<sf::Texture>& shield,
-            std::unique_ptr<sf::Texture>& excl,
-            std::unique_ptr<sf::Texture>& green_rect,
-            std::unique_ptr<sf::Texture>& red_rect,
-            std::unique_ptr<sf::Texture>& orange_rect,
+            std::unordered_map<std::string, std::unique_ptr<sf::Texture> >&
+                textures,
             std::shared_ptr<sf::Font>& font,
             GameSide side, bool left, int x, int y);
         ~Tank();
