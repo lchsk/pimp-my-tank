@@ -184,6 +184,9 @@ namespace pmt
 
         for (auto& bullet : _bullet_mgr->get_flying_bullets()) {
             for (auto& tank : _tanks) {
+                if (! tank->is_alive())
+                    continue;
+
                 tank_hit = tank->check_collision(bullet);
 
                 if (tank_hit) {
