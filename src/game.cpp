@@ -94,14 +94,23 @@ namespace pmt
             std::cout << "No font found\n";
         }
 
+        std::unordered_map<WeaponType, unsigned> weapons;
+
         for (unsigned i = 0; i < _tanks_count; i++) {
             std::string tank_str = "tank_" + std::to_string(i);
+
+            weapons[WeaponType::Missile] =
+                std::stoi(_map->get_param(tank_str + "_missiles"));
+
+            weapons[WeaponType::MagnumMissile] =
+                std::stoi(_map->get_param(tank_str + "_magnums"));
 
             _tanks.push_back(std::make_shared<pmt::Tank>(
                 i,
                 std::stoi(_map->get_param(tank_str + "_health")),
                 std::stoi(_map->get_param(tank_str + "_shield")),
                 std::stoi(_map->get_param(tank_str + "_cash")),
+                weapons,
                 _bullet_mgr,
                 _textures,
                 _font,

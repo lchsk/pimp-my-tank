@@ -9,7 +9,6 @@ initial_wind=-4.59
 # How often wind changes, in milliseconds
 wind_change_period=1000
 
-# SIEMA
 tank_0_x=250
 tank_0_y=292
 tank_0_side=right
@@ -17,6 +16,8 @@ tank_0_human=true
 tank_0_health=50
 tank_0_shield=50
 tank_0_cash=150
+tank_0_missiles=150
+tank_0_magnums=1
 
 tank_1_x=680
 tank_1_y=292
@@ -25,6 +26,8 @@ tank_1_human=true
 tank_1_health=80
 tank_1_shield=100
 tank_1_cash=100
+tank_1_missiles=150
+tank_1_magnums=15
 
 tank_2_x=450
 tank_2_y=324
@@ -33,3 +36,5 @@ tank_2_human=true
 tank_2_health=50
 tank_2_shield=50
 tank_2_cash=50
+tank_2_missiles=150
+tank_2_magnums=150

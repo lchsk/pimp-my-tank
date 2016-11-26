@@ -26,6 +26,7 @@ namespace pmt
             int initial_health,
             int initial_shield,
             int cash,
+            std::unordered_map<WeaponType, unsigned>& weapons,
             std::shared_ptr<pmt::BulletMgr>& bullet_mgr,
             std::unordered_map<std::string, std::unique_ptr<sf::Texture> >&
                 textures,

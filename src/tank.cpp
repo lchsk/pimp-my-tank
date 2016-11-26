@@ -10,6 +10,7 @@ namespace pmt
         int initial_health,
         int initial_shield,
         int cash,
+        std::unordered_map<WeaponType, unsigned>& weapons,
         std::shared_ptr<pmt::BulletMgr>& bullet_mgr,
         std::unordered_map<std::string, std::unique_ptr<sf::Texture> >&
         textures,
@@ -71,9 +72,9 @@ namespace pmt
         // Set initial gun rotation
         _rotate_gun(0);
 
-        // Set initial weapons
-        _weapons[WeaponType::Missile] = 0;
-        // _weapons[WeaponType::MagnumMissile] = 5;
+        // Initial weapons
+        for (auto it = weapons.begin(); it != weapons.end(); it++)
+            _weapons[it->first] = it->second;
     }
 
     std::string Tank::get_weapon_name() const
