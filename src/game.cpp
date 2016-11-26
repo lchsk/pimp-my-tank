@@ -122,7 +122,17 @@ namespace pmt
             ));
         }
 
-        _tank_turn = 0;
+        std::string first_turn_param = _map->get_param("first_turn");
+
+        unsigned first_turn = 0;
+
+        if (first_turn_param == "random") {
+            first_turn = pmt::util::get_random_int(0, _tanks_count - 1);
+        } else {
+            first_turn = std::stoi(first_turn_param);
+        }
+
+        _tank_turn = first_turn;
         _tanks[_tank_turn]->activate();
 
         _hud->show_turn(_tanks[_tank_turn]);

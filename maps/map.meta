@@ -9,6 +9,9 @@ initial_wind=-4.59
 # How often wind changes, in milliseconds
 wind_change_period=1000
 
+# Who gets to shoot first: either "random" of id of the player (0, 1, 2 etc..)
+first_turn=random
+
 tank_0_x=250
 tank_0_y=292
 tank_0_side=right

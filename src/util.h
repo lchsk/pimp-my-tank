@@ -132,6 +132,16 @@ namespace pmt
 
             return urd(mt);
         }
+
+        inline int get_random_int(int min, int max)
+        {
+            std::uniform_int_distribution<int> urd(min, max);
+            std::random_device rd;
+            std::mt19937 mt(rd());
+
+            return urd(mt);
+        }
+
     }
 
     namespace color
