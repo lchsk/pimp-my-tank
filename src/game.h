@@ -54,7 +54,7 @@ namespace pmt
             std::shared_ptr<pmt::BulletMgr> _bullet_mgr;
 
             unsigned _tanks_count;
-            int _tank_turn;
+            unsigned _tank_turn;
     };
 }
 #endif

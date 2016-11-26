@@ -32,8 +32,8 @@ namespace pmt
         std::vector<std::unique_ptr<sf::Sprite> > _frames;
         sf::Time _since_update;
 
-        unsigned _frame;
         double _speed;
+        unsigned _frame;
         bool _is_playing;
         sf::Vector2f _pos;
         sf::Vector2f _scale;

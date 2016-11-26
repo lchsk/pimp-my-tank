@@ -7,11 +7,11 @@ namespace pmt
 {
     Hud::Hud(std::unordered_map<std::string, std::unique_ptr<sf::Texture> >&
              textures, std::shared_ptr<sf::Font>& font) :
-        _font(font),
         _show_cash(false),
         _shop_open(false),
         _top_shop_item(0),
-        _selected(0)
+        _selected(0),
+        _font(font)
     {
         _text_turn_name = std::make_unique<sf::Text>();
         _text_turn_name->setFont(*_font);

@@ -30,9 +30,9 @@ namespace pmt
     public:
         Offer(OfferType type, std::string name, std::string desc, int price)
             : type(type),
+            price(price),
             name(name),
-            desc(desc),
-            price(price) {}
+            desc(desc) {}
         ~Offer()
         {
         }

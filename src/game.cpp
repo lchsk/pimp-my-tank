@@ -251,7 +251,7 @@ namespace pmt
 
         bool found_next_tank = false;
 
-        for (int i = 0; i < _tanks_count; i++) {
+        for (unsigned i = 0; i < _tanks_count; i++) {
             unsigned next_tank_id = _next_tank_id();
 
             auto& tank = _tanks[next_tank_id];

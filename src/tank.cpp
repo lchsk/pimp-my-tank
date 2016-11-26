@@ -24,10 +24,10 @@ namespace pmt
           _has_turn(false),
           _health(100),
           _shield(100),
-          _shot_power(-1.0f),
           _cash(110002),
           _tank_id(tank_id),
           _gun_rotation(7.0f),
+          _shot_power(-1.0f),
           _current_weapon(WeaponType::Missile)
     {
         _tank = std::make_unique<sf::Sprite>(*tank.get());
@@ -73,8 +73,8 @@ namespace pmt
             _shields[i]->setPosition(tank_middle_x + i * 2, y + shield_diff);
         }
 
-        for (int row = 0; row < SHOT_BAR_ROWS; row ++) {
-            for (int col = 0; col < SHOT_BAR_COLS; col++) {
+        for (unsigned row = 0; row < SHOT_BAR_ROWS; row ++) {
+            for (unsigned col = 0; col < SHOT_BAR_COLS; col++) {
                 _green_power.push_back(
                     std::make_unique<sf::Sprite>(
                         (row >= 0 && row < 4)
@@ -200,6 +200,13 @@ namespace pmt
         case OfferType::Shield100:
             _add_shield(100);
             break;
+
+        case OfferType::ShotPower:
+        case OfferType::ShowShotAngle:
+        case OfferType::Crosshairs:
+            // TODO
+            break;
+
         }
     }
 
