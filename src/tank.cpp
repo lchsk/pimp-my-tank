@@ -7,6 +7,9 @@ namespace pmt
 {
     Tank::Tank(
         unsigned tank_id,
+        int initial_health,
+        int initial_shield,
+        int cash,
         std::shared_ptr<pmt::BulletMgr>& bullet_mgr,
         std::unique_ptr<sf::Texture>& tank,
         std::unique_ptr<sf::Texture>& gun,
@@ -22,9 +25,9 @@ namespace pmt
         : _side(side),
           _left(left),
           _has_turn(false),
-          _health(100),
-          _shield(100),
-          _cash(110002),
+          _health(initial_health),
+          _shield(initial_shield),
+          _cash(cash),
           _tank_id(tank_id),
           _gun_rotation(7.0f),
           _shot_power(-1.0f),

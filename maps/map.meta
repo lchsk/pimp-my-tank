@@ -11,13 +11,22 @@ tank_0_x=250
 tank_0_y=292
 tank_0_side=right
 tank_0_human=true
+tank_0_health=50
+tank_0_shield=50
+tank_0_cash=150
 
 tank_1_x=680
 tank_1_y=292
 tank_1_side=left
 tank_1_human=true
+tank_1_health=80
+tank_1_shield=100
+tank_1_cash=100
 
 tank_2_x=450
 tank_2_y=324
 tank_2_side=left
 tank_2_human=true
+tank_2_health=50
+tank_2_shield=50
+tank_2_cash=50

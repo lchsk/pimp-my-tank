@@ -23,6 +23,9 @@ namespace pmt
     public:
         Tank(
             unsigned tank_id,
+            int initial_health,
+            int initial_shield,
+            int cash,
             std::shared_ptr<pmt::BulletMgr>& bullet_mgr,
             std::unique_ptr<sf::Texture>& tank,
             std::unique_ptr<sf::Texture>& gun,

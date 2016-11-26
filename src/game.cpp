@@ -93,7 +93,11 @@ namespace pmt
         for (unsigned i = 0; i < _tanks_count; i++) {
             std::string tank_str = "tank_" + std::to_string(i);
 
-            _tanks.push_back(std::make_shared<pmt::Tank>(i,
+            _tanks.push_back(std::make_shared<pmt::Tank>(
+                i,
+                std::stoi(_map->get_param(tank_str + "_health")),
+                std::stoi(_map->get_param(tank_str + "_shield")),
+                std::stoi(_map->get_param(tank_str + "_cash")),
                 _bullet_mgr,
                 _textures["tank.png"],
                 _textures["gun.png"],
