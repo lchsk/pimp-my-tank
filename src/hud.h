@@ -55,6 +55,8 @@ namespace pmt
         std::unordered_map<OfferType, std::unique_ptr<sf::Text> > _shop_descs;
         std::unordered_map<OfferType, std::unique_ptr<sf::Text> > _shop_prices;
 
+		std::unique_ptr<sf::Text> _text_wind;
+
         std::unique_ptr<pmt::Animation> _flag;
         std::unique_ptr<sf::Sprite> _pole;
     };

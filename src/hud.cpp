@@ -74,6 +74,12 @@ namespace pmt
         _flag->set_position(pmt::config::WINDOW_W / 2, 43);
         _flag->set_speed(0);
         _flag->play();
+
+        _text_wind = std::make_unique<sf::Text>();
+        _text_wind->setFont(*_font);
+        _text_wind->setCharacterSize(16);
+        _text_wind->setColor(pmt::color::Blue);
+        _text_wind->setPosition(pmt::config::WINDOW_W / 2 + 30, 30);
     }
 
     Hud::~Hud()
@@ -86,6 +92,8 @@ namespace pmt
 
         window.draw(*_pole);
         _flag->render(window);
+
+        window.draw(*_text_wind);
 
         if (_show_cash) {
             window.draw(*_text_cash);
@@ -125,6 +133,8 @@ namespace pmt
         _flag->set_speed(pmt::util::linear(abs(wind), 0.02, 0.4, -1, 1));
         _flag->set_scale(wind < 0 ? -2 : 2, 2);
         _flag->update(delta);
+
+        _text_wind->setString(pmt::util::to_string_prec(fabs(8 * wind)) + " mph");
     }
 
     bool Hud::is_shop_open() const

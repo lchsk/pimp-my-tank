@@ -1,6 +1,8 @@
 #ifndef UTIL_H
 #define UTIL_H
 
+#include <iomanip>
+
 #include <SFML/Graphics.hpp>
 
 namespace pmt
@@ -96,6 +98,14 @@ namespace pmt
         {
             return (target_max - target_min) *
                 (x - input_min) / (input_max - input_min) + target_min;
+        }
+
+        inline std::string to_string_prec(double val, unsigned precision=2)
+        {
+            std::stringstream stream;
+            stream << std::fixed << std::setprecision(precision) << val;
+
+            return stream.str();
         }
     }
 
