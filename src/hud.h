@@ -44,18 +44,14 @@ namespace pmt
         std::shared_ptr<sf::Font> _font;
 
         std::unique_ptr<sf::Text> _text_turn_name;
-
-        std::unique_ptr<sf::Text> _text_cash_label;
         std::unique_ptr<sf::Text> _text_cash;
-
-        std::unique_ptr<sf::Text> _text_weapon_label;
+        std::unique_ptr<sf::Text> _text_weapon_count;
         std::unique_ptr<sf::Text> _text_weapon;
+        std::unique_ptr<sf::Text> _text_wind;
 
         std::unordered_map<OfferType, std::unique_ptr<sf::Text> > _shop_names;
         std::unordered_map<OfferType, std::unique_ptr<sf::Text> > _shop_descs;
         std::unordered_map<OfferType, std::unique_ptr<sf::Text> > _shop_prices;
-
-		std::unique_ptr<sf::Text> _text_wind;
 
         std::unique_ptr<pmt::Animation> _flag;
         std::unique_ptr<sf::Sprite> _pole;
