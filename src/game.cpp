@@ -210,7 +210,8 @@ namespace pmt
                 if (current_tank->is_human()) {
                     if (_hud->is_shop_open()) {
                         if (event.key.code == sf::Keyboard::Escape
-                            || event.key.code == sf::Keyboard::Key::S)
+                            || event.key.code == sf::Keyboard::Key::S
+                            || event.key.code == sf::Keyboard::Key::Q)
                             _hud->close_shop();
                         else if (event.key.code == sf::Keyboard::Up
                             || event.key.code == sf::Keyboard::Key::P)
@@ -236,10 +237,13 @@ namespace pmt
                             _hud->show_cash(current_tank);
                         } else if (event.key.code == sf::Keyboard::Key::S)
                             _hud->open_shop(current_tank);
+                        else if (event.key.code == sf::Keyboard::Key::N)
+                            _next_turn();
                         else if (event.key.code == sf::Keyboard::LControl) {
                             current_tank->spin_around();
                         }
-                        else if (event.key.code == sf::Keyboard::Escape)
+                        else if (event.key.code == sf::Keyboard::Escape
+                            || event.key.code == sf::Keyboard::Key::Q)
                             _window->close();
                     }
                 }

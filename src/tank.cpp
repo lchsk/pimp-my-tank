@@ -72,7 +72,7 @@ namespace pmt
         _rotate_gun(0);
 
         // Set initial weapons
-        _weapons[WeaponType::Missile] = 2;
+        _weapons[WeaponType::Missile] = 0;
         // _weapons[WeaponType::MagnumMissile] = 5;
     }
 
@@ -289,6 +289,9 @@ namespace pmt
 
     void Tank::increase_shot_power(sf::Time delta)
     {
+        if (_weapons[_current_weapon] <= 0)
+            return;
+
         _shot_power += (delta.asMilliseconds() / 5.0);
 
         if (_shot_power > 100)
