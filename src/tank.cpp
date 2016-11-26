@@ -37,41 +37,20 @@ namespace pmt
         _bullet_mgr = bullet_mgr;
         _font = font;
 
-        if (left) {
-            _tank->setScale(-1, 1);
-            _gun->setScale(-1, 1);
-
-            _gun->setPosition(x - 20, y + 6);
-
-        } else {
-            _gun->setPosition(x + 20, y + 6);
-        }
-
-        int tank_width = tank->getSize().x * _tank->getScale().x;
-        int tank_middle_x = x + tank_width / 2 - 10;
-
         _tank->setPosition(x, y);
-        _excl->setPosition(tank_middle_x, y - 30);
 
         _text_tank_control = std::make_unique<sf::Text>();
         _text_tank_control->setString(is_human() ? "Human" : "AI");
         _text_tank_control->setFont(*_font);
         _text_tank_control->setCharacterSize(8);
-        _text_tank_control->setPosition(tank_middle_x + 24, y - 23);
-
-        int health_diff = -7;
-        int shield_diff = -10;
 
         for (int i = 0; i < 10; i++) {
             _greens.push_back(std::make_unique<sf::Sprite>(*green.get()));
-            _greens[i]->setPosition(tank_middle_x + i * 2, y + health_diff);
-
             _reds.push_back(std::make_unique<sf::Sprite>(*red.get()));
-            _reds[i]->setPosition(tank_middle_x + i * 2, y + health_diff);
-
             _shields.push_back(std::make_unique<sf::Sprite>(*shield.get()));
-            _shields[i]->setPosition(tank_middle_x + i * 2, y + shield_diff);
         }
+
+        _change_view();
 
         for (unsigned row = 0; row < SHOT_BAR_ROWS; row ++) {
             for (unsigned col = 0; col < SHOT_BAR_COLS; col++) {
@@ -315,6 +294,12 @@ namespace pmt
             _shot_power = 100.0f;
     }
 
+    void Tank::spin_around()
+    {
+        _left = !_left;
+        _change_view();
+    }
+
     void Tank::_add_shield(int value)
     {
         _shield += value;
@@ -398,5 +383,37 @@ namespace pmt
             _gun->setRotation(_gun_rotation);
         else
             _gun->setRotation(-_gun_rotation);
+    }
+
+    void Tank::_change_view()
+    {
+        int scale = _left ? -1 : 1;
+        int tank_width = _tank->getTexture()->getSize().x * scale;
+
+        double x, y;
+        const int health_diff = -7;
+        const int shield_diff = -10;
+
+        y = _tank->getPosition().y;
+
+        _tank->setPosition(_tank->getPosition().x - tank_width, y);
+
+        x = _tank->getPosition().x;
+
+        const int tank_middle_x = x + tank_width / 2 - 10;
+
+        _excl->setPosition(tank_middle_x, y - 30);
+        _text_tank_control->setPosition(tank_middle_x + 24, y - 23);
+
+        for (int i = 0; i < 10; i++) {
+            _greens[i]->setPosition(tank_middle_x + i * 2, y + health_diff);
+            _reds[i]->setPosition(tank_middle_x + i * 2, y + health_diff);
+            _shields[i]->setPosition(tank_middle_x + i * 2, y + shield_diff);
+        }
+
+        _tank->setScale(scale, 1);
+        _gun->setScale(scale, 1);
+        _gun->setPosition(x + scale * 20, y + 6);
+        _gun->setRotation(-scale * _gun_rotation);
     }
 }

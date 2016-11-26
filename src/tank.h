@@ -55,6 +55,7 @@ namespace pmt
         void previous_weapon();
         void increase_shot_power(sf::Time delta);
         void init_shot();
+        void spin_around();
 
         void activate();
         void deactivate();
@@ -73,6 +74,7 @@ namespace pmt
         void _hit(std::shared_ptr<pmt::Bullet>& bullet);
         void _change_color(const sf::Color color);
         void _add_shield(int value);
+        void _change_view();
 
         std::unique_ptr<sf::Sprite> _tank;
         std::unique_ptr<sf::Sprite> _gun;
