@@ -13,6 +13,7 @@
 #include "map.h"
 #include "bullet_mgr.h"
 #include "hud.h"
+#include "animation.h"
 
 namespace pmt
 {
@@ -52,6 +53,8 @@ namespace pmt
             std::unordered_map<int, std::string> _tiles_map;
 
             std::shared_ptr<pmt::BulletMgr> _bullet_mgr;
+
+            std::unique_ptr<pmt::Animation> _explosion;
 
             unsigned _tanks_count;
             unsigned _tank_turn;

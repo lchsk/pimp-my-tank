@@ -24,6 +24,8 @@ namespace pmt
             "flag_1.png",
             "flag_2.png",
 
+            "explosion.png",
+
             "gun.png",
             "tank.png",
             "shell.png",
@@ -59,6 +61,9 @@ namespace pmt
 
             _textures[filename] = std::move(texture);
         }
+
+        _explosion = std::make_unique<pmt::Animation>(
+            _textures["explosion.png"], 12, 96, 96);
 
         _map = std::make_unique<pmt::Map>(_tiles_map, _textures);
 
@@ -170,6 +175,10 @@ namespace pmt
         bool tank_hit = false;
         bool env_hit = false;
 
+        for (unsigned i = 0; i < _tanks_count; i++) {
+            _tanks[i]->update(delta);
+        }
+
         if (_tanks[_tank_turn]->can_shoot())
             _tanks[_tank_turn]->increase_shot_power(delta);
 
@@ -180,9 +189,8 @@ namespace pmt
                 if (tank_hit) {
                     _tanks[bullet->get_origin_tank()]
                         ->add_cash(pmt::config::REWARD_HIT);
-
-					break;
-				}
+                    break;
+                }
             }
 
             if (tank_hit) {
@@ -190,8 +198,20 @@ namespace pmt
             } else {
                 env_hit = _map->check_collision(bullet);
 
-                if (env_hit)
+                if (env_hit) {
+                    sf::Vector2f expl_size = _explosion->get_size();
+
+                    _explosion->set_position(
+                        bullet->get_position().x - expl_size.x / 2,
+                        bullet->get_position().y - expl_size.y / 2
+                    );
+                    double scale = pmt::util::get_random(0.6, 0.9);
+                    _explosion->set_scale(scale, scale);
+
+                    _explosion->play();
+
                     break;
+                }
             }
         }
 
@@ -199,6 +219,8 @@ namespace pmt
             _next_turn();
 
         _hud->show_cash(_tanks[_tank_turn]);
+
+        _explosion->update(delta);
     }
 
     void Game::render()
@@ -211,6 +233,8 @@ namespace pmt
         }
 
         _bullet_mgr->render(*_window);
+
+        _explosion->render(*_window);
 
         _hud->render(*_window);
         _window->display();

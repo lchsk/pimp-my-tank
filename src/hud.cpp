@@ -67,6 +67,7 @@ namespace pmt
         _flag = std::make_unique<pmt::Animation>(textures, frames);
         _flag->set_position(pmt::config::WINDOW_W / 2, 43);
         _flag->set_speed(0);
+        _flag->loop(true);
         _flag->play();
 
         _text_wind = std::make_unique<sf::Text>();

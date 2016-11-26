@@ -17,6 +17,7 @@ namespace pmt
         double get_initial_speed();
         double get_start_x();
         double get_start_y();
+        sf::Vector2f get_position() const;
         WeaponType get_type() const;
         unsigned get_origin_tank() const;
         std::unique_ptr<sf::Sprite>& get_sprite();

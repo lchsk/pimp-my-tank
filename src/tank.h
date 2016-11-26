@@ -8,6 +8,7 @@
 
 #include "bullet_mgr.h"
 #include "util.h"
+#include "animation.h"
 
 namespace pmt
 {
@@ -35,7 +36,10 @@ namespace pmt
         ~Tank();
 
         void render(sf::RenderWindow& window);
+        void update(sf::Time delta);
 
+        sf::Vector2f get_position() const;
+        double get_middle_x() const;
         bool is_human() const;
         bool is_alive() const;
         bool has_turn() const;
@@ -89,6 +93,8 @@ namespace pmt
 
         std::shared_ptr<sf::Font> _font;
         std::unique_ptr<sf::Text> _text_tank_control;
+
+        std::unique_ptr<pmt::Animation> _explosion;
 
         GameSide _side;
         bool _left;

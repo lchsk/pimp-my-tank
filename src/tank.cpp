@@ -34,6 +34,9 @@ namespace pmt
         _bullet_mgr = bullet_mgr;
         _font = font;
 
+        _explosion = std::make_unique<pmt::Animation>(
+            textures["explosion.png"], 12, 96, 96);
+
         _tank->setPosition(x, y);
 
         _text_tank_control = std::make_unique<sf::Text>();
@@ -261,8 +264,15 @@ namespace pmt
     {
     }
 
+    void Tank::update(sf::Time delta)
+    {
+        _explosion->update(delta);
+    }
+
     void Tank::render(sf::RenderWindow& window)
     {
+        _explosion->render(window);
+
         if (! is_alive())
             return;
 
@@ -291,6 +301,17 @@ namespace pmt
             // Cash for being hit
             _cash += pmt::config::REWARD_BEING_HIT;
 
+            sf::Vector2f pos = get_position();
+            double scale = pmt::util::get_random(0.6, 0.9);
+            _explosion->set_scale(scale, scale);
+
+            sf::Vector2f expl_size = _explosion->get_size();
+
+            _explosion->set_position(
+                pos.x + get_middle_x() - expl_size.x / 2,
+                pos.y - expl_size.y / 2);
+            _explosion->play();
+
             return true;
         }
 
@@ -317,6 +338,19 @@ namespace pmt
     {
         _left = !_left;
         _change_view();
+    }
+
+    sf::Vector2f Tank::get_position() const
+    {
+        return _tank->getPosition();
+    }
+
+    double Tank::get_middle_x() const
+    {
+        double tank_width = _tank->getTexture()->getSize().x
+            * _tank->getScale().x;
+
+        return tank_width / 2;
     }
 
     void Tank::_add_shield(int value)

@@ -19,6 +19,11 @@ namespace pmt
         window.draw(*_sprite);
     }
 
+    sf::Vector2f Bullet::get_position() const
+    {
+        return _sprite->getPosition();
+    }
+
     bool Bullet::is_flying() const
     {
         return _flying;
