@@ -221,6 +221,12 @@ namespace pmt
 
     void BulletMgr::_update_wind(sf::Time delta)
     {
+        // Don't update wind if a bullet is flying
+        for (auto it = _bullets.begin(); it != _bullets.end(); ++it)
+            for (auto& bullet : it->second)
+                if (bullet->is_flying())
+                    return;
+
         _wind_change_timer += delta.asMilliseconds();
 
         if (_wind_change_timer > 1500) {
@@ -244,7 +250,7 @@ namespace pmt
         double Gamma_wind = pmt::config::GAMMA_WIND;
         double C_air = pmt::config::C_AIR;
         double C_wind = pmt::config::C_WIND;
-        double V_wind = _wind;
+        double V_wind = _wind * pmt::config::WIND_POWER_COEF;
         double mass = 200.0;
 
         double cosX, cosY;

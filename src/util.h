@@ -70,6 +70,8 @@ namespace pmt
         const int REWARD_BEING_HIT = 50;
         const int REWARD_HIT = 50;
 
+        const double WIND_POWER_COEF = 30.0;
+
         const double G = 20.0;
         const double GAMMA_WIND = 180.0;
         const double C_AIR = 3.0;
