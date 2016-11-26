@@ -33,6 +33,7 @@ add_executable(${EXECUTABLE_NAME}
     src/tank.cpp
     src/map.cpp
     src/util.cpp
+    src/bullet.cpp
     src/bullet_mgr.cpp
     src/hud.cpp
     src/animation.cpp

@@ -25,6 +25,11 @@ namespace pmt
         NoColor
     };
 
+    enum class WeaponType {
+        Missile,
+        MagnumMissile
+    };
+
     class Offer
     {
     public:
