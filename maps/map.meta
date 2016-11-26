@@ -6,6 +6,9 @@ random_wind=true
 # Speed of wind at the start of the game
 initial_wind=-4.59
 
+# How often wind changes, in milliseconds
+wind_change_period=1000
+
 # SIEMA
 tank_0_x=250
 tank_0_y=292

@@ -62,7 +62,7 @@ namespace pmt
 
         _map = std::make_unique<pmt::Map>(_tiles_map, _textures);
 
-        double wind;
+        double wind, wind_change_period;
 
         if (_map->get_param("random_wind") == "true") {
             wind = pmt::util::get_random(-1, 1);
@@ -71,9 +71,13 @@ namespace pmt
                 / pmt::config::WIND_MULTIPLIER;
         }
 
-        std::cout << "wind: " << wind << "\n";
+        wind_change_period = std::stod(_map->get_param("wind_change_period"));
 
-        _bullet_mgr = std::make_shared<pmt::BulletMgr>(_textures, wind);
+        _bullet_mgr = std::make_shared<pmt::BulletMgr>(
+            _textures,
+            wind,
+            wind_change_period);
+
         _bullet_mgr->add_bullets(pmt::WeaponType::Missile,
                                  1,
                                  _textures["shell.png"]);

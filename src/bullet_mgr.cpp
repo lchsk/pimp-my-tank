@@ -6,9 +6,10 @@
 namespace pmt
 {
     BulletMgr::BulletMgr(std::unordered_map<std::string, std::unique_ptr<sf::Texture> >&
-                         textures, double wind) :
+                         textures, double wind, double wind_change_period) :
         _wind(wind),
-        _wind_change_timer(0)
+        _wind_change_timer(0),
+        _wind_change_period(wind_change_period)
     {
         _weapon_names = {
             {WeaponType::Missile, "Missile"},
@@ -128,13 +129,9 @@ namespace pmt
 
         _wind_change_timer += delta.asMilliseconds();
 
-        if (_wind_change_timer > 1500) {
-            std::cout << "CHANGE WIND\n";
-
+        if (_wind_change_timer > _wind_change_period) {
             _wind += _get_random();
-            std::cout << "WIND: " << _wind << "\n";
             _wind_change_timer = 0;
-
         }
     }
 
