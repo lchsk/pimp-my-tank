@@ -263,6 +263,9 @@ namespace pmt
 
     void Tank::render(sf::RenderWindow& window)
     {
+        if (! is_alive())
+            return;
+
         window.draw(*_gun);
         window.draw(*_tank);
 

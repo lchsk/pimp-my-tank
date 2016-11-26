@@ -275,12 +275,12 @@ namespace pmt
         }
     }
 
-    unsigned Game::_next_tank_id()
+    unsigned Game::_next_tank_id(unsigned tank_id)
     {
-        if (_tank_turn + 1 >= _tanks_count)
+        if (tank_id + 1 >= _tanks_count)
             return 0;
         else
-            return _tank_turn + 1;
+            return tank_id + 1;
     }
 
     void Game::_next_turn()
@@ -289,13 +289,14 @@ namespace pmt
         tank->deactivate();
 
         bool found_next_tank = false;
+        unsigned next_tank_id = _tank_turn;
 
         for (unsigned i = 0; i < _tanks_count; i++) {
-            unsigned next_tank_id = _next_tank_id();
+            next_tank_id = _next_tank_id(next_tank_id);
 
             auto& tank = _tanks[next_tank_id];
 
-            if (tank->is_alive()) {
+            if (tank->is_alive() && _tank_turn != next_tank_id) {
                 found_next_tank = true;
                 _tank_turn = next_tank_id;
                 tank->activate();
@@ -309,6 +310,7 @@ namespace pmt
             std::cout << "NEW TANK ID: " << _tank_turn << "\n";
         } else {
             std::cout << "Game Over\n";
+            std::cout << "WINNER: " << _tank_turn << "\n";
         }
     }
 }

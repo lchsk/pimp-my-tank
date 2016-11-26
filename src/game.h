@@ -33,7 +33,7 @@ namespace pmt
             void render();
 
             void _next_turn();
-            unsigned _next_tank_id();
+            unsigned _next_tank_id(unsigned tank_id);
 
             std::shared_ptr<sf::Font> _font;
 
