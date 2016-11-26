@@ -276,8 +276,8 @@ namespace pmt
         if (! is_alive())
             return;
 
-        window.draw(*_gun);
         window.draw(*_tank);
+        window.draw(*_gun);
 
         if (_has_turn) {
             window.draw(*_excl);
@@ -466,7 +466,7 @@ namespace pmt
 
         _tank->setScale(scale, 1);
         _gun->setScale(scale, 1);
-        _gun->setPosition(x + scale * 20, y + 6);
+        _gun->setPosition(x + scale * 28, y + 5);
         _gun->setRotation(-scale * _gun_rotation);
     }
 }
