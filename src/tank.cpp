@@ -220,6 +220,8 @@ namespace pmt
 
     void Tank::next_weapon()
     {
+        _shot_power = -1;
+
         std::vector<WeaponType>::iterator it = std::find(
             pmt::WeaponsOrder.begin(),
             pmt::WeaponsOrder.end(),
@@ -236,6 +238,8 @@ namespace pmt
 
     void Tank::previous_weapon()
     {
+        _shot_power = -1;
+
         std::vector<WeaponType>::reverse_iterator it = std::find(
             pmt::WeaponsOrder.rbegin(),
             pmt::WeaponsOrder.rend(),

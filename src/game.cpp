@@ -28,7 +28,8 @@ namespace pmt
 
             "gun.png",
             "tank.png",
-            "shell.png",
+            "missile.png",
+            "magnum.png",
             "sheep.png",
             "excl.png",
 
@@ -86,10 +87,10 @@ namespace pmt
 
         _bullet_mgr->add_bullets(pmt::WeaponType::Missile,
                                  1,
-                                 _textures["shell.png"]);
+                                 _textures["missile.png"]);
         _bullet_mgr->add_bullets(pmt::WeaponType::MagnumMissile,
                                  1,
-                                 _textures["shell.png"]);
+                                 _textures["magnum.png"]);
         _bullet_mgr->add_bullets(pmt::WeaponType::Sheep,
                                  1,
                                  _textures["sheep.png"]);
