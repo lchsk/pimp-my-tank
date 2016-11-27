@@ -50,23 +50,18 @@ namespace pmt
     {
         for (auto& bullet : _bullets[type]) {
             if (! bullet->is_flying()) {
-                std::cout << "angle: " << angle << "\n";
+                double offset = 0;
 
-                double x = start_x;
-                double y = pmt::config::WINDOW_H - start_y;
+                switch (type) {
+                case WeaponType::Missile:
+                case WeaponType::MagnumMissile:
+                    offset = -5;
+                    break;
 
-                x += 24;
-                y -= 24;
-
-                x = x * cos(pmt::util::radian(angle));
-                // double p2 = (bullet->start_y) * sin(pmt::util::radian(angle));
-
-                // double xp = p1;
-
-                y = x * sin(pmt::util::radian(angle))
-                    + y * cos(pmt::util::radian(angle));
-
-                // x = xp;
+                case WeaponType::Sheep:
+                    offset = 20;
+                    break;
+                }
 
                 // TODO:
                 bullet->shoot(
@@ -75,7 +70,7 @@ namespace pmt
                     -angle,
                     initial_speed,
                     start_x,
-                    pmt::config::WINDOW_H - start_y);
+                    pmt::config::WINDOW_H - start_y + offset);
             }
         }
     }
@@ -83,6 +78,8 @@ namespace pmt
     std::vector<std::shared_ptr<pmt::Bullet> >&
     BulletMgr::get_flying_bullets()
     {
+        _vec.clear();
+
         for (auto it = _bullets.begin(); it != _bullets.end(); ++it)
             for (auto& bullet : it->second)
                 if (bullet->is_flying())

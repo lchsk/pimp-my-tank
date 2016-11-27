@@ -238,11 +238,11 @@ namespace pmt
         _window->clear();
         _map->render(*_window);
 
+        _bullet_mgr->render(*_window);
+
         for (unsigned i = 0; i < _tanks_count; i++) {
             _tanks[i]->render(*_window);
         }
-
-        _bullet_mgr->render(*_window);
 
         _explosion->render(*_window);
 
