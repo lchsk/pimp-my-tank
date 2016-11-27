@@ -57,8 +57,16 @@ namespace pmt
 
     static std::vector<Offer> offers = {
         Offer(OfferType::Missile, "Missile", "Basic tank missile", 50),
-        Offer(OfferType::MagnumMissile, "Magnum Missile", "Magnum Missile", 50),
-        Offer(OfferType::Sheep, "Sheep Missile", "Magnum Missile", 50),
+        Offer(
+            OfferType::MagnumMissile,
+            "Magnum Missile",
+            "Do more damage with a magnum missile, heavy",
+            120),
+        Offer(
+            OfferType::Sheep,
+            "Sheep Missile",
+            "Nothing damages shields more, very light",
+            150),
 
         Offer(OfferType::Crosshairs, "Crosshairs", "Magnum Missile", 50),
         Offer(OfferType::ShotPower, "Show Power", "Magnum Missile", 50),

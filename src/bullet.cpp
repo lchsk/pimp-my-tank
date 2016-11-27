@@ -7,6 +7,20 @@ namespace pmt
         _type(type),
         _flying_time(0)
     {
+        switch (type) {
+        case WeaponType::Missile:
+            _mass = 120;
+            break;
+
+        case WeaponType::MagnumMissile:
+            _mass = 300;
+            break;
+
+        case WeaponType::Sheep:
+            _mass = 50;
+            break;
+        }
+
         _sprite = std::make_unique<sf::Sprite>(*texture);
     }
 
@@ -17,6 +31,11 @@ namespace pmt
     void Bullet::render(sf::RenderWindow& window)
     {
         window.draw(*_sprite);
+    }
+
+    double Bullet::get_mass() const
+    {
+        return _mass;
     }
 
     sf::Vector2f Bullet::get_position() const

@@ -150,7 +150,7 @@ namespace pmt
         double C_air = pmt::config::C_AIR;
         double C_wind = pmt::config::C_WIND;
         double V_wind = _wind * pmt::config::WIND_POWER_COEF;
-        double mass = 200.0;
+        double mass = bullet->get_mass();
 
         double cosX, cosY;
         double b, Lx, Ly;

@@ -17,6 +17,7 @@ namespace pmt
         double get_initial_speed();
         double get_start_x();
         double get_start_y();
+        double get_mass() const;
         sf::Vector2f get_position() const;
         WeaponType get_type() const;
         unsigned get_origin_tank() const;
@@ -47,6 +48,8 @@ namespace pmt
         unsigned _origin_tank;
 
         WeaponType _type;
+
+        double _mass;
 
         double _angle;
         double _initial_speed;
