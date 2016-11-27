@@ -19,6 +19,7 @@ namespace pmt
         : _side(side),
           _left(left),
           _has_turn(false),
+          _show_angle(false),
           _health(initial_health),
           _shield(initial_shield),
           _cash(cash),
@@ -38,6 +39,12 @@ namespace pmt
             textures["explosion.png"], 12, 96, 96);
 
         _tank->setPosition(x, y);
+
+        _text_angle = std::make_unique<sf::Text>();
+        _text_angle->setFont(*_font);
+        _text_angle->setCharacterSize(16);
+        _text_angle->setColor(pmt::color::Blue);
+        _text_angle->setPosition(2, 32);
 
         _text_tank_control = std::make_unique<sf::Text>();
         _text_tank_control->setString(is_human() ? "Human" : "AI");
@@ -202,6 +209,8 @@ namespace pmt
 
         case OfferType::ShotPower:
         case OfferType::ShowShotAngle:
+            _show_angle = true;
+            break;
         case OfferType::Crosshairs:
             // TODO
             break;
@@ -293,6 +302,9 @@ namespace pmt
         if (_has_turn) {
             window.draw(*_excl);
             window.draw(*_text_tank_control);
+
+            if (_show_angle)
+                window.draw(*_text_angle);
         }
 
         _render_health(window);
@@ -451,13 +463,12 @@ namespace pmt
     {
         int next_val = static_cast<int>(_gun_rotation + val) % 360;
 
-        if (((next_val >= -15 && next_val < 87)))
+        if (((next_val >= -15 && next_val < 85)))
             _gun_rotation += val;
 
-        if (_left)
-            _gun->setRotation(_gun_rotation);
-        else
-            _gun->setRotation(-_gun_rotation);
+        _text_angle->setString(pmt::util::to_string_prec((_gun_rotation), 1) + "*");
+
+        _gun->setRotation(_left ? _gun_rotation : -_gun_rotation);
     }
 
     void Tank::_change_view()

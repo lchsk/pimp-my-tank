@@ -93,12 +93,15 @@ namespace pmt
 
         std::shared_ptr<sf::Font> _font;
         std::unique_ptr<sf::Text> _text_tank_control;
+        std::unique_ptr<sf::Text> _text_angle;
 
         std::unique_ptr<pmt::Animation> _explosion;
 
         GameSide _side;
         bool _left;
         bool _has_turn;
+
+        bool _show_angle;
 
         int _health;
         int _shield;
