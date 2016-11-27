@@ -85,7 +85,18 @@ namespace pmt
         _flying_left = shoot_left;
         _origin_tank = origin_tank;
 
-        _sprite->setRotation(shoot_left ? -angle + 180 : angle);
+        switch (_type) {
+        case WeaponType::Missile:
+        case WeaponType::MagnumMissile:
+            _sprite->setRotation(shoot_left ? -angle + 180 : angle);
+
+            break;
+
+        case WeaponType::Sheep:
+
+            break;
+        }
+
         _angle = -angle;
         _initial_speed = initial_speed;
         _start_x = start_x;

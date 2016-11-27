@@ -14,6 +14,7 @@ namespace pmt
         _weapon_names = {
             {WeaponType::Missile, "Missile"},
             {WeaponType::MagnumMissile, "Magnum Missile"},
+            {WeaponType::Sheep, "Sheep"},
         };
 
         _urd = std::make_unique<std::uniform_real_distribution<double> >(-0.5, 0.5);

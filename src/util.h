@@ -11,6 +11,7 @@ namespace pmt
     enum class OfferType {
         Missile,
         MagnumMissile,
+        Sheep,
 
         ShotPower,
         ShowShotAngle,
@@ -32,7 +33,8 @@ namespace pmt
 
     enum class WeaponType {
         Missile,
-        MagnumMissile
+        MagnumMissile,
+        Sheep
     };
 
     class Offer
@@ -56,6 +58,7 @@ namespace pmt
     static std::vector<Offer> offers = {
         Offer(OfferType::Missile, "Missile", "Basic tank missile", 50),
         Offer(OfferType::MagnumMissile, "Magnum Missile", "Magnum Missile", 50),
+        Offer(OfferType::Sheep, "Sheep Missile", "Magnum Missile", 50),
 
         Offer(OfferType::Crosshairs, "Crosshairs", "Magnum Missile", 50),
         Offer(OfferType::ShotPower, "Show Power", "Magnum Missile", 50),

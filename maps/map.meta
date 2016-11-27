@@ -19,8 +19,9 @@ tank_0_human=true
 tank_0_health=-1
 tank_0_shield=50
 tank_0_cash=150
-tank_0_missiles=150
+tank_0_missiles=0
 tank_0_magnums=1
+tank_0_sheeps=2
 
 tank_1_x=680
 tank_1_y=292
@@ -29,8 +30,9 @@ tank_1_human=true
 tank_1_health=10
 tank_1_shield=0
 tank_1_cash=100
-tank_1_missiles=150
-tank_1_magnums=15
+tank_1_missiles=1
+tank_1_magnums=2
+tank_1_sheeps=3
 
 tank_2_x=450
 tank_2_y=324
@@ -41,3 +43,4 @@ tank_2_shield=0
 tank_2_cash=50
 tank_2_missiles=150
 tank_2_magnums=150
+tank_2_sheeps=150

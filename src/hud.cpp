@@ -119,7 +119,7 @@ namespace pmt
 
                 y += 50;
             }
-		}
+        }
     }
 
     void Hud::update(sf::Time& delta, double wind)

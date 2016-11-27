@@ -158,6 +158,10 @@ namespace pmt
             _weapons[WeaponType::MagnumMissile] += 1;
             _current_weapon = WeaponType::MagnumMissile;
             break;
+        case OfferType::Sheep:
+            _weapons[WeaponType::Sheep] += 1;
+            _current_weapon = WeaponType::Sheep;
+            break;
 
         case OfferType::Transparency:
             _change_color(pmt::color::Transparent);
@@ -213,8 +217,11 @@ namespace pmt
             _current_weapon);
 
         while (++it != pmt::WeaponsOrder.end()) {
-            if (_weapons[*it] > 0)
+            if (_weapons[*it] > 0) {
                 _current_weapon = *it;
+
+                break;
+            }
         }
     }
 
@@ -226,8 +233,11 @@ namespace pmt
             _current_weapon);
 
         while (++it != pmt::WeaponsOrder.rend()) {
-            if (_weapons[*it] > 0)
+            if (_weapons[*it] > 0) {
                 _current_weapon = *it;
+
+                break;
+            }
         }
     }
 
@@ -235,6 +245,7 @@ namespace pmt
     {
         switch(_current_weapon) {
         case WeaponType::Missile:
+        case WeaponType::Sheep:
         case WeaponType::MagnumMissile:
             if (_weapons[_current_weapon] > 0) {
                 _weapons[_current_weapon]--;
@@ -389,6 +400,17 @@ namespace pmt
 
             if (_shield <= 0)
                 _health -= 25;
+
+            break;
+
+        case WeaponType::Sheep:
+            if (_shield > 0) {
+                _shield -= 50;
+                _health -= 10;
+            }
+
+            if (_shield <= 0)
+                _health -= 20;
 
             break;
         }

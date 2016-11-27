@@ -29,6 +29,7 @@ namespace pmt
             "gun.png",
             "tank.png",
             "shell.png",
+            "sheep.png",
             "excl.png",
 
             "green.png",
@@ -89,6 +90,9 @@ namespace pmt
         _bullet_mgr->add_bullets(pmt::WeaponType::MagnumMissile,
                                  1,
                                  _textures["shell.png"]);
+        _bullet_mgr->add_bullets(pmt::WeaponType::Sheep,
+                                 1,
+                                 _textures["sheep.png"]);
 
         _font = std::make_shared<sf::Font>();
         _hud = std::make_unique<pmt::Hud>(_textures, _font);
@@ -109,6 +113,9 @@ namespace pmt
 
             weapons[WeaponType::MagnumMissile] =
                 std::stoi(_map->get_param(tank_str + "_magnums"));
+
+            weapons[WeaponType::Sheep] =
+                std::stoi(_map->get_param(tank_str + "_sheeps"));
 
             _tanks.push_back(std::make_shared<pmt::Tank>(
                 i,

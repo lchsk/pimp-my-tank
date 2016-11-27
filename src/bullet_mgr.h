@@ -17,7 +17,8 @@ namespace pmt
 {
     static std::vector<WeaponType> WeaponsOrder = {
         WeaponType::Missile,
-        WeaponType::MagnumMissile
+        WeaponType::MagnumMissile,
+        WeaponType::Sheep
     };
 
     class BulletMgr
