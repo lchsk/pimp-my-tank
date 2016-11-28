@@ -147,6 +147,7 @@ namespace pmt
 
         _tank_turn = first_turn;
         _tanks[_tank_turn]->activate();
+        _run_ai_turn();
 
         _hud->show_turn(_tanks[_tank_turn]);
         _hud->show_cash(_tanks[_tank_turn]);
@@ -261,6 +262,10 @@ namespace pmt
             if (event.type == sf::Event::Closed)
                 _window->close();
             else if (event.type == sf::Event::KeyPressed) {
+                if (event.key.code == sf::Keyboard::Escape
+                    || event.key.code == sf::Keyboard::Key::Q)
+                    _window->close();
+
                 if (current_tank->is_human()) {
                     if (_hud->is_shop_open()) {
                         if (event.key.code == sf::Keyboard::Escape
@@ -296,9 +301,6 @@ namespace pmt
                         else if (event.key.code == sf::Keyboard::LControl) {
                             current_tank->spin_around();
                         }
-                        else if (event.key.code == sf::Keyboard::Escape
-                            || event.key.code == sf::Keyboard::Key::Q)
-                            _window->close();
                     }
                 }
             } else if (event.type == sf::Event::KeyReleased) {
@@ -307,6 +309,33 @@ namespace pmt
                     _hud->show_cash(current_tank);
                 }
             }
+        }
+    }
+
+    void Game::_run_ai_turn()
+    {
+        if (! _tanks[_tank_turn]->is_human()) {
+            int target = -1;
+
+            while (true) {
+                for (unsigned i = 0; i < _tanks_count; i++) {
+                    if (_tanks[i]->is_alive() && _tank_turn != i) {
+                        double r = pmt::util::get_random(0, 1);
+
+                        if (r > 0.5) {
+                            target = i;
+                            break;
+                        }
+                    }
+                }
+
+                if (target > -1)
+                    break;
+            }
+            // target = 1;
+
+            std::cout << "TARGET: " << target << "\n";
+            _tanks[_tank_turn]->ai_turn(_tanks[target], _bullet_mgr->get_wind());
         }
     }
 
@@ -343,6 +372,8 @@ namespace pmt
 
         if (found_next_tank) {
             std::cout << "NEW TANK ID: " << _tank_turn << "\n";
+
+            _run_ai_turn();
         } else {
             std::cout << "Game Over\n";
             std::cout << "WINNER: " << _tank_turn << "\n";

@@ -13,6 +13,7 @@ namespace pmt
 
         bool is_flying() const;
         bool is_flying_left() const;
+        bool on_screen() const;
         double get_angle();
         double get_initial_speed();
         double get_start_x();
@@ -36,7 +37,10 @@ namespace pmt
         void increase_flying_time(double time);
         double get_time();
 
+        void simulate(sf::Time delta, double wind);
+
     private:
+
         std::unique_ptr<sf::Sprite> _sprite;
 
         // Is flying or not

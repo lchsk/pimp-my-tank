@@ -43,13 +43,14 @@ namespace pmt
         bool is_human() const;
         bool is_alive() const;
         bool has_turn() const;
-        int get_id();
+        unsigned get_id();
         int get_cash() const;
         void gun_up();
         void gun_down();
         void shoot();
         bool can_shoot() const;
         bool check_collision(std::shared_ptr<pmt::Bullet>& bullet);
+        bool check_dummy_collision(std::shared_ptr<pmt::Bullet>& bullet);
 
         void add_cash(unsigned amount);
         void next_weapon();
@@ -60,6 +61,9 @@ namespace pmt
 
         void activate();
         void deactivate();
+
+        void ai_turn(std::shared_ptr<pmt::Tank>& target, double wind);
+        unsigned get_ai_target() const;
 
         void buy(const Offer& offer);
 
@@ -97,6 +101,8 @@ namespace pmt
 
         std::unique_ptr<pmt::Animation> _explosion;
 
+        std::shared_ptr<pmt::Bullet> _dummy_bullet;
+
         GameSide _side;
         bool _left;
         bool _has_turn;
@@ -119,6 +125,8 @@ namespace pmt
         const unsigned SHOT_BAR_ROWS = 12;
         const unsigned SHOT_BAR_COLS = 6;
         const unsigned SHOT_BAR_ITEMS = SHOT_BAR_ROWS * SHOT_BAR_COLS;
+
+        unsigned _ai_target;
     };
 }
 

@@ -96,6 +96,10 @@ namespace pmt
 
         const int REWARD_BEING_HIT = 50;
         const int REWARD_HIT = 50;
+        const int REWARD_TURN = 25;
+
+        const double MIN_SHOT_POWER = 60;
+        const double MAX_SHOT_POWER = 140;
 
         const double WIND_POWER_COEF = 30.0;
 

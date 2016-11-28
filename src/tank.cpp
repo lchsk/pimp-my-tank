@@ -32,6 +32,10 @@ namespace pmt
         _gun = std::make_unique<sf::Sprite>(*textures["gun.png"].get());
         _excl = std::make_unique<sf::Sprite>(*textures["excl.png"].get());
 
+        _dummy_bullet = std::make_shared<pmt::Bullet>(
+            WeaponType::Missile,
+            textures["missile.png"]);
+
         _bullet_mgr = bullet_mgr;
         _font = font;
 
@@ -117,7 +121,7 @@ namespace pmt
         return _shot_power > 0;
     }
 
-    int Tank::get_id()
+    unsigned Tank::get_id()
     {
         return _tank_id;
     }
@@ -139,6 +143,7 @@ namespace pmt
 
     void Tank::activate()
     {
+        _cash += pmt::config::REWARD_TURN;
         _has_turn = true;
     }
 
@@ -263,10 +268,10 @@ namespace pmt
             if (_weapons[_current_weapon] > 0) {
                 _weapons[_current_weapon]--;
 
-                std::cout << "Shot Power: " << _shot_power << "\n";
                 double power = pmt::util::linear(_shot_power, 60, 140);
 
-                std::cout << "Shot Power Lin: " << power << "\n";
+                std::cout << "Shot Power, p:" << _shot_power << " l: " << power << "\n";
+                std::cout << "Shot Angle: " << _gun_rotation << "\n";
 
                 _bullet_mgr->shoot(
                     _tank_id,
@@ -288,6 +293,99 @@ namespace pmt
     {
     }
 
+    void Tank::ai_turn(std::shared_ptr<pmt::Tank>& enemy, double wind)
+    {
+        sf::Vector2f enemy_pos = enemy->get_position();
+        sf::Vector2f my_pos = get_position();
+
+        bool enemy_on_the_left = enemy_pos.x < my_pos.x;
+
+        if (enemy_on_the_left != _left) {
+            spin_around();
+        }
+
+        // Change weapon
+        for (unsigned i = 0; i < pmt::WeaponsOrder.size(); i++) {
+            // double r = pmt::util::get_random(0, 1);
+
+            // if (r > 0.5)
+            // if (_weapons[pmt::WeaponsOrder[i]] > 0)
+                // _current_weapon = pmt::WeaponsOrder[i];
+        }
+
+        // Buy
+
+        _ai_target = enemy->get_id();
+
+        bool found = false;
+        double shot_angle = 1;
+        double shot_power = 1;
+        double power;
+
+        sf::Vector2f pos = _gun->getPosition();
+
+        for (double power_base = 5; power_base <= 100; power_base++) {
+            power = pmt::util::linear(
+                power_base,
+                pmt::config::MIN_SHOT_POWER,
+                pmt::config::MAX_SHOT_POWER
+            );
+
+            for (int angle = -15; angle < 85; angle++) {
+                sf::Time delta = sf::milliseconds(20);
+
+                _dummy_bullet->hit();
+                _dummy_bullet->shoot(
+                    get_id(),
+                    enemy_on_the_left,
+                    -angle,
+                    power,
+                    pos.x,
+                    pmt::config::WINDOW_H - pos.y
+                );
+
+                for (unsigned i = 0; i < 100; i++) {
+                    _dummy_bullet->simulate(delta, wind);
+
+                    if (! _dummy_bullet->on_screen())
+                        break;
+
+                    if (enemy->check_dummy_collision(_dummy_bullet)) {
+                        found = true;
+                        shot_power = power_base + pmt::util::get_random(-10, 10);
+                        shot_angle = angle;
+
+                        break;
+                    }
+                }
+
+                if (found)
+                    break;
+            }
+
+            if (found)
+                break;
+        }
+
+        std::cout << "FOUND: " << found << "\n";
+
+        if (! found) {
+            shot_power = pmt::util::get_random(10, 100);
+            shot_angle = pmt::util::get_random(1, 80);
+        }
+
+        _shot_power = shot_power;
+        _gun_rotation = shot_angle;
+        _rotate_gun(0);
+
+        shoot();
+    }
+
+    unsigned Tank::get_ai_target() const
+    {
+        return _ai_target;
+    }
+
     void Tank::update(sf::Time delta)
     {
         _explosion->update(delta);
@@ -296,6 +394,7 @@ namespace pmt
     void Tank::render(sf::RenderWindow& window)
     {
         _explosion->render(window);
+        // _dummy_bullet->render(window);
 
         if (! is_alive())
             return;
@@ -314,6 +413,12 @@ namespace pmt
         _render_health(window);
         _render_shield(window);
         _render_shot_power(window);
+    }
+
+    bool Tank::check_dummy_collision(std::shared_ptr<pmt::Bullet>& bullet)
+    {
+        return _tank->getGlobalBounds().intersects(
+            bullet->get_sprite()->getGlobalBounds()) && _tank_id != bullet->get_origin_tank();
     }
 
     bool Tank::check_collision(std::shared_ptr<pmt::Bullet>& bullet)

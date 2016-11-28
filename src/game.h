@@ -56,6 +56,8 @@ namespace pmt
 
             std::unique_ptr<pmt::Animation> _explosion;
 
+            void _run_ai_turn();
+
             unsigned _tanks_count;
             unsigned _tank_turn;
     };
