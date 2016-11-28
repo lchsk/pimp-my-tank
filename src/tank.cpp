@@ -32,9 +32,17 @@ namespace pmt
         _gun = std::make_unique<sf::Sprite>(*textures["gun.png"].get());
         _excl = std::make_unique<sf::Sprite>(*textures["excl.png"].get());
 
-        _dummy_bullet = std::make_shared<pmt::Bullet>(
+        _dummy_missile = std::make_shared<pmt::Bullet>(
             WeaponType::Missile,
             textures["missile.png"]);
+
+        _dummy_magnum = std::make_shared<pmt::Bullet>(
+            WeaponType::Missile,
+            textures["magnum.png"]);
+
+        _dummy_sheep = std::make_shared<pmt::Bullet>(
+            WeaponType::Missile,
+            textures["sheep.png"]);
 
         _bullet_mgr = bullet_mgr;
         _font = font;
@@ -313,6 +321,10 @@ namespace pmt
                 // _current_weapon = pmt::WeaponsOrder[i];
         }
 
+        _current_weapon = pmt::WeaponType::Missile;
+
+        std::shared_ptr<pmt::Bullet> dummy_bullet = _dummy_missile;
+
         // Buy
 
         _ai_target = enemy->get_id();
@@ -334,8 +346,8 @@ namespace pmt
             for (int angle = -15; angle < 85; angle++) {
                 sf::Time delta = sf::milliseconds(20);
 
-                _dummy_bullet->hit();
-                _dummy_bullet->shoot(
+                dummy_bullet->hit();
+                dummy_bullet->shoot(
                     get_id(),
                     enemy_on_the_left,
                     -angle,
@@ -345,12 +357,12 @@ namespace pmt
                 );
 
                 for (unsigned i = 0; i < 100; i++) {
-                    _dummy_bullet->simulate(delta, wind);
+                    dummy_bullet->simulate(delta, wind);
 
-                    if (! _dummy_bullet->on_screen())
+                    if (! dummy_bullet->on_screen())
                         break;
 
-                    if (enemy->check_dummy_collision(_dummy_bullet)) {
+                    if (enemy->check_dummy_collision(dummy_bullet)) {
                         found = true;
                         shot_power = power_base + pmt::util::get_random(-10, 10);
                         shot_angle = angle;

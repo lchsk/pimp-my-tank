@@ -101,7 +101,9 @@ namespace pmt
 
         std::unique_ptr<pmt::Animation> _explosion;
 
-        std::shared_ptr<pmt::Bullet> _dummy_bullet;
+        std::shared_ptr<pmt::Bullet> _dummy_missile;
+        std::shared_ptr<pmt::Bullet> _dummy_magnum;
+        std::shared_ptr<pmt::Bullet> _dummy_sheep;
 
         GameSide _side;
         bool _left;
