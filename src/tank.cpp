@@ -275,36 +275,29 @@ namespace pmt
 
     void Tank::shoot()
     {
-        switch(_current_weapon) {
-        case WeaponType::Missile:
-        case WeaponType::Sheep:
-        case WeaponType::MagnumMissile:
-            if (_weapons[_current_weapon] > 0) {
-                if (is_human())
-                    _weapons[_current_weapon]--;
+        if (_weapons[_current_weapon] > 0 || ! is_human()) {
+            if (is_human())
+                _weapons[_current_weapon]--;
 
-                double power = pmt::util::linear(
-                    _shot_power,
-                    pmt::config::MIN_SHOT_POWER,
-                    pmt::config::MAX_SHOT_POWER
+            double power = pmt::util::linear(
+                _shot_power,
+                pmt::config::MIN_SHOT_POWER,
+                pmt::config::MAX_SHOT_POWER
                 );
 
-                std::cout << "Shot Power, p:" << _shot_power << " l: " << power << "\n";
-                std::cout << "Shot Angle: " << _gun_rotation << "\n";
+            std::cout << "Shot Power, p:" << _shot_power << " l: " << power << "\n";
+            std::cout << "Shot Angle: " << _gun_rotation << "\n";
 
-                _bullet_mgr->shoot(
-                    _tank_id,
-                    _left,
-                    _current_weapon,
-                    _gun_rotation,
-                    power,
-                    _gun->getPosition().x,
-                    _gun->getPosition().y);
+            _bullet_mgr->shoot(
+                _tank_id,
+                _left,
+                _current_weapon,
+                _gun_rotation,
+                power,
+                _gun->getPosition().x,
+                _gun->getPosition().y);
 
-                _shot_power = -1.0f;
-            }
-
-            break;
+            _shot_power = -1.0f;
         }
     }
 
@@ -315,24 +308,16 @@ namespace pmt
 
     void Tank::ai_turn(std::shared_ptr<pmt::Tank>& enemy, double wind)
     {
-        // Change weapon
-        for (unsigned i = 0; i < pmt::WeaponsOrder.size(); i++) {
-            // double r = pmt::util::get_random(0, 1);
-
-            // if (r > 0.5)
-            // if (_weapons[pmt::WeaponsOrder[i]] > 0)
-                // _current_weapon = pmt::WeaponsOrder[i];
-        }
-
         _current_weapon = pmt::WeaponType::Missile;
 
+        for (unsigned i = 0; i < pmt::WeaponsOrder.size(); i++) {
+            double r = pmt::util::get_random(0, 1);
 
-        // Buy
-
-        // _ai_target = enemy->get_id();
+            if (r > 0.5 && _weapons[pmt::WeaponsOrder[i]] > 0)
+                _current_weapon = pmt::WeaponsOrder[i];
+        }
 
         std::thread t(&pmt::Tank::_ai_shoot_when_ready, this, enemy, wind);
-
         t.detach();
     }
 
@@ -614,7 +599,21 @@ namespace pmt
 
         sf::Vector2f pos = _gun->getPosition();
 
-        std::shared_ptr<pmt::Bullet> dummy_bullet = _dummy_missile;
+        std::shared_ptr<pmt::Bullet> dummy_bullet;
+
+        switch (_current_weapon) {
+        case WeaponType::Missile:
+            dummy_bullet = _dummy_missile;
+            break;
+
+        case WeaponType::MagnumMissile:
+            dummy_bullet = _dummy_magnum;
+            break;
+
+        case WeaponType::Sheep:
+            dummy_bullet = _dummy_sheep;
+            break;
+        }
 
         for (double power_base = 5; power_base <= 100; power_base++) {
             power = pmt::util::linear(
