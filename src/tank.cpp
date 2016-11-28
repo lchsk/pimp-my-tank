@@ -280,7 +280,8 @@ namespace pmt
         case WeaponType::Sheep:
         case WeaponType::MagnumMissile:
             if (_weapons[_current_weapon] > 0) {
-                _weapons[_current_weapon]--;
+                if (is_human())
+                    _weapons[_current_weapon]--;
 
                 double power = pmt::util::linear(
                     _shot_power,
