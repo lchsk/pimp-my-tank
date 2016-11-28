@@ -57,29 +57,71 @@ namespace pmt
         Offer(OfferType::Missile, "Missile", "Basic tank missile", 50),
         Offer(
             OfferType::MagnumMissile,
-            "Magnum Missile",
+            "Magnum missile",
             "Do more damage with a magnum missile, heavy",
-            120),
+            120
+        ),
         Offer(
             OfferType::Sheep,
-            "Sheep Missile",
+            "Sheep missile",
             "Nothing damages shields more, very light",
-            150),
+            150
+        ),
 
-        Offer(OfferType::ShowShotAngle, "Shot Angle", "Magnum Missile", 50),
+        Offer(
+            OfferType::ShowShotAngle,
+            "Shot angle",
+            "You will see angle value when you're preparing a shot",
+            50
+        ),
 
-        Offer(OfferType::Shield25, "Shield +25", "Magnum Missile", 50),
-        Offer(OfferType::Shield50, "Shield +50", "Magnum Missile", 50),
-        Offer(OfferType::Shield100, "SHield +100", "Magnum Missile", 50),
+        Offer(
+            OfferType::Shield25,
+            "Shield +25",
+            "Increases shield by 25 points",
+            50
+        ),
+        Offer(
+            OfferType::Shield50,
+            "Shield +50",
+            "Increases shield by 50 points",
+            50
+        ),
+        Offer(
+            OfferType::Shield100,
+            "Shield +100",
+            "Increases shield to a maximum value",
+            50
+        ),
 
-        Offer(OfferType::WeakerWind, "Weaker Wind", "Magnum Missile", 50),
-        Offer(OfferType::StrongerWind, "Stronger Wind", "Magnum Missile", 50),
-        Offer(OfferType::ZeroWind, "Zero Wind", "Magnum Missile", 50),
+        Offer(
+            OfferType::WeakerWind,
+            "Weaker Wind",
+            "Lowers wind speed",
+            50
+        ),
+        Offer(
+            OfferType::StrongerWind,
+            "Stronger Wind",
+            "Increases wind speed",
+            50
+        ),
+        Offer(
+            OfferType::ZeroWind,
+            "Zero Wind",
+            "Resets wind to a near zero speed",
+            50
+        ),
 
         Offer(OfferType::RedColor, "Red tank color", "Paint your tank red", 50),
         Offer(OfferType::BlueColor, "Blue tank color", "Paint your tank blue", 50),
         Offer(OfferType::PinkColor, "Pink tank color", "Paint your tank pink", 50),
-        Offer(OfferType::Transparency, "Transparency", "Magnum Missile", 50),
+        Offer(
+            OfferType::Transparency,
+            "Transparency",
+            "Tank will be semi-transparent",
+            50
+        ),
         Offer(OfferType::NoColor, "No tank color", "Default tank color", 0),
     };
 
@@ -157,6 +199,7 @@ namespace pmt
     namespace color
     {
         const sf::Color Blue = sf::Color(31, 58, 147, 255);
+        const sf::Color Red = sf::Color(255, 41, 36, 255);
         const sf::Color Pink = sf::Color(219, 10, 91, 255);
         const sf::Color Transparent = sf::Color(255, 255, 255, 100);
     }

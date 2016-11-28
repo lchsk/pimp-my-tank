@@ -178,9 +178,11 @@ namespace pmt
 
     void Game::update(sf::Time delta)
     {
-        _bullet_mgr->update(delta);
-        _map->update(delta);
-        _hud->update(delta, _bullet_mgr->get_wind());
+        if (! _hud->is_shop_open()) {
+            _bullet_mgr->update(delta);
+            _map->update(delta);
+            _hud->update(delta, _bullet_mgr->get_wind());
+        }
 
         bool tank_hit = false;
         bool env_hit = false;

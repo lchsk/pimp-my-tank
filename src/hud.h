@@ -34,6 +34,10 @@ namespace pmt
         void buy();
 
     private:
+        void _draw_shop(sf::RenderWindow& window);
+        void _check_cash();
+
+        bool _no_cash;
         bool _show_cash;
         bool _shop_open;
         unsigned _top_shop_item;
@@ -43,11 +47,16 @@ namespace pmt
 
         std::shared_ptr<sf::Font> _font;
 
+        std::unique_ptr<sf::Text> _text_shop_header;
+        std::unique_ptr<sf::Text> _text_shop_info;
+
         std::unique_ptr<sf::Text> _text_turn_name;
         std::unique_ptr<sf::Text> _text_cash;
         std::unique_ptr<sf::Text> _text_weapon_count;
         std::unique_ptr<sf::Text> _text_weapon;
         std::unique_ptr<sf::Text> _text_wind;
+
+        std::unique_ptr<sf::RectangleShape> _shop_overlay;
 
         std::unordered_map<OfferType, std::unique_ptr<sf::Text> > _shop_names;
         std::unordered_map<OfferType, std::unique_ptr<sf::Text> > _shop_descs;

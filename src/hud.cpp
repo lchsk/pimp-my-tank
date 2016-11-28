@@ -13,6 +13,18 @@ namespace pmt
         _selected(0),
         _font(font)
     {
+        _shop_overlay = std::make_unique<sf::RectangleShape>();
+        _shop_overlay->setSize(
+            sf::Vector2f(pmt::config::WINDOW_W, pmt::config::WINDOW_H));
+        sf::Color col(0, 0, 0, 210);
+        _shop_overlay->setFillColor(col);
+
+        _text_shop_header = std::make_unique<sf::Text>("Shop", *_font, 64);
+        _text_shop_header->setColor(pmt::color::Blue);
+
+        _text_shop_info = std::make_unique<sf::Text>("Not enough cash", *_font, 16);
+        _text_shop_info->setColor(pmt::color::Red);
+
         _text_turn_name = std::make_unique<sf::Text>();
         _text_turn_name->setFont(*_font);
         _text_turn_name->setCharacterSize(16);
@@ -40,19 +52,16 @@ namespace pmt
             _shop_names[offer.type] = std::make_unique<sf::Text>();
             _shop_names[offer.type]->setFont(*_font);
             _shop_names[offer.type]->setCharacterSize(16);
-            _shop_names[offer.type]->setColor(pmt::color::Blue);
             _shop_names[offer.type]->setString(offer.name);
 
             _shop_descs[offer.type] = std::make_unique<sf::Text>();
             _shop_descs[offer.type]->setFont(*_font);
             _shop_descs[offer.type]->setCharacterSize(16);
-            _shop_descs[offer.type]->setColor(pmt::color::Blue);
             _shop_descs[offer.type]->setString(offer.desc);
 
             _shop_prices[offer.type] = std::make_unique<sf::Text>();
             _shop_prices[offer.type]->setFont(*_font);
             _shop_prices[offer.type]->setCharacterSize(16);
-            _shop_prices[offer.type]->setColor(pmt::color::Blue);
             _shop_prices[offer.type]->setString("$" + std::to_string(offer.price));
         }
 
@@ -97,29 +106,7 @@ namespace pmt
             window.draw(*_text_weapon_count);
         }
 
-        if (_shop_open) {
-            int y = 50;
-
-            for (int i = 0; i < 5; i++) {
-                auto& offer = offers[_top_shop_item + i];
-
-                if (_selected == _top_shop_item + i) {
-                    _shop_names[offer.type]->setColor(sf::Color::Red);
-                } else {
-                    _shop_names[offer.type]->setColor(pmt::color::Blue);
-                }
-
-                _shop_prices[offer.type]->setPosition(50, y);
-                _shop_names[offer.type]->setPosition(100, y);
-                _shop_descs[offer.type]->setPosition(100, y + 20);
-
-                window.draw(*_shop_prices[offer.type]);
-                window.draw(*_shop_names[offer.type]);
-                window.draw(*_shop_descs[offer.type]);
-
-                y += 50;
-            }
-        }
+        _draw_shop(window);
     }
 
     void Hud::update(sf::Time& delta, double wind)
@@ -146,6 +133,8 @@ namespace pmt
 
         if (_selected > 0)
             _selected--;
+
+        _check_cash();
     }
 
     void Hud::shop_down()
@@ -155,12 +144,19 @@ namespace pmt
 
         if (_selected < pmt::offers.size() - 1)
             _selected++;
+
+        _check_cash();
     }
 
     void Hud::open_shop(std::shared_ptr<pmt::Tank>& tank)
     {
+        _top_shop_item = 0;
+        _selected = 0;
+
         _shop_client = tank;
         _shop_open = true;
+
+        _check_cash();
     }
 
     void Hud::close_shop()
@@ -172,9 +168,7 @@ namespace pmt
     {
         auto& offer = pmt::offers[_selected];
 
-        if (offer.price > _shop_client->get_cash()) {
-            std::cout << "No money\n";
-        } else {
+        if (offer.price <= _shop_client->get_cash()) {
             _shop_client->buy(offer);
             close_shop();
         }
@@ -207,5 +201,66 @@ namespace pmt
         _text_cash->setPosition(
             pmt::config::WINDOW_W - _text_cash->getLocalBounds().width - 2,
         12);
+    }
+
+    void Hud::_check_cash()
+    {
+        auto& offer = pmt::offers[_selected];
+
+        _no_cash = offer.price > _shop_client->get_cash();
+
+        if (_no_cash)
+            _text_shop_info->setPosition(
+                pmt::config::WINDOW_W / 2
+                - _text_shop_info->getLocalBounds().width / 2,
+                50
+            );
+    }
+
+    void Hud::_draw_shop(sf::RenderWindow& window)
+    {
+        if (_shop_open) {
+            window.draw(*_shop_overlay);
+            window.draw(*_text_shop_header);
+
+            if (_no_cash)
+                window.draw(*_text_shop_info);
+
+            _text_shop_header->setPosition(
+                pmt::config::WINDOW_W - _text_shop_header->getLocalBounds().width,
+                pmt::config::WINDOW_H - _text_shop_header->getLocalBounds().height + 32
+            );
+
+            int y = 80;
+
+            sf::Color col;
+
+            for (int i = 0; i < 5; i++) {
+                auto& offer = offers[_top_shop_item + i];
+
+                if (_selected == _top_shop_item + i) {
+                    col = pmt::color::Blue;
+
+                    if (offer.price > _shop_client->get_cash())
+                        col = pmt::color::Red;
+                } else {
+                    col = sf::Color::White;
+                }
+
+                _shop_names[offer.type]->setColor(col);
+                _shop_descs[offer.type]->setColor(col);
+                _shop_prices[offer.type]->setColor(col);
+
+                _shop_prices[offer.type]->setPosition(90, y + 8);
+                _shop_names[offer.type]->setPosition(150, y);
+                _shop_descs[offer.type]->setPosition(150, y + 20);
+
+                window.draw(*_shop_prices[offer.type]);
+                window.draw(*_shop_names[offer.type]);
+                window.draw(*_shop_descs[offer.type]);
+
+                y += 60;
+            }
+        }
     }
 }

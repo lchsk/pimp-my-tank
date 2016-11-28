@@ -193,10 +193,10 @@ namespace pmt
             _change_color(pmt::color::Transparent);
             break;
         case OfferType::RedColor:
-            _change_color(sf::Color::Red);
+            _change_color(pmt::color::Red);
             break;
         case OfferType::BlueColor:
-            _change_color(sf::Color::Blue);
+            _change_color(pmt::color::Blue);
             break;
         case OfferType::PinkColor:
             _change_color(pmt::color::Pink);
