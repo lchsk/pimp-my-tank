@@ -311,47 +311,9 @@ namespace pmt
     {
     }
 
+
     void Tank::ai_turn(std::shared_ptr<pmt::Tank>& enemy, double wind)
     {
-        sf::Vector2f enemy_pos = enemy->get_position();
-        sf::Vector2f my_pos = get_position();
-
-        bool enemy_on_the_left = enemy_pos.x < my_pos.x;
-
-        if (enemy_on_the_left != _left) {
-            spin_around();
-        }
-
-        double power_factor;
-        double angle_factor;
-
-        switch (_ai_level) {
-        case 1: // Easy
-            power_factor = pmt::util::get_random(-10, 15);
-            angle_factor = pmt::util::get_random(-5, 5);
-            break;
-
-        case 2:
-            power_factor = pmt::util::get_random(-10, 10);
-            angle_factor = pmt::util::get_random(-4, 4);
-            break;
-
-        case 3:
-            power_factor = pmt::util::get_random(-6, 8);
-            angle_factor = pmt::util::get_random(-3, 3);
-            break;
-
-        case 4:
-            power_factor = pmt::util::get_random(-3, 5);
-            angle_factor = pmt::util::get_random(-2, 2);
-            break;
-
-        case 5: // Hard
-            power_factor = pmt::util::get_random(-1, 5);
-            angle_factor = pmt::util::get_random(-1, 1);
-            break;
-        }
-
         // Change weapon
         for (unsigned i = 0; i < pmt::WeaponsOrder.size(); i++) {
             // double r = pmt::util::get_random(0, 1);
@@ -363,74 +325,14 @@ namespace pmt
 
         _current_weapon = pmt::WeaponType::Missile;
 
-        std::shared_ptr<pmt::Bullet> dummy_bullet = _dummy_missile;
 
         // Buy
 
-        _ai_target = enemy->get_id();
+        // _ai_target = enemy->get_id();
 
-        bool found = false;
-        double shot_angle = 1;
-        double shot_power = 1;
-        double power;
+        std::thread t(&pmt::Tank::_ai_shoot_when_ready, this, enemy, wind);
 
-        sf::Vector2f pos = _gun->getPosition();
-
-        for (double power_base = 5; power_base <= 100; power_base++) {
-            power = pmt::util::linear(
-                power_base,
-                pmt::config::MIN_SHOT_POWER,
-                pmt::config::MAX_SHOT_POWER
-            );
-
-            for (int angle = -15; angle < 85; angle++) {
-                sf::Time delta = sf::milliseconds(20);
-
-                dummy_bullet->hit();
-                dummy_bullet->shoot(
-                    get_id(),
-                    enemy_on_the_left,
-                    -angle,
-                    power,
-                    pos.x,
-                    pmt::config::WINDOW_H - pos.y
-                );
-
-                for (unsigned i = 0; i < 100; i++) {
-                    dummy_bullet->simulate(delta, wind);
-
-                    if (! dummy_bullet->on_screen())
-                        break;
-
-                    if (enemy->check_dummy_collision(dummy_bullet)) {
-                        found = true;
-                        shot_power = power_base + power_factor;
-                        shot_angle = angle + angle_factor;
-
-                        break;
-                    }
-                }
-
-                if (found)
-                    break;
-            }
-
-            if (found)
-                break;
-        }
-
-        std::cout << "FOUND: " << found << "\n";
-
-        if (! found) {
-            shot_power = pmt::util::get_random(10, 100);
-            shot_angle = pmt::util::get_random(1, 80);
-        }
-
-        _shot_power = shot_power;
-        _gun_rotation = shot_angle;
-        _rotate_gun(0);
-
-        shoot();
+        t.detach();
     }
 
     unsigned Tank::get_ai_target() const
@@ -445,32 +347,31 @@ namespace pmt
 
     void Tank::render(sf::RenderWindow& window)
     {
-        _explosion->render(window);
-        // _dummy_bullet->render(window);
+        if (is_alive()) {
+            window.draw(*_tank);
+            window.draw(*_gun);
 
-        if (! is_alive())
-            return;
+            if (_has_turn) {
+                window.draw(*_excl);
+                window.draw(*_text_tank_control);
 
-        window.draw(*_tank);
-        window.draw(*_gun);
+                if (_show_angle)
+                    window.draw(*_text_angle);
+            }
 
-        if (_has_turn) {
-            window.draw(*_excl);
-            window.draw(*_text_tank_control);
-
-            if (_show_angle)
-                window.draw(*_text_angle);
+            _render_health(window);
+            _render_shield(window);
+            _render_shot_power(window);
         }
 
-        _render_health(window);
-        _render_shield(window);
-        _render_shot_power(window);
+        _explosion->render(window);
     }
 
     bool Tank::check_dummy_collision(std::shared_ptr<pmt::Bullet>& bullet)
     {
         return _tank->getGlobalBounds().intersects(
-            bullet->get_sprite()->getGlobalBounds()) && _tank_id != bullet->get_origin_tank();
+            bullet->get_sprite()->getGlobalBounds())
+            && _tank_id != bullet->get_origin_tank();
     }
 
     bool Tank::check_collision(std::shared_ptr<pmt::Bullet>& bullet)
@@ -610,7 +511,7 @@ namespace pmt
 
     void Tank::_render_shot_power(sf::RenderWindow& window)
     {
-        if (_shot_power > 0) {
+        if (_shot_power > 0 && is_human()) {
             int items = ceil(pmt::util::linear(_shot_power, 0, SHOT_BAR_ITEMS));
 
             items = items - (items % SHOT_BAR_COLS);
@@ -662,5 +563,113 @@ namespace pmt
         _gun->setScale(scale, 1);
         _gun->setPosition(x + scale * 28, y + 5);
         _gun->setRotation(-scale * _gun_rotation);
+    }
+
+    void Tank::_ai_shoot_when_ready(std::shared_ptr<pmt::Tank> enemy, double wind)
+    {
+        sf::Vector2f enemy_pos = enemy->get_position();
+        sf::Vector2f my_pos = get_position();
+
+        bool enemy_on_the_left = enemy_pos.x < my_pos.x;
+
+        if (enemy_on_the_left != _left) {
+            spin_around();
+        }
+
+        double power_factor;
+        double angle_factor;
+
+        switch (_ai_level) {
+        case 1: // Easy
+            power_factor = pmt::util::get_random(-10, 15);
+            angle_factor = pmt::util::get_random(-5, 5);
+            break;
+
+        case 2:
+            power_factor = pmt::util::get_random(-10, 10);
+            angle_factor = pmt::util::get_random(-4, 4);
+            break;
+
+        case 3:
+            power_factor = pmt::util::get_random(-6, 8);
+            angle_factor = pmt::util::get_random(-3, 3);
+            break;
+
+        case 4:
+            power_factor = pmt::util::get_random(-3, 7);
+            angle_factor = pmt::util::get_random(-2, 2);
+            break;
+
+        case 5: // Hard
+            power_factor = pmt::util::get_random(-1, 5);
+            angle_factor = pmt::util::get_random(-1, 1);
+            break;
+        }
+
+        bool found = false;
+        double shot_angle = 1;
+        double shot_power = 1;
+        double power;
+
+        sf::Vector2f pos = _gun->getPosition();
+
+        std::shared_ptr<pmt::Bullet> dummy_bullet = _dummy_missile;
+
+        for (double power_base = 5; power_base <= 100; power_base++) {
+            power = pmt::util::linear(
+                power_base,
+                pmt::config::MIN_SHOT_POWER,
+                pmt::config::MAX_SHOT_POWER
+            );
+
+            for (int angle = -15; angle < 85; angle++) {
+                sf::Time delta = sf::milliseconds(50);
+
+                dummy_bullet->hit();
+                dummy_bullet->shoot(
+                    get_id(),
+                    enemy_on_the_left,
+                    -angle,
+                    power,
+                    pos.x,
+                    pmt::config::WINDOW_H - pos.y
+                );
+
+                for (unsigned i = 0; i < 100; i++) {
+                    dummy_bullet->simulate(delta, wind);
+
+                    if (! dummy_bullet->on_screen())
+                        break;
+
+                    if (enemy->check_dummy_collision(dummy_bullet)) {
+                        found = true;
+                        shot_power = power_base + power_factor;
+                        shot_angle = angle + angle_factor;
+
+                        break;
+                    }
+                }
+
+                if (found)
+                    break;
+            }
+
+            if (found)
+                break;
+        }
+
+        std::cout << "FOUND: " << found << "\n";
+
+        if (! found) {
+            shot_power = pmt::util::get_random(10, 100);
+            shot_angle = pmt::util::get_random(1, 80);
+        }
+
+        _shot_power = shot_power;
+        _gun_rotation = shot_angle;
+
+        _rotate_gun(0);
+
+        shoot();
     }
 }

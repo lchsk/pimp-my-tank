@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <unordered_map>
+#include <thread>
 
 #include <SFML/Graphics.hpp>
 
@@ -81,6 +82,7 @@ namespace pmt
         void _change_color(const sf::Color color);
         void _add_shield(int value);
         void _change_view();
+        void _ai_shoot_when_ready(std::shared_ptr<pmt::Tank> enemy, double wind);
 
         std::unique_ptr<sf::Sprite> _tank;
         std::unique_ptr<sf::Sprite> _gun;
