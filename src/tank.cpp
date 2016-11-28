@@ -226,14 +226,9 @@ namespace pmt
             _bullet_mgr->set_wind(_bullet_mgr->get_wind() * 3.0);
             break;
 
-        case OfferType::ShotPower:
         case OfferType::ShowShotAngle:
             _show_angle = true;
             break;
-        case OfferType::Crosshairs:
-            // TODO
-            break;
-
         }
     }
 

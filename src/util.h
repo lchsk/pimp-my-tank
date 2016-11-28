@@ -13,9 +13,7 @@ namespace pmt
         MagnumMissile,
         Sheep,
 
-        ShotPower,
         ShowShotAngle,
-        Crosshairs,
         Shield25,
         Shield50,
         Shield100,
@@ -68,8 +66,6 @@ namespace pmt
             "Nothing damages shields more, very light",
             150),
 
-        Offer(OfferType::Crosshairs, "Crosshairs", "Magnum Missile", 50),
-        Offer(OfferType::ShotPower, "Show Power", "Magnum Missile", 50),
         Offer(OfferType::ShowShotAngle, "Shot Angle", "Magnum Missile", 50),
 
         Offer(OfferType::Shield25, "Shield +25", "Magnum Missile", 50),
