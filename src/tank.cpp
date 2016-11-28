@@ -10,6 +10,7 @@ namespace pmt
         int initial_health,
         int initial_shield,
         int cash,
+        int ai_level,
         std::unordered_map<WeaponType, unsigned>& weapons,
         std::shared_ptr<pmt::BulletMgr>& bullet_mgr,
         std::unordered_map<std::string, std::unique_ptr<sf::Texture> >&
@@ -23,6 +24,7 @@ namespace pmt
           _health(initial_health),
           _shield(initial_shield),
           _cash(cash),
+          _ai_level(ai_level),
           _tank_id(tank_id),
           _gun_rotation(7.0f),
           _shot_power(-1.0f),
@@ -59,7 +61,11 @@ namespace pmt
         _text_angle->setPosition(2, 32);
 
         _text_tank_control = std::make_unique<sf::Text>();
-        _text_tank_control->setString(is_human() ? "Human" : "AI");
+        _text_tank_control->setString(
+            is_human() ?
+            "Human" :
+            ("AI [" + std::to_string(_ai_level) + "]")
+        );
         _text_tank_control->setFont(*_font);
         _text_tank_control->setCharacterSize(8);
 
@@ -276,7 +282,11 @@ namespace pmt
             if (_weapons[_current_weapon] > 0) {
                 _weapons[_current_weapon]--;
 
-                double power = pmt::util::linear(_shot_power, 60, 140);
+                double power = pmt::util::linear(
+                    _shot_power,
+                    pmt::config::MIN_SHOT_POWER,
+                    pmt::config::MAX_SHOT_POWER
+                );
 
                 std::cout << "Shot Power, p:" << _shot_power << " l: " << power << "\n";
                 std::cout << "Shot Angle: " << _gun_rotation << "\n";
@@ -310,6 +320,36 @@ namespace pmt
 
         if (enemy_on_the_left != _left) {
             spin_around();
+        }
+
+        double power_factor;
+        double angle_factor;
+
+        switch (_ai_level) {
+        case 1: // Easy
+            power_factor = pmt::util::get_random(-10, 15);
+            angle_factor = pmt::util::get_random(-5, 5);
+            break;
+
+        case 2:
+            power_factor = pmt::util::get_random(-10, 10);
+            angle_factor = pmt::util::get_random(-4, 4);
+            break;
+
+        case 3:
+            power_factor = pmt::util::get_random(-6, 8);
+            angle_factor = pmt::util::get_random(-3, 3);
+            break;
+
+        case 4:
+            power_factor = pmt::util::get_random(-3, 5);
+            angle_factor = pmt::util::get_random(-2, 2);
+            break;
+
+        case 5: // Hard
+            power_factor = pmt::util::get_random(-1, 5);
+            angle_factor = pmt::util::get_random(-1, 1);
+            break;
         }
 
         // Change weapon
@@ -364,8 +404,8 @@ namespace pmt
 
                     if (enemy->check_dummy_collision(dummy_bullet)) {
                         found = true;
-                        shot_power = power_base + pmt::util::get_random(-10, 10);
-                        shot_angle = angle;
+                        shot_power = power_base + power_factor;
+                        shot_angle = angle + angle_factor;
 
                         break;
                     }

@@ -123,6 +123,7 @@ namespace pmt
                 std::stoi(_map->get_param(tank_str + "_health")),
                 std::stoi(_map->get_param(tank_str + "_shield")),
                 std::stoi(_map->get_param(tank_str + "_cash")),
+                std::stoi(_map->get_param(tank_str + "_level")),
                 weapons,
                 _bullet_mgr,
                 _textures,

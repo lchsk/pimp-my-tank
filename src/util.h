@@ -99,7 +99,7 @@ namespace pmt
         const int REWARD_TURN = 25;
 
         const double MIN_SHOT_POWER = 60;
-        const double MAX_SHOT_POWER = 140;
+        const double MAX_SHOT_POWER = 220;
 
         const double WIND_POWER_COEF = 30.0;
 

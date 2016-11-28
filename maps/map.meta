@@ -12,21 +12,12 @@ wind_change_period=1000
 # Who gets to shoot first: either "random" of id of the player (0, 1, 2 etc..)
 first_turn=0
 
-tank_1_x=100
-tank_1_y=52
-tank_1_side=right
-tank_1_human=false
-tank_1_health=1
-tank_1_shield=50
-tank_1_cash=150
-tank_1_missiles=50
-tank_1_magnums=1
-tank_1_sheeps=2
-
 tank_0_x=510
 tank_0_y=202
 tank_0_side=left
 tank_0_human=false
+# Skills of AI player (1 - worst, 5 - best)
+tank_0_level=1
 tank_0_health=100
 tank_0_shield=20
 tank_0_cash=100
@@ -34,10 +25,24 @@ tank_0_missiles=15
 tank_0_magnums=2
 tank_0_sheeps=3
 
+tank_1_x=100
+tank_1_y=52
+tank_1_side=right
+tank_1_human=false
+tank_1_level=5
+tank_1_health=1
+tank_1_shield=50
+tank_1_cash=150
+tank_1_missiles=50
+tank_1_magnums=1
+tank_1_sheeps=2
+
+
 tank_2_x=450
 tank_2_y=324
 tank_2_side=left
 tank_2_human=true
+tank_2_level=1
 tank_2_health=10
 tank_2_shield=0
 tank_2_cash=50
