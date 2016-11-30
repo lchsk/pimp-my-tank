@@ -7,6 +7,7 @@ The aim of the game is to control your tank and hit other players' (human or com
 # Features
 * several maps included (which allow to play in various configurations, e.g. human vs computer vs computer, or even watch computer players fighting each other)
 * maps are stored in text files, so it's easy to create more maps without any programming
+* when shooting, a player must take wind into account (as it can change missile's path massievely)
 * pixel-style graphics
 * allows to play against a computer or against human players using the same machine
 * computer players have different skills levels
@@ -42,3 +43,11 @@ Start the game from the terminal:
 |N                               |move to the next turn  |
 |control                       |spin around the tank   |
 |esc                           |open menu / go back    |
+
+# Screenshots
+
+![pimp my tank](pimp_my_tank_2.png)
+
+![pimp my tank](pimp_my_tank_1.png)
+
+![pimp my tank](pimp_my_tank_3.png)
