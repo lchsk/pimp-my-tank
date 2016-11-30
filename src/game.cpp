@@ -609,20 +609,21 @@ namespace pmt
         const std::string credits = "";
 
         _menu_text_credits = std::make_shared<sf::Text>(credits, *_font, 16);
-        _menu_text_credits->setPosition(50, 220);
+        _menu_text_credits->setPosition(50, 170);
 
         const std::string help = "";
 
         _menu_text_help = std::make_shared<sf::Text>(help, *_font, 16);
-        _menu_text_help->setPosition(50, 220);
+        _menu_text_help->setPosition(50, 170);
 
         _menu_text_maps_stats = std::make_shared<sf::Text>(
             std::to_string(_maps.size())
             , *_font, 16);
-        _menu_text_maps_stats->setPosition(50, 220);
+        _menu_text_maps_stats->setPosition(50, 170);
+        _menu_text_maps_stats->setColor(pmt::color::Blue);
 
         _menu_text_map_info = std::make_shared<sf::Text>("", *_font, 16);
-        _menu_text_map_info->setPosition(50, 250);
+        _menu_text_map_info->setPosition(50, 210);
 
         _menu_back = std::make_shared<sf::Text>("back", *_font, 16);
         _menu_back->setPosition(50, 350);
