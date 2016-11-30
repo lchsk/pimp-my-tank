@@ -536,28 +536,24 @@ namespace pmt
 
         std::string line;
 
+        _maps.clear();
+
         if (maps_file.is_open()) {
             std::string map_id;
 
-            while (! maps_file.eof()) {
-                maps_file >> map_id;
-
-                _maps_meta.push_back(map_id);
+            while (maps_file >> map_id) {
+                _maps.push_back(
+                    std::make_shared<pmt::Map>(
+                        map_id,
+                        _tiles_map,
+                        _textures
+                        )
+                    );
             }
 
             maps_file.close();
         } else {
             throw std::runtime_error("<maps> file not found");
-        }
-
-        for (auto &name : _maps_meta) {
-            _maps.push_back(
-                std::make_shared<pmt::Map>(
-                    name,
-                    _tiles_map,
-                    _textures
-                )
-            );
         }
     }
 

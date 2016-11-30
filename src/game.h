@@ -101,7 +101,6 @@ namespace pmt
 
             std::vector<std::shared_ptr<sf::Text> > _menu;
 
-            std::vector<std::string> _maps_meta;
             std::vector<std::shared_ptr<pmt::Map> > _maps;
 
             int _menu_selected;
