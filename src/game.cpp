@@ -606,10 +606,10 @@ namespace pmt
         _menu.push_back(_menu_credits);
         _menu.push_back(_menu_quit);
 
-        std::string credits_1
+        const std::string credits_1
             = "Author: Maciej Lechowski\nmjlechowski@gmail.com\ngithub.com/lchsk\n\n";
 
-        std::string credits_2
+        const std::string credits_2
             = "Graphics: \nBleddyuffles, www.bleddy.xyz\n"
             "GrafxKid, http://opengameart.org/content/items-and-elements\n"
             "J-Robot, http://opengameart.org/content/pixel-explosion-12-frames\n"
@@ -622,7 +622,16 @@ namespace pmt
         _menu_text_credits_2 = std::make_shared<sf::Text>(credits_2, *_font, 8);
         _menu_text_credits_2->setPosition(50, 250);
 
-        const std::string help = "";
+        const std::string help
+            =
+            "<space>                             press to shoot\n"
+            "<left> / <right>             change weapon\n"
+            "<up> / <down>                alter angle of the gun\n"
+            "S                                              open / close shop\n"
+            "<return>                           buy in a shop / confirm\n"
+            "N                                              move to the next turn\n"
+            "<control>                         spin around the tank\n"
+            "<esc>                                   open menu / go back";
 
         _menu_text_help = std::make_shared<sf::Text>(help, *_font, 16);
         _menu_text_help->setPosition(50, 170);
