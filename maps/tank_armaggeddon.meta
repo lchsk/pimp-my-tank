@@ -1,0 +1,80 @@
+name=Tank Armaggeddon
+tanks_count=5
+
+# Is initial wind random?
+random_wind=true
+
+# Speed of wind at the start of the game
+initial_wind=0
+
+# How often wind changes, in milliseconds
+wind_change_period=5000
+
+# Who gets to shoot first: either "random" of id of the player (0, 1, 2 etc..)
+first_turn=random
+
+# Furthest to the left
+tank_0_x=120
+tank_0_y=346
+tank_0_side=right
+tank_0_human=true
+# Skills of AI player (1 - worst, 5 - best)
+tank_0_level=1
+tank_0_health=50
+tank_0_shield=50
+tank_0_cash=100
+tank_0_missiles=1
+tank_0_magnums=0
+tank_0_sheeps=0
+
+# The one on the island on the right
+tank_1_x=384
+tank_1_y=282
+tank_1_side=left
+tank_1_human=false
+tank_1_level=3
+tank_1_health=90
+tank_1_shield=80
+tank_1_cash=0
+tank_1_missiles=5
+tank_1_magnums=5
+tank_1_sheeps=5
+
+# The one in a foxhole
+tank_2_x=550
+tank_2_y=314
+tank_2_side=left
+tank_2_human=true
+tank_2_level=1
+tank_2_health=100
+tank_2_shield=10
+tank_2_cash=100
+tank_2_missiles=2
+tank_2_magnums=0
+tank_2_sheeps=8
+
+# Island on the left
+tank_3_x=110
+tank_3_y=154
+tank_3_side=right
+tank_3_human=false
+tank_3_level=4
+tank_3_health=100
+tank_3_shield=100
+tank_3_cash=1
+tank_3_missiles=3
+tank_3_magnums=3
+tank_3_sheeps=3
+
+# On the far right
+tank_4_x=700
+tank_4_y=186
+tank_4_side=left
+tank_4_human=false
+tank_4_level=5
+tank_4_health=100
+tank_4_shield=100
+tank_4_cash=1
+tank_4_missiles=3
+tank_4_magnums=3
+tank_4_sheeps=3

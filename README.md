@@ -11,7 +11,7 @@ The aim of the game is to control your tank and hit other players' (human or com
 # Features
 * several maps included (which allow to play in various configurations, e.g. human vs computer vs computer, or even watch computer players fighting each other)
 * maps are stored in text files, so it's easy to create more maps without any programming
-* when shooting, a player must take wind into account (as it can change missile's path massievely)
+* when shooting, a player must take wind into account (as it can change missile's path massively)
 * pixel-style graphics
 * allows to play against a computer or against human players using the same machine
 * computer players have different skills levels
