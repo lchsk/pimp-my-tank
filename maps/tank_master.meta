@@ -1,0 +1,52 @@
+name=Tank Master
+
+tanks_count=3
+
+# Is initial wind random?
+random_wind=true
+
+# Speed of wind at the start of the game
+initial_wind=1
+
+# How often wind changes, in milliseconds
+wind_change_period=2000
+
+# Who gets to shoot first: either "random" of id of the player (0, 1, 2 etc..)
+first_turn=random
+
+tank_0_x=130
+tank_0_y=186
+tank_0_side=right
+tank_0_human=false
+# Skills of AI player (1 - worst, 5 - best)
+tank_0_level=5
+tank_0_health=100
+tank_0_shield=50
+tank_0_cash=0
+tank_0_missiles=10
+tank_0_magnums=5
+tank_0_sheeps=1
+
+tank_1_x=700
+tank_1_y=154
+tank_1_side=left
+tank_1_human=true
+tank_1_level=5
+tank_1_health=100
+tank_1_shield=50
+tank_1_cash=0
+tank_1_missiles=10
+tank_1_magnums=5
+tank_1_sheeps=1
+
+tank_2_x=360
+tank_2_y=186
+tank_2_side=left
+tank_2_human=false
+tank_2_level=3
+tank_2_health=100
+tank_2_shield=100
+tank_2_cash=0
+tank_2_missiles=5
+tank_2_magnums=5
+tank_2_sheeps=5
