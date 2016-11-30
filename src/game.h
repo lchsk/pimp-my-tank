@@ -83,7 +83,8 @@ namespace pmt
             std::shared_ptr<sf::Text> _menu_credits;
             std::shared_ptr<sf::Text> _menu_quit;
 
-            std::shared_ptr<sf::Text> _menu_text_credits;
+            std::shared_ptr<sf::Text> _menu_text_credits_1;
+            std::shared_ptr<sf::Text> _menu_text_credits_2;
             std::shared_ptr<sf::Text> _menu_text_help;
 
             std::shared_ptr<sf::Text> _menu_text_maps_stats;

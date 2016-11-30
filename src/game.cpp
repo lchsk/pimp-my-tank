@@ -606,10 +606,21 @@ namespace pmt
         _menu.push_back(_menu_credits);
         _menu.push_back(_menu_quit);
 
-        const std::string credits = "";
+        std::string credits_1
+            = "Author: Maciej Lechowski\nmjlechowski@gmail.com\ngithub.com/lchsk\n\n";
 
-        _menu_text_credits = std::make_shared<sf::Text>(credits, *_font, 16);
-        _menu_text_credits->setPosition(50, 170);
+        std::string credits_2
+            = "Graphics: \nBleddyuffles, www.bleddy.xyz\n"
+            "GrafxKid, http://opengameart.org/content/items-and-elements\n"
+            "J-Robot, http://opengameart.org/content/pixel-explosion-12-frames\n"
+            "mrnannings, http://opengameart.org/content/pixel-tank\n"
+            "Kenney, Kenney.nl\n"
+            "Euro-t-guide.com, https://commons.wikimedia.org/wiki/M4_Sherman#/media/File:Utah_Beach_2006-Sherman.jpg\n";
+
+        _menu_text_credits_1 = std::make_shared<sf::Text>(credits_1, *_font, 16);
+        _menu_text_credits_1->setPosition(50, 170);
+        _menu_text_credits_2 = std::make_shared<sf::Text>(credits_2, *_font, 8);
+        _menu_text_credits_2->setPosition(50, 250);
 
         const std::string help = "";
 
@@ -677,7 +688,8 @@ namespace pmt
             break;
 
         case MenuScreen::Credits:
-            _window->draw(*_menu_text_credits);
+            _window->draw(*_menu_text_credits_1);
+            _window->draw(*_menu_text_credits_2);
 
             _window->draw(*_menu_back);
 
