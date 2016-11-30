@@ -60,27 +60,27 @@ namespace pmt
             OfferType::MagnumMissile,
             "Magnum missile",
             "Do more damage with a magnum missile, heavy",
-            70
+            80
         ),
         Offer(
             OfferType::Sheep,
             "Sheep missile",
             "Nothing damages shields more, very light",
-            90
+            100
         ),
 
         Offer(
             OfferType::ShowShotAngle,
             "Shot angle",
             "You will see angle value when you're preparing a shot",
-            40
+            50
         ),
 
         Offer(
             OfferType::Shield25,
             "Shield +25",
             "Increases shield by 25 points",
-            40
+            50
         ),
         Offer(
             OfferType::Shield50,
@@ -133,9 +133,9 @@ namespace pmt
 
         const double MISSILE_SPEED = 2.5f;
 
-        const int REWARD_BEING_HIT = 20;
+        const int REWARD_BEING_HIT = 10;
         const int REWARD_HIT = 50;
-        const int REWARD_TURN = 30;
+        const int REWARD_TURN = 20;
 
         const double MIN_SHOT_POWER = 60;
         const double MAX_SHOT_POWER = 220;
