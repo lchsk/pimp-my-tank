@@ -15,7 +15,7 @@ The aim of the game is to control your tank and hit other players' (human or com
 
 # Dependencies
 * C++14 compiler (e.g. g++6), tested with g++ 6.1.1
-* SFML library, v2.3.2
+* [SFML library](http://www.sfml-dev.org/) v2.3.2
 * Linux, tested on Ubuntu 14.04
 
 # Installation
@@ -29,16 +29,16 @@ Start the game from the terminal:
 
     $ ./pimp-my-tank
 
-(Remember to `cd` into the directory where the `pimp-my-tank` binary is located`
+(Remember to `cd` into the directory where the `pimp-my-tank` binary is located)
 
 # Controls
 |Key   |Action   |
 |---|---|
-|<space>   |press to shoot   |
-|<left> / <right>                |change weapon   |
-|<up> / <down>                   |alter angle of the gun   |
+|space   |press to shoot   |
+|left / right                |change weapon   |
+|up / down                   |alter angle of the gun   |
 |S                               |open / close shop|
-|<return>                        |buy in a shop / confirm|
+|return                        |buy in a shop / confirm|
 |N                               |move to the next turn  |
-|<control>                       |spin around the tank   |
-|<esc>                           |open menu / go back    |
+|control                       |spin around the tank   |
+|esc                           |open menu / go back    |
