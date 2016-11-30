@@ -274,7 +274,9 @@ namespace pmt
                                 break;
                             case 3:
                                 _menu_play->setColor(pmt::color::Blue);
-                                _start_map();
+
+                                if ((unsigned) _map_selected < _maps.size())
+                                    _start_map();
                                 break;
                             }
                         }
