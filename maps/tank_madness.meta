@@ -1,0 +1,51 @@
+name=Tank Madness
+tanks_count=3
+
+# Is initial wind random?
+random_wind=0
+
+# Speed of wind at the start of the game
+initial_wind=10
+
+# How often wind changes, in milliseconds
+wind_change_period=1000
+
+# Who gets to shoot first: either "random" of id of the player (0, 1, 2 etc..)
+first_turn=random
+
+tank_0_x=170
+tank_0_y=282
+tank_0_side=right
+tank_0_human=false
+# Skills of AI player (1 - worst, 5 - best)
+tank_0_level=3
+tank_0_health=100
+tank_0_shield=100
+tank_0_cash=1
+tank_0_missiles=3
+tank_0_magnums=3
+tank_0_sheeps=3
+
+tank_1_x=540
+tank_1_y=154
+tank_1_side=right
+tank_1_human=false
+tank_1_level=3
+tank_1_health=100
+tank_1_shield=100
+tank_1_cash=1
+tank_1_missiles=4
+tank_1_magnums=2
+tank_1_sheeps=0
+
+tank_2_x=680
+tank_2_y=280
+tank_2_side=left
+tank_2_human=false
+tank_2_level=3
+tank_2_health=100
+tank_2_shield=100
+tank_2_cash=1
+tank_2_missiles=3
+tank_2_magnums=3
+tank_2_sheeps=3
