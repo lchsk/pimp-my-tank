@@ -68,13 +68,12 @@ namespace pmt
         if (! is_flying_left())
             vx1 *= -1;
 
-        // sy1 = 300.0 * cos(pmt::util::radian(Alpha)); //wspolrzedna y konca lufy
-        vy1 = Vm * cosY; //skladowa vy predkosci
+        vy1 = Vm * cosY;
 
         double time = get_time();
 
         double x, y;
-        x = ( (mass/C_air) * exp(-(C_air * time)/mass) * ((-C_wind * V_wind * cos(pmt::util::radian(Gamma_wind)))/C_air + vx1) - (C_wind * V_wind * cos(pmt::util::radian(Gamma_wind)) * time)/C_air ) - ( (mass/C_air) * ((-C_wind * V_wind * cos(pmt::util::radian(Gamma_wind)))/C_air + vx1)) + sx1;
+        x = ((mass/C_air) * exp(-(C_air * time)/mass) * ((-C_wind * V_wind * cos(pmt::util::radian(Gamma_wind)))/C_air + vx1) - (C_wind * V_wind * cos(pmt::util::radian(Gamma_wind)) * time)/C_air ) - ( (mass/C_air) * ((-C_wind * V_wind * cos(pmt::util::radian(Gamma_wind)))/C_air + vx1)) + sx1;
         y = (sy1 + ( -(vy1 + (mass*g)/C_air) * (mass/C_air) * exp(-(C_air*time)/mass) - (mass * g * time)/C_air) + ( (mass/C_air) * (vy1 + (mass * g)/C_air)));
 
         set_position(x, pmt::config::WINDOW_H - y);

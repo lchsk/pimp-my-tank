@@ -545,28 +545,6 @@ namespace pmt
             throw std::runtime_error("<maps> file not found");
         }
 
-        // return;
-
-        // DIR* dir;
-        // struct dirent* ent;
-
-        // if ((dir = opendir(DIR_MAPS.c_str())) != NULL) {
-        //     while ((ent = readdir(dir)) != NULL) {
-        //         std::string name(ent->d_name);
-
-        //         if (name == "." || name == "..")
-        //             continue;
-
-        //         int dot = name.find_last_of('.');
-
-        //         if (name.substr(dot + 1, 4) == "meta") {
-        //             _maps_meta.push_back(name.substr(0, dot));
-        //         }
-        //     }
-
-        //     closedir (dir);
-        // }
-
         for (auto &name : _maps_meta) {
             _maps.push_back(
                 std::make_shared<pmt::Map>(
