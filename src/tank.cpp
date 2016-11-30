@@ -280,9 +280,6 @@ namespace pmt
                 pmt::config::MAX_SHOT_POWER
                 );
 
-            std::cout << "Shot Power, p:" << _shot_power << " l: " << power << "\n";
-            std::cout << "Shot Angle: " << _gun_rotation << "\n";
-
             _bullet_mgr->shoot(
                 _tank_id,
                 _left,
@@ -652,8 +649,6 @@ namespace pmt
             if (found)
                 break;
         }
-
-        std::cout << "FOUND: " << found << "\n";
 
         if (! found) {
             shot_power = pmt::util::get_random(10, 100);

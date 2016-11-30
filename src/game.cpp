@@ -1,6 +1,5 @@
 #include <iostream>
 #include <fstream>
-// #include <dirent.h>
 
 #include "util.h"
 #include "game.h"

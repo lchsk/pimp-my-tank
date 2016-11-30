@@ -54,25 +54,25 @@ namespace pmt
     };
 
     static std::vector<Offer> offers = {
-        Offer(OfferType::Missile, "Missile", "Basic tank missile", 50),
+        Offer(OfferType::Missile, "Missile", "Basic tank missile", 40),
         Offer(
             OfferType::MagnumMissile,
             "Magnum missile",
             "Do more damage with a magnum missile, heavy",
-            120
+            90
         ),
         Offer(
             OfferType::Sheep,
             "Sheep missile",
             "Nothing damages shields more, very light",
-            150
+            110
         ),
 
         Offer(
             OfferType::ShowShotAngle,
             "Shot angle",
             "You will see angle value when you're preparing a shot",
-            50
+            40
         ),
 
         Offer(
@@ -85,32 +85,32 @@ namespace pmt
             OfferType::Shield50,
             "Shield +50",
             "Increases shield by 50 points",
-            50
+            100
         ),
         Offer(
             OfferType::Shield100,
             "Shield +100",
-            "Increases shield to a maximum value",
-            50
+            "Increases shield to the maximum value",
+            200
         ),
 
         Offer(
             OfferType::WeakerWind,
             "Weaker Wind",
             "Lowers wind speed",
-            50
+            75
         ),
         Offer(
             OfferType::StrongerWind,
             "Stronger Wind",
             "Increases wind speed",
-            50
+            25
         ),
         Offer(
             OfferType::ZeroWind,
             "Zero Wind",
             "Resets wind to a near zero speed",
-            50
+            100
         ),
 
         Offer(OfferType::RedColor, "Red tank color", "Paint your tank red", 50),
@@ -120,7 +120,7 @@ namespace pmt
             OfferType::Transparency,
             "Transparency",
             "Tank will be semi-transparent",
-            50
+            30
         ),
         Offer(OfferType::NoColor, "No tank color", "Default tank color", 0),
     };
@@ -132,9 +132,9 @@ namespace pmt
 
         const double MISSILE_SPEED = 2.5f;
 
-        const int REWARD_BEING_HIT = 50;
+        const int REWARD_BEING_HIT = 20;
         const int REWARD_HIT = 50;
-        const int REWARD_TURN = 25;
+        const int REWARD_TURN = 30;
 
         const double MIN_SHOT_POWER = 60;
         const double MAX_SHOT_POWER = 220;
