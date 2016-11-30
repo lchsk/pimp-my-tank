@@ -16,7 +16,8 @@ namespace pmt
     class Map
     {
     public:
-        Map(std::unordered_map<int, std::string> tiles,
+        Map(std::string name,
+            std::unordered_map<int, std::string> tiles,
             std::unordered_map
                 <std::string, std::unique_ptr<sf::Texture> >& textures
         );
@@ -28,6 +29,9 @@ namespace pmt
         std::string get_param(std::string key);
 
         bool check_collision(std::shared_ptr<pmt::Bullet>& bullet);
+
+        unsigned get_human_tanks_count() const;
+        unsigned get_ai_tanks_count() const;
 
     private:
         std::unique_ptr<sf::Sprite> _bg[8];
@@ -48,6 +52,9 @@ namespace pmt
         std::unordered_map<std::string, std::string> _meta;
 
         const int BG_WIDTH = 1800;
+
+        unsigned _ai_tanks;
+        unsigned _human_tanks;
     };
 }
 

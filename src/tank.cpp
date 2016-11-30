@@ -562,28 +562,28 @@ namespace pmt
 
         switch (_ai_level) {
         case 1: // Easy
-            power_factor = pmt::util::get_random(-10, 15);
-            angle_factor = pmt::util::get_random(-5, 5);
+            power_factor = pmt::util::get_random(-8, 12);
+            angle_factor = pmt::util::get_random(-3, 3.5);
             break;
 
         case 2:
-            power_factor = pmt::util::get_random(-10, 10);
-            angle_factor = pmt::util::get_random(-4, 4);
-            break;
-
-        case 3:
-            power_factor = pmt::util::get_random(-6, 8);
+            power_factor = pmt::util::get_random(-6, 7);
             angle_factor = pmt::util::get_random(-3, 3);
             break;
 
+        case 3:
+            power_factor = pmt::util::get_random(-4, 5);
+            angle_factor = pmt::util::get_random(-2, 2.3);
+            break;
+
         case 4:
-            power_factor = pmt::util::get_random(-3, 7);
-            angle_factor = pmt::util::get_random(-2, 2);
+            power_factor = pmt::util::get_random(-1, 4);
+            angle_factor = pmt::util::get_random(-1, 1.5);
             break;
 
         case 5: // Hard
-            power_factor = pmt::util::get_random(-1, 5);
-            angle_factor = pmt::util::get_random(-1, 1);
+            power_factor = pmt::util::get_random(0, 3);
+            angle_factor = pmt::util::get_random(0, 0.3);
             break;
         }
 

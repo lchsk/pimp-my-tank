@@ -16,8 +16,7 @@ namespace pmt
         _shop_overlay = std::make_unique<sf::RectangleShape>();
         _shop_overlay->setSize(
             sf::Vector2f(pmt::config::WINDOW_W, pmt::config::WINDOW_H));
-        sf::Color col(0, 0, 0, 210);
-        _shop_overlay->setFillColor(col);
+        _shop_overlay->setFillColor(pmt::color::Overlay);
 
         _text_shop_header = std::make_unique<sf::Text>("Shop", *_font, 64);
         _text_shop_header->setColor(pmt::color::Blue);

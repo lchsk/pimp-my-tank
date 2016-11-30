@@ -7,12 +7,15 @@
 namespace pmt
 {
     Map::Map(
+        std::string name,
         std::unordered_map<int, std::string> tiles,
         std::unordered_map
             <std::string, std::unique_ptr<sf::Texture> >& textures)
+        : _ai_tanks(0),
+          _human_tanks(0)
     {
-        _load_data(DIR_MAPS + "map.data", tiles, textures);
-        _load_meta(DIR_MAPS + "map.meta");
+        _load_data(DIR_MAPS + name + ".data", tiles, textures);
+        _load_meta(DIR_MAPS + name + ".meta");
 
         for (int i = 0; i < 8; i += 2) {
             std::string filename = "trees" + std::to_string(i / 2 + 1) + ".png";
@@ -43,6 +46,16 @@ namespace pmt
 
     }
 
+    unsigned Map::get_human_tanks_count() const
+    {
+        return _human_tanks;
+    }
+
+    unsigned Map::get_ai_tanks_count() const
+    {
+        return _ai_tanks;
+    }
+
     void Map::update(sf::Time delta)
     {
         for (int i = 0; i < 8; i += 2) {
@@ -70,13 +83,11 @@ namespace pmt
 
     void Map::render(sf::RenderWindow& window)
     {
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 8; i++)
             window.draw(*_bg[i]);
-        }
 
-        for (sf::Sprite& s : _tiles) {
+        for (sf::Sprite& s : _tiles)
             window.draw(s);
-        }
     }
 
     std::string Map::get_param(std::string key)
@@ -117,7 +128,6 @@ namespace pmt
         std::string line;
 
         if (map.is_open()) {
-
             while (std::getline(map, line)) {
                 // Comments
                 if (line[0] == '#')
@@ -134,6 +144,17 @@ namespace pmt
             map.close();
         } else {
             throw std::runtime_error("Map file not found");
+        }
+
+        unsigned tanks_count = std::stoi(get_param("tanks_count"));
+
+        for (unsigned i = 0; i < tanks_count; i++) {
+            std::string tank_str = "tank_" + std::to_string(i);
+
+            if (get_param(tank_str + "_human") == "true")
+                _human_tanks++;
+            else
+                _ai_tanks++;
         }
     }
 

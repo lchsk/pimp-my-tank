@@ -201,6 +201,7 @@ namespace pmt
         const sf::Color Blue = sf::Color(31, 58, 147, 255);
         const sf::Color Red = sf::Color(255, 41, 36, 255);
         const sf::Color Pink = sf::Color(219, 10, 91, 255);
+        const sf::Color Overlay = sf::Color(0, 0, 0, 210);
         const sf::Color Transparent = sf::Color(255, 255, 255, 100);
     }
 }

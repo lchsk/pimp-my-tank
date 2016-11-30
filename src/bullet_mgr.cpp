@@ -6,10 +6,10 @@
 namespace pmt
 {
     BulletMgr::BulletMgr(std::unordered_map<std::string, std::unique_ptr<sf::Texture> >&
-                         textures, double wind, double wind_change_period) :
-        _wind(wind),
+                         textures) :
+        _wind(0),
         _wind_change_timer(0),
-        _wind_change_period(wind_change_period)
+        _wind_change_period(2000)
     {
         _weapon_names = {
             {WeaponType::Missile, "Missile"},
@@ -120,6 +120,11 @@ namespace pmt
     void BulletMgr::set_wind(double wind)
     {
         _wind = wind;
+    }
+
+    void BulletMgr::set_wind_change_period(double wind_change_period)
+    {
+        _wind_change_period = wind_change_period;
     }
 
     void BulletMgr::_update_wind(sf::Time delta)

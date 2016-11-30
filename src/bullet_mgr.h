@@ -28,7 +28,8 @@ namespace pmt
             BulletMgr& operator=(const BulletMgr&) = delete;
 
             BulletMgr(std::unordered_map<std::string, std::unique_ptr<sf::Texture> >&
-                      textures, double wind, double wind_change_period);
+                      textures
+            );
             ~BulletMgr();
 
             void update(sf::Time delta);
@@ -51,6 +52,7 @@ namespace pmt
             std::string get_weapon_name(const WeaponType type);
             double get_wind() const;
             void set_wind(double wind);
+            void set_wind_change_period(double wind_change_period);
 
         private:
             void _simulate(sf::Time delta, std::shared_ptr<pmt::Bullet> bullet);

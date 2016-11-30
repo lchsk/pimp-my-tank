@@ -1,4 +1,5 @@
-tanks_count=3
+name=Blablabla
+tanks_count=2
 
 # Is initial wind random?
 random_wind=true
@@ -10,12 +11,12 @@ initial_wind=-4.59
 wind_change_period=1000
 
 # Who gets to shoot first: either "random" of id of the player (0, 1, 2 etc..)
-first_turn=2
+first_turn=0
 
 tank_0_x=510
 tank_0_y=202
 tank_0_side=left
-tank_0_human=false
+tank_0_human=true
 # Skills of AI player (1 - worst, 5 - best)
 tank_0_level=1
 tank_0_health=100
@@ -38,14 +39,14 @@ tank_1_magnums=1
 tank_1_sheeps=2
 
 
-tank_2_x=450
-tank_2_y=324
-tank_2_side=left
-tank_2_human=true
-tank_2_level=1
-tank_2_health=10
-tank_2_shield=0
-tank_2_cash=50
-tank_2_missiles=150
-tank_2_magnums=150
-tank_2_sheeps=150
+#tank_2_x=450
+#tank_2_y=324
+# tank_2_side=left
+# tank_2_human=true
+# tank_2_level=1
+# tank_2_health=10
+# tank_2_shield=0
+# tank_2_cash=50
+# tank_2_missiles=150
+# tank_2_magnums=150
+# tank_2_sheeps=150
