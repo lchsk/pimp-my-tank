@@ -546,6 +546,9 @@ namespace pmt
 
     void Tank::_ai_shoot_when_ready(std::shared_ptr<pmt::Tank> enemy, double wind)
     {
+        // Thinking :)
+        sf::sleep(sf::milliseconds(pmt::util::get_random(400, 1000)));
+
         sf::Vector2f enemy_pos = enemy->get_position();
         sf::Vector2f my_pos = get_position();
 
