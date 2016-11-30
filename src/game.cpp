@@ -336,27 +336,31 @@ namespace pmt
                         else if (event.key.code == sf::Keyboard::Return)
                             _hud->buy();
                     } else {
-                        if (event.key.code == sf::Keyboard::Up)
-                            current_tank->gun_up();
-                        else if (event.key.code == sf::Keyboard::Down)
-                            current_tank->gun_down();
-                        else if (event.key.code == sf::Keyboard::Space) {
-                            if (! current_tank->can_shoot())
-                                current_tank->init_shot();
-                        } else if (event.key.code == sf::Keyboard::Right) {
-                            current_tank->next_weapon();
-                            _hud->show_cash(current_tank);
-                        } else if (event.key.code == sf::Keyboard::Left) {
-                            current_tank->previous_weapon();
-                            _hud->show_cash(current_tank);
-                        } else if (event.key.code == sf::Keyboard::Key::S)
-                            _hud->open_shop(current_tank);
-                        else if (event.key.code == sf::Keyboard::Key::N)
-                            _next_turn();
-                        else if (event.key.code == sf::Keyboard::LControl) {
-                            current_tank->spin_around();
-                        } else if (event.key.code == sf::Keyboard::Escape
-                                   || event.key.code == sf::Keyboard::Key::Q) {
+                        if (_game_on) {
+                            if (event.key.code == sf::Keyboard::Up)
+                                current_tank->gun_up();
+                            else if (event.key.code == sf::Keyboard::Down)
+                                current_tank->gun_down();
+                            else if (event.key.code == sf::Keyboard::Space) {
+                                if (! current_tank->can_shoot())
+                                    current_tank->init_shot();
+                            } else if (event.key.code == sf::Keyboard::Right) {
+                                current_tank->next_weapon();
+                                _hud->show_cash(current_tank);
+                            } else if (event.key.code == sf::Keyboard::Left) {
+                                current_tank->previous_weapon();
+                                _hud->show_cash(current_tank);
+                            } else if (event.key.code == sf::Keyboard::Key::S)
+                                _hud->open_shop(current_tank);
+                            else if (event.key.code == sf::Keyboard::Key::N)
+                                _next_turn();
+                            else if (event.key.code == sf::Keyboard::LControl) {
+                                current_tank->spin_around();
+                            }
+                        }
+
+                        if (event.key.code == sf::Keyboard::Escape
+                            || event.key.code == sf::Keyboard::Key::Q) {
                             _in_menu = true;
                             _current_menu = MenuScreen::Main;
                             _menu[_menu_selected]->setColor(sf::Color::White);
