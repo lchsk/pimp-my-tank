@@ -383,7 +383,8 @@ namespace pmt
 
     void Tank::init_shot()
     {
-        _shot_power = 1.0f;
+        if (_weapons[_current_weapon] > 0)
+            _shot_power = 1.0f;
     }
 
     void Tank::increase_shot_power(sf::Time delta)
