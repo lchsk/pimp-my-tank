@@ -4,6 +4,10 @@ A video game created for GitHub Game Off 2016 (Theme is Hacking, Modding, or Aug
 
 The aim of the game is to control your tank and hit other players' (human or computer controlled) tanks. The user the *modify* his/her tank (by buying new weapons, changing tank's colour) as well as alter the environment (by changing the wind speed which makes shooting missiles quite tricky).
 
+[Gameplay video](https://www.youtube.com/watch?v=-8dq__x5j-Q)
+
+![pimp my tank](pimp_my_tank_2.png)
+
 # Features
 * several maps included (which allow to play in various configurations, e.g. human vs computer vs computer, or even watch computer players fighting each other)
 * maps are stored in text files, so it's easy to create more maps without any programming
@@ -45,8 +49,6 @@ Start the game from the terminal:
 |esc                           |open menu / go back    |
 
 # Screenshots
-
-![pimp my tank](pimp_my_tank_2.png)
 
 ![pimp my tank](pimp_my_tank_1.png)
 
