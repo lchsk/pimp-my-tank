@@ -59,13 +59,13 @@ namespace pmt
             OfferType::MagnumMissile,
             "Magnum missile",
             "Do more damage with a magnum missile, heavy",
-            90
+            70
         ),
         Offer(
             OfferType::Sheep,
             "Sheep missile",
             "Nothing damages shields more, very light",
-            110
+            90
         ),
 
         Offer(
@@ -79,19 +79,19 @@ namespace pmt
             OfferType::Shield25,
             "Shield +25",
             "Increases shield by 25 points",
-            50
+            40
         ),
         Offer(
             OfferType::Shield50,
             "Shield +50",
             "Increases shield by 50 points",
-            100
+            75
         ),
         Offer(
             OfferType::Shield100,
             "Shield +100",
             "Increases shield to the maximum value",
-            200
+            120
         ),
 
         Offer(
@@ -113,9 +113,9 @@ namespace pmt
             100
         ),
 
-        Offer(OfferType::RedColor, "Red tank color", "Paint your tank red", 50),
-        Offer(OfferType::BlueColor, "Blue tank color", "Paint your tank blue", 50),
-        Offer(OfferType::PinkColor, "Pink tank color", "Paint your tank pink", 50),
+        Offer(OfferType::RedColor, "Red tank color", "Paint your tank red", 20),
+        Offer(OfferType::BlueColor, "Blue tank color", "Paint your tank blue", 20),
+        Offer(OfferType::PinkColor, "Pink tank color", "Paint your tank pink", 20),
         Offer(
             OfferType::Transparency,
             "Transparency",
