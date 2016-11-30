@@ -1,0 +1,40 @@
+name=Tank Paradise
+
+tanks_count=2
+
+# Is initial wind random?
+random_wind=true
+
+# Speed of wind at the start of the game
+initial_wind=1
+
+# How often wind changes, in milliseconds
+wind_change_period=1000
+
+# Who gets to shoot first: either "random" of id of the player (0, 1, 2 etc..)
+first_turn=random
+
+tank_0_x=100
+tank_0_y=314
+tank_0_side=right
+tank_0_human=true
+# Skills of AI player (1 - worst, 5 - best)
+tank_0_level=1
+tank_0_health=100
+tank_0_shield=100
+tank_0_cash=350
+tank_0_missiles=5
+tank_0_magnums=3
+tank_0_sheeps=2
+
+tank_1_x=690
+tank_1_y=282
+tank_1_side=left
+tank_1_human=false
+tank_1_level=5
+tank_1_health=100
+tank_1_shield=100
+tank_1_cash=0
+tank_1_missiles=5
+tank_1_magnums=5
+tank_1_sheeps=5
