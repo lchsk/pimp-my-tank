@@ -366,6 +366,12 @@ namespace pmt
                             _menu_selected = _game_on ? 0 : 1;
                         }
                     }
+                } else if (event.key.code == sf::Keyboard::Escape
+                    || event.key.code == sf::Keyboard::Key::Q) {
+                    _in_menu = true;
+                    _current_menu = MenuScreen::Main;
+                    _menu[_menu_selected]->setColor(sf::Color::White);
+                    _menu_selected = _game_on ? 0 : 1;
                 }
             } else if (event.type == sf::Event::KeyReleased) {
                 if (! _in_menu) {
